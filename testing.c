@@ -5,6 +5,109 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+typedef struct env_vars_s
+{
+	char				*str;
+	struct env_vars_s	*next;
+}	env_vars_t;
+
+int	ft_strlen(char	*str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+env_vars_t *new_env_node(int strlen)
+{
+	env_vars_t *new;
+
+	new = malloc(sizeof(env_vars_t));
+	if (!new)
+		exit(404);
+	new->str = malloc(strlen * sizeof(char));
+	if (!new->str)
+		exit(404);
+	new->next = NULL;
+	return (new);
+}
+
+void	str_copy(char *take, char *place)
+{
+	int i;
+
+	i = 0;
+	while (take[i])
+	{
+		place[i] = take[i];
+		i++;
+	}
+	place[i] = '\0';
+}
+
+void	init_env_vars_list(char **envp, env_vars_t **env_head)
+{
+	env_vars_t	*tmp;
+	int			strlen;
+	int			i;
+
+	i = 0;
+	while (envp[i])
+	{
+		strlen = ft_strlen(envp[i]);
+		if (i == 0)
+		{
+			tmp = new_env_node(strlen + 1);
+			*env_head = tmp;
+		}
+		else
+		{
+			tmp->next = new_env_node(strlen + 1);
+			tmp = tmp->next;
+		}
+		str_copy(envp[i], tmp->str);
+		i++;
+	}
+}
+
+int	env_list_size(env_vars_t *env_list)
+{
+	int	i;
+
+	i = 0;
+	while (env_list)
+	{
+		env_list = env_list->next;
+		i++;
+	}
+	return (i);
+}
+
+char	**env_list_to_array(env_vars_t **env_head)
+{
+	env_vars_t	*tmp;
+	char		**env_array;
+	int			i;
+	int			j;
+
+	i = 0;
+	j = 0;
+	tmp = *env_head;
+	env_array = malloc(sizeof(char *) * (env_list_size(*env_head) + 1));
+	while (i < env_list_size(*env_head))
+	{
+		env_array[i] = malloc(sizeof(char) * ft_strlen(tmp->str) + 1);
+		str_copy(tmp->str, env_array[i]);
+		i++;
+		tmp = tmp->next;
+	}
+	env_array[i] = NULL;
+	return (env_array);
+}
+
 void	print_history(void)
 {
 	HISTORY_STATE *history = history_get_history_state();
@@ -16,16 +119,29 @@ void	print_history(void)
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
-	char	*str;
-	char	*prompt;
-	char	*pwd;
-	int		i;
+	env_vars_t	**env_head;
+	char		**env_array;
+	char		*str;
+	char		*prompt;
+	char		*pwd;
+	int			i;
 
 	i = 0;
 	prompt = "minishell: ";
 	using_history();
+	init_env_vars_list(envp, env_head);
+	env_array = env_list_to_array(env_head);
+	// env_vars_t *tmp = *env_head;
+	// while (tmp)
+	// {
+	// 	if (tmp->str)
+	// 		printf("%s\n", tmp->str);
+	// 	tmp = tmp->next;
+	// }
+	// for (int i = 0; env_array[i]; i++)
+	// 	printf("%s\n", env_array[i]);
 	while (1)
 	{
 		str = readline(prompt);
@@ -63,6 +179,15 @@ int	main(void)
 		{
 			if (chdir(str + 3) != 0)
 				printf("%s: No such file or directory\n", str + 3);
+		}
+		else if (strcmp("ls", str) == 0) // not working?
+		{
+			char *test[2] = {"-la", "."};
+			execve("/bin/ls", test, env_array);
+		}
+		else if (strcmp("exit", str) == 0)
+		{
+			exit(0);
 		}
 		// printf("%s\n", str);
 		free(str);
