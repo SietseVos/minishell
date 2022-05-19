@@ -13,7 +13,7 @@ typedef struct action_s
 
 typedef struct root_s
 {
-	action_t	**action_head;
+	action_t	*action_head;
 }	root_t;
 
 #endif

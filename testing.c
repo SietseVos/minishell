@@ -11,6 +11,130 @@ typedef struct env_vars_s
 	struct env_vars_s	*next;
 }	env_vars_t;
 
+typedef struct action_s
+{
+	int				input_fd;
+	int				output_fd;
+	char			*command;
+	char			*argument;
+	struct action_s *next;
+}	action_t;
+
+typedef struct root_s
+{
+	action_t	*action_head;
+	env_vars_t	*env_head;
+	char		*input;
+}	root_t;
+
+int		len_to_next_pipe(char *str, int i)
+{
+	int	quote_count;
+	int	single_quote_count;
+
+	single_quote_count = 0;
+	quote_count = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' && single_quote_count == 0)
+			quote_count += 1;
+		else if (str[i] == '\'' && quote_count == 0)
+			single_quote_count += 1;
+		else if (str[i] == '|' && single_quote_count + quote_count == 0)
+			return (i);
+		if (single_quote_count == 2)
+			single_quote_count = 0;
+		if (quote_count == 2)
+			quote_count = 0;
+		i++;
+	}
+	return (i);
+}
+
+int		pipe_sides(char *str, int i)
+{
+	int	quote_count;
+	int	single_quote_count;
+	int	pipe_sides;
+
+	single_quote_count = 0;
+	quote_count = 0;
+	pipe_sides = 1;
+	while (str[i])
+	{
+		if (str[i] == '\"' && single_quote_count == 0)
+			quote_count += 1;
+		else if (str[i] == '\'' && quote_count == 0)
+			single_quote_count += 1;
+		else if (str[i] == '|' && single_quote_count + quote_count == 0)
+			pipe_sides += 1;
+		if (single_quote_count == 2)
+			single_quote_count = 0;
+		if (quote_count == 2)
+			quote_count = 0;
+		i++;
+	}
+	return (pipe_sides);
+}
+// this string "|" contains | one pipe
+char	**split_on_pipes(root_t *root)
+{
+	char	**full_commands;
+	int		next_pipe;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	k = 0;
+	next_pipe = 0;
+	int	sides = pipe_sides(root->input, i);
+	full_commands = malloc((sides + 1) * sizeof(char *));
+	full_commands[sides] = NULL;
+	if (!full_commands)
+		exit(404);
+	while (root->input[i])
+	{
+		j = 0;
+		next_pipe = len_to_next_pipe(root->input, i);
+		full_commands[k] = malloc((next_pipe + 1) * sizeof(char));
+		while (i < next_pipe)
+		{
+			full_commands[k][j] = root->input[i];
+			i++;
+			j++;
+		}
+		full_commands[k][j] = '\0';
+		k++;
+		if (root->input[i])
+			i++;
+	}
+	return (full_commands);
+}
+
+void	parser(root_t *root)
+{
+	char	**split_input;
+	split_input = split_on_pipes(root);
+	for (int i = 0; split_input[i]; i++)
+		printf("%s\n", split_input[i]);
+}
+
+action_t	*new_action_node(void)
+{
+	action_t	*new;
+
+	new = malloc(sizeof(action_t) * 1);
+	if (!new)
+		exit(404);
+	new->argument = NULL;
+	new->command = NULL;
+	new->input_fd = STDIN_FILENO;
+	new->output_fd = STDOUT_FILENO;
+	new->next = NULL;
+	return (new);
+}
+
 int	ft_strlen(char	*str)
 {
 	int i;
@@ -86,23 +210,23 @@ int	env_list_size(env_vars_t *env_list)
 	return (i);
 }
 
-char	**env_list_to_array(env_vars_t **env_head)
+char	**env_list_to_array(env_vars_t *env_list)
 {
-	env_vars_t	*tmp;
+	env_vars_t	*list;
 	char		**env_array;
 	int			i;
 	int			j;
 
 	i = 0;
 	j = 0;
-	tmp = *env_head;
-	env_array = malloc(sizeof(char *) * (env_list_size(*env_head) + 1));
-	while (i < env_list_size(*env_head))
+	list = env_list;
+	env_array = malloc(sizeof(char *) * (env_list_size(env_list) + 1));
+	while (i < env_list_size(env_list))
 	{
-		env_array[i] = malloc(sizeof(char) * ft_strlen(tmp->str) + 1);
-		str_copy(tmp->str, env_array[i]);
+		env_array[i] = malloc(sizeof(char) * ft_strlen(list->str) + 1);
+		str_copy(list->str, env_array[i]);
 		i++;
-		tmp = tmp->next;
+		list = list->next;
 	}
 	env_array[i] = NULL;
 	return (env_array);
@@ -121,18 +245,17 @@ void	print_history(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	env_vars_t	**env_head;
-	char		**env_array;
-	char		*str;
-	char		*prompt;
-	char		*pwd;
-	int			i;
+	root_t	root;
+	char	**env_array;
+	char	*prompt;
+	char	*pwd;
+	int		i;
 
 	i = 0;
 	prompt = "minishell: ";
 	using_history();
-	init_env_vars_list(envp, env_head);
-	env_array = env_list_to_array(env_head);
+	init_env_vars_list(envp, &root.env_head);
+	env_array = env_list_to_array(root.env_head);
 	// env_vars_t *tmp = *env_head;
 	// while (tmp)
 	// {
@@ -144,53 +267,54 @@ int	main(int argc, char **argv, char **envp)
 	// 	printf("%s\n", env_array[i]);
 	while (1)
 	{
-		str = readline(prompt);
+		root.input = readline(prompt);
 		prompt = "minishell: ";
-		add_history(str);
+		add_history(root.input);
 
-		if (strcmp("clear", str) == 0)
+		parser(&root);
+		if (strcmp("clear", root.input) == 0)
 		{
 			rl_clear_history();
 			prompt = "histoy cleared: ";
 		}
-		else if (strcmp("history", str) == 0)
+		else if (strcmp("history", root.input) == 0)
 		{
 			print_history();
 		}
-		else if (strcmp("before", str) == 0)
+		else if (strcmp("before", root.input) == 0)
 		{
 			printf("this is ");
 			printf("before ");
 		}
-		else if (strncmp("check ", str, 6) == 0)
+		else if (strncmp("check ", root.input, 6) == 0)
 		{
-			if (access(str + 6, F_OK) == 0)
-				printf("%s exists!\n", str + 6);
+			if (access(root.input + 6, F_OK) == 0)
+				printf("%s exists!\n", root.input + 6);
 			else
-				printf("%s does not exist!\n", str + 6);
+				printf("%s does not exist!\n", root.input + 6);
 		}
-		else if (strcmp("pwd", str) == 0)
+		else if (strcmp("pwd", root.input) == 0)
 		{
 			pwd = getcwd(NULL, 0);
 			printf("%s\n", pwd);
 			free(pwd);
 		}
-		else if (strncmp("cd ", str, 3) == 0)
+		else if (strncmp("cd ", root.input, 3) == 0)
 		{
-			if (chdir(str + 3) != 0)
-				printf("%s: No such file or directory\n", str + 3);
+			if (chdir(root.input + 3) != 0)
+				printf("%s: No such file or directory\n", root.input + 3);
 		}
-		else if (strcmp("ls", str) == 0) // not working?
+		else if (strcmp("ls", root.input) == 0) // not working?
 		{
 			char *test[2] = {"-la", "."};
 			execve("/bin/ls", test, env_array);
 		}
-		else if (strcmp("exit", str) == 0)
+		else if (strcmp("exit", root.input) == 0)
 		{
 			exit(0);
 		}
 		// printf("%s\n", str);
-		free(str);
+		free(root.input);
 		i++;
 	}
 }
