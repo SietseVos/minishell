@@ -21,26 +21,29 @@ typedef struct action_s
 char	*putstr(char **s, char c);
 char	**ft_split(char *s, char c);
 
-void	determine_type(char *input, int i);
+
+
+action_t	*determine_type(char *input, int *i)
 {
-	if (input[i] == '<')
-		prs_infile(input, i);
-	else if (input[i] == '>' || (input[i] == '>' && input[i + 1] == '>') )
-		prs_outfile(input, i);
-	else
-		prs_cmd(input, i);
-	
+	if (input[*i] == '<')
+		return (prs_infile(input, i));
+	else if (input[*i] == '>' || (input[*i] == '>' && input[*i + 1] == '>'))
+		return (prs_outfile(input, i));
+	else if (input[*i] == '<' && input[*i + 1] == '<')
+		return (prs_hdoc(input, i));
+	return (prs_cmd(input, i));
 }
 
 action_t	*parser(char *input)
 {
-	int	i;
-
+	int			i;
+	action_t	*ret;
 
 	i = 0;
+	ret = determine_type(input, &i);
 	while (input[i])
 	{
-		determine_type(input, i);
+		ret ->next = determine_type(input, &i);
 	}
 }
 
