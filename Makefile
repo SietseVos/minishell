@@ -12,12 +12,11 @@ FLAGS = -Wall -Werror -Wextra
 
 INCLUDE_DIRS = -Isrc/libft -Iinclude -I$(BREW_DIR)/opt/readline/include 
 
-# LIB_DIRS = -Lsrc/libft -llibft  -L$(LIBREADLINE) -lreadline 
 LIB_DIRS = src/libft/libft.a -L$(LIBREADLINE) -lreadline 
 
 OBJ_DIR = obj
 
-OBJ = $(SRC:%.c=%.o)
+OBJ = $(addprefix obj/, $(SRC:%.c=%.o))
 
 all: $(OBJ_DIR) $(NAME)
 
@@ -26,10 +25,11 @@ $(NAME): $(OBJ)
 	gcc $(OBJ) $(FLAGS) $(LIB_DIRS) $(INCLUDE_DIRS) -o minishell
 
 $(OBJ_DIR)/%.o: %.c
+	mkdir -p $(@D)
 	gcc -c $^ -o $@ $(FLAGS) $(INCLUDE_DIRS)
 
 $(OBJ_DIR):
-	mkdir obj
+	mkdir -p obj
 
 clean:
 	make clean -C src/libft
