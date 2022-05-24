@@ -28,7 +28,9 @@ int main()
 
 
 	run_test("|jkjgjvcklxmvklcx");
-
+	run_test("||jkjgjvcklxmvklcx");
+	run_test("||| test > out | cat -e");
+	run_test("| test > out | cat -e");
 	return (0);
 }
 

@@ -37,6 +37,17 @@ typedef struct root_s
 }	root_t;
 
 
+/* ---------------------------	builtins	------------------------------ */
+
+	void		cd(char **argument, env_vars_t *env);
+	void		exit_shell(char **argument);
+	void		pwd(char **argument);
+	int			strings_in_array(char **str);
+
+/* ----------------------------------------------------------------------- */
+
+//*************************************************************************//
+
 /* --------------------------	env_functions	-------------------------- */
 
 void			add_env_node(env_vars_t *env, char *str);
