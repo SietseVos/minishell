@@ -8,12 +8,14 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft.h"
-# define TRUNC 0
-# define PIPE 1
+# define INFILE 0
+# define OUTFILE 1
 # define APPEND 2
 # define HDOC 3
-# define INFILE 4
-# define OUTFILE 5
+# define TRUNC 4
+# define PIPE 5
+# define TOSTDOUT 6
+# define NOINPUT 7
 
 typedef struct action_s
 {
@@ -56,5 +58,16 @@ bool			check_syntax_error(char *str);
 
 //*************************************************************************//
 
+/* ------------------------------	parser	------------------------------ */
+
+int				strlen_til_space(char *str, int *strlen, char **envp);
+void			*nullerr(char *errmsg);
+int				is_operator(char c);
+int				check_str_end(char *str, int i, int n);
+int				strlen_til_quote(char *str, int *strlen, char c, char **envp);
+
+/* ----------------------------------------------------------------------- */
+
+//*************************************************************************//
 
 #endif

@@ -1,25 +1,16 @@
-#include <string.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-# define INFILE 0
-# define OUTFILE 1
-# define APPEND 2
-# define HDOC 3
-# define TRUNC 4
-# define PIPE 5
-# define TOSTDOUT 6
-# define NOINPUT 7
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   parse.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
+/*   Updated: 2022/05/24 16:49:34 by svos          ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef struct action_s
-{
-	char			*arg;
-	int				type;
-	struct action_s *next;
-}	action_t;
-
-// char	*putstr(char **s, char c);
-// char	**ft_split(char *s, char c);
+#include "minishell.h"
 
 size_t	ft_strlen(const char *str)
 {
@@ -33,99 +24,10 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	len;
-	size_t	i;
-
-	i = 0;
-	len = ft_strlen(src);
-	while (*src != 0)
-	{
-		if (i + 1 < dstsize)
-		{
-			*dst = *src;
-			dst++;
-		}
-		i++;
-		src++;
-	}
-	if (dstsize != 0)
-		*dst = '\0';
-	return (len);
-}
-
-
-int	check_str_end(char *str, int i, int n)
-{
-	int	count;
-
-	count = 0;
-	while (count <= n)
-	{
-		if (str[i + count] == '\0')
-			return (count);
-		count++;
-	}
-	return (-1);
-}
-
-void	*nullerr(char *errmsg)
-{
-	printf("%s\n",errmsg);
-	return (NULL);
-}
-
-int	strlen_til_space(char *str, int i)
-{
-	int	count;
-
-	count = 0;
-	while (str[i] != ' ' && str[i] != '\0')
-	{
-		count++;
-		i++;
-	}
-	return (count);
-}
-
-int	strlen_til_quote(char *str, int i)
-{
-	int	count;
-
-	count = 0;
-	while (str[i] != '"' && str[i] != '\0')
-	{
-		count++;
-		i++;
-	}
-	return (count);
-}
-
-int	is_operator(char c)
-{
-	if (c == '<' || c == '>' || c == '|')
-		return (1);
-	return (0);
-}
-
-action_t	*found_redirect(char *input, int *i, int type)
+action_t	*create_node(int strlen, char *str, int type)
 {
 	action_t	*node;
-	int			strlen;
 
-	while (input[*i] != ' ')
-		*i += 1;
-	*i += 1;
-	strlen = strlen_til_space(input, *i);
-	if (input[*i] == '"')
-	{
-		*i += 1;
-		strlen = strlen_til_quote(input, *i);
-	}
-	if (strlen == 0 || is_operator(input[*i]) == 1)
-		return (nullerr("no string after space of redirect"));
 	node = malloc(sizeof(action_t));
 	if (node == NULL)
 		return (nullerr("node malloc fail"));
@@ -135,43 +37,77 @@ action_t	*found_redirect(char *input, int *i, int type)
 		free(node);
 		return (nullerr("node arg malloc fail"));
 	}
-	ft_strlcpy(node ->arg, input + *i, strlen + 1);
 	node ->type = type;
 	return (node);
 }
 
-action_t	*parse_file(char *input, int *i)
+action_t	*found_redirect(char *input, int *i, int type, env_vars_t *envp)
+{
+	action_t	*node;
+	int			strlen;
+	int			endskip;
+
+	strlen = 0;
+	while (input[*i] != ' ')
+		*i += 1;
+	*i += 1;
+	if (input[*i] == ' ')
+		endskip = strlen_til_space(input + *i, &strlen, envp);
+	if (input[*i] == '"')
+	{
+		*i += 1;
+		endskip = strlen_til_quote(input + *i, &strlen, '"', envp);
+	}
+	if (input[*i] == '\'')
+	{
+		*i += 1;
+		endskip = strlen_til_quote(input + *i, &strlen, '\'', envp);
+	}
+	if (strlen == 0 || is_operator(input[*i]) == true)
+		return (nullerr("no string after space of redirect"));
+	node = create_node(strlen, input + *i, type);
+	if (node == NULL)
+		return (nullerr("redirect node malloc fail"));
+	if (input[*i - 1] == '"')
+		ft_strlcpy(node ->arg, input + *i, strlen + 1);
+	else
+		interpert_str(node ->arg, input + *i, strlen + 1);
+	*i = *i + strlen + endskip;
+	return (node);
+}
+
+action_t	*parse_file(char *input, int *i, env_vars_t *envp)
 {
 	action_t	*node;
 
 	if (check_str_end(input, *i, 2) >= 0)
 		return (nullerr("no string after redirect"));
 	if (input[*i] == '<' && input[*i + 1] == ' ')
-		node = found_redirect(input, i, INFILE);
+		node = found_redirect(input, i, INFILE, envp);
 	if (input[*i] == '>' && input[*i + 1] == ' ')
-		node = found_redirect(input, i, OUTFILE);
+		node = found_redirect(input, i, OUTFILE, envp);
 	if (input[*i] == '<' && input[*i + 1] == '<')
-		node = found_redirect(input, i, HDOC);
+		node = found_redirect(input, i, HDOC, envp);
 	if (input[*i] == '>' && input[*i + 1] == '>')
-		node = found_redirect(input, i, APPEND);
+		node = found_redirect(input, i, APPEND, envp);
 	return (node);
 }
 
-action_t	*determine_type(char *input, int *i)
+action_t	*determine_type(char *input, int *i, env_vars_t *envp)
 {
 	if (input[*i] == '<' || input[*i] == '>')
-		return (parse_file(input, i));
+		return (parse_file(input, i, envp));
 	// return (parse_cmd(input, i));
 	return (NULL);
 }
 
-action_t	*parser(char *input)
+action_t	*parser(char *input, env_vars_t *envp)
 {
 	int			i;
 	action_t	*ret;
 
 	i = 0;
-	ret = determine_type(input, &i);
+	ret = determine_type(input, &i, envp);
 	// while (input[i])
 	// {
 	// 	ret ->next = determine_type(input, &i);
@@ -181,12 +117,14 @@ action_t	*parser(char *input)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	action_t	*cmdseq;
+	char test;
+	env_vars_t	**envlist;
+	action_t	*inlst;
 
-	input = strdup("< \"jkdfjds\"   dsf");
-	cmdseq = parser(input);
-	printf("arg: %s, type: %d\n", cmdseq ->arg, cmdseq ->type);
-	(void)argc;
-	(void)argv;
+	create_env_vars_list(envp, envlist);
+	test = strdup("< fjjklds");
+	inlst = parser(test, *envlist);
+	return (0);
 }
+
+// gcc parse.c parse_utils.c ../env_functions/create_env_vars_list.c ../../src/libft/ft_strlcpy.c ../../src/libft/ft_strlen.c ../../src/libft/ft_strdup.c ../../src/libft/ft_strncmp.c -I ../../include/ -I ../../src/libft ../../src/libft/libft.a -fsanitize=address -g
