@@ -64,12 +64,13 @@ char	*lexer(char	*input)
 	char	*output;
 
 	i = 0;
+	// check for syntax error (multiple >>>> in a row)
+	if (check_syntax_error(input))
+		return (NULL);
 	spaces = get_missing_space_count(input);
 	output = malloc(sizeof(char) * (ft_strlen(input) + spaces + 1));
 	if (!output)
 		exit(404);
-	// check for syntax error (multiple >>>> in a row)
-	output = check_syntax_error(output);
 	fill_output(input, output);
 	return (output);
 }

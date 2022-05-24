@@ -32,10 +32,8 @@ char	**env_list_to_array(env_vars_t *env_list)
 	env_vars_t	*list;
 	char		**env_array;
 	int			i;
-	int			j;
 
 	i = 0;
-	j = 0;
 	list = env_list;
 	env_array = malloc(sizeof(char *) * (env_list_size(env_list) + 1));
 	while (i < env_list_size(env_list))

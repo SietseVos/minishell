@@ -49,7 +49,8 @@ char			**env_list_to_array(env_vars_t *env_list);
 
 char			*lexer(char *input);
 bool			in_string(char c, bool reset);
-char			*check_syntax_error(char *str);
+void			skip_string(char *str, int *i);
+bool			check_syntax_error(char *str);
 
 /* ----------------------------------------------------------------------- */
 

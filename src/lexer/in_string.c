@@ -30,3 +30,10 @@ bool in_string(char c, bool reset)
 	}
 	return (true);
 }
+
+void	skip_string(char *str, int *i)
+{
+	while (str[*i] && in_string(str[*i], false))
+		*i += 1;
+	in_string(str[*i], true);
+}

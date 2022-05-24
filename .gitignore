@@ -1,0 +1,8 @@
+test.c
+*.out
+*.o
+/objs
+minishell
+testing
+testing2
+/src/libft/libft.a
