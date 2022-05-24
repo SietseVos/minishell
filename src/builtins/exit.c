@@ -11,8 +11,8 @@ static long long	atoll(char *str)
 {
 	unsigned long long	tmp;
 	long long			return_value;
-	int					sign;
-	int					i;
+	int32_t				sign;
+	int32_t				i;
 
 	i = 0;
 	tmp = 0;
@@ -36,7 +36,7 @@ static long long	atoll(char *str)
 
 static bool	check_for_wrong_argument(char *str)
 {
-	int i;
+	int32_t i;
 
 	i = 0;
 	if (str[0] == '-')

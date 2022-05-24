@@ -10,7 +10,7 @@
 typedef struct action_s
 {
 	char			**arg;
-	int				type;
+	int32_t			type;
 	struct action_s *next;
 }	action_t;
 

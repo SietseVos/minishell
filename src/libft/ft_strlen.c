@@ -2,7 +2,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	int	i;
+	int32_t	i;
 
 	i = 0;
 	if (str == NULL)

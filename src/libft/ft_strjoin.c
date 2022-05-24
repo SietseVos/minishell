@@ -4,7 +4,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*a;
 	char	*ret;
-	int		i;
+	int32_t		i;
 
 	i = (int)ft_strlen(s2);
 	a = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, 1);

@@ -13,8 +13,8 @@ typedef struct env_vars_s
 
 typedef struct action_s
 {
-	int				input_fd;
-	int				output_fd;
+	int32_t				input_fd;
+	int32_t				output_fd;
 	char			*command;
 	char			*argument;
 	struct action_s *next;
@@ -27,10 +27,10 @@ typedef struct root_s
 	char		*input;
 }	root_t;
 
-int		len_to_next_pipe(char *str, int i)
+int32_t		len_to_next_pipe(char *str, int32_t i)
 {
-	int	quote_count;
-	int	single_quote_count;
+	int32_t	quote_count;
+	int32_t	single_quote_count;
 
 	single_quote_count = 0;
 	quote_count = 0;
@@ -51,11 +51,11 @@ int		len_to_next_pipe(char *str, int i)
 	return (i);
 }
 
-int		pipe_sides(char *str, int i)
+int32_t		pipe_sides(char *str, int32_t i)
 {
-	int	quote_count;
-	int	single_quote_count;
-	int	pipe_sides;
+	int32_t	quote_count;
+	int32_t	single_quote_count;
+	int32_t	pipe_sides;
 
 	single_quote_count = 0;
 	quote_count = 0;
@@ -80,15 +80,15 @@ int		pipe_sides(char *str, int i)
 char	**split_on_pipes(root_t *root)
 {
 	char	**full_commands;
-	int		next_pipe;
-	int		i;
-	int		j;
-	int		k;
+	int32_t		next_pipe;
+	int32_t		i;
+	int32_t		j;
+	int32_t		k;
 
 	i = 0;
 	k = 0;
 	next_pipe = 0;
-	int	sides = pipe_sides(root->input, i);
+	int32_t	sides = pipe_sides(root->input, i);
 	full_commands = malloc((sides + 1) * sizeof(char *));
 	full_commands[sides] = NULL;
 	if (!full_commands)
@@ -116,7 +116,7 @@ void	parser(root_t *root)
 {
 	char	**split_input;
 	split_input = split_on_pipes(root);
-	for (int i = 0; split_input[i]; i++)
+	for (int32_t i = 0; split_input[i]; i++)
 		printf("%s\n", split_input[i]);
 }
 
@@ -135,9 +135,9 @@ action_t	*new_action_node(void)
 	return (new);
 }
 
-int	ft_strlen(char	*str)
+int32_t	ft_strlen(char	*str)
 {
-	int i;
+	int32_t i;
 
 	i = 0;
 	while (str[i])
@@ -148,7 +148,7 @@ int	ft_strlen(char	*str)
 void	print_history(void)
 {
 	HISTORY_STATE *history = history_get_history_state();
-	for (int i = 1; i < history->length; i++)
+	for (int32_t i = 1; i < history->length; i++)
 	{
 		HIST_ENTRY	*current;
 		current = history_get(i);
@@ -156,13 +156,13 @@ void	print_history(void)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int32_t	main(int32_t argc, char **argv, char **envp)
 {
 	root_t	root;
 	char	**env_array;
 	char	*prompt;
 	char	*pwd;
-	int		i;
+	int32_t		i;
 
 	i = 0;
 	prompt = "minishell: ";
@@ -176,7 +176,7 @@ int	main(int argc, char **argv, char **envp)
 	// 		printf("%s\n", tmp->str);
 	// 	tmp = tmp->next;
 	// }
-	// for (int i = 0; env_array[i]; i++)
+	// for (int32_t i = 0; env_array[i]; i++)
 	// 	printf("%s\n", env_array[i]);
 	while (1)
 	{

@@ -3,8 +3,8 @@
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t	len;
-	int		size;
-	int		ret;
+	int32_t		size;
+	int32_t		ret;
 
 	ret = ft_strlen(dst) + ft_strlen(src);
 	if (dstsize < ft_strlen(dst))

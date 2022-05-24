@@ -1,7 +1,7 @@
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *s, int32_t c)
 {
 	unsigned char	t;
-	int				i;
+	int32_t				i;
 
 	t = c;
 	i = 0;

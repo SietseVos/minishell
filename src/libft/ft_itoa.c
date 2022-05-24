@@ -1,8 +1,8 @@
 #include "libft.h"
 
-static int	countlen(long n)
+static int32_t	countlen(long n)
 {
-	int	count;
+	int32_t	count;
 
 	count = 0;
 	if (n < 0)
@@ -17,7 +17,7 @@ static int	countlen(long n)
 	return (count);
 }
 
-static char	*putnbr(char *ret, long n, int count)
+static char	*putnbr(char *ret, long n, int32_t count)
 {
 	if (n < 0)
 		n = n * -1;
@@ -37,9 +37,9 @@ static char	*putnbr(char *ret, long n, int count)
 	return (ret);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int32_t n)
 {
-	int		count;
+	int32_t		count;
 	char	*ret;
 	long	nr;
 

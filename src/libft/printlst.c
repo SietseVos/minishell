@@ -3,9 +3,9 @@
 
 void	printlst(t_list *print)
 {
-	while (print != 0)
+	while (print32_t != 0)
 	{
-		printf("%s|", print ->content);
-		print = print ->next;
+		printf("%s|", print32_t ->content);
+		print32_t = print32_t ->next;
 	}
 }

@@ -7,7 +7,7 @@
 // void	print_history(void)
 // {
 // 	HISTORY_STATE *history = history_get_history_state();
-// 	for (int i = 1; i < history->length; i++)
+// 	for (int32_t i = 1; i < history->length; i++)
 // 	{
 // 		HIST_ENTRY	*current;
 // 		current = history_get(i);
@@ -29,12 +29,12 @@
 
 	// < Makefile cat > test > test2
 
-int	main(void)
+int32_t	main(void)
 {
 	char	**args;
 	char	*str;
 	char	*prompt;
-	int		i;
+	int32_t	i;
 
 	prompt = "minishell: ";
 	// using_history();

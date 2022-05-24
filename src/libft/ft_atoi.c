@@ -1,8 +1,8 @@
-int	ft_atoi(const char *str)
+int32_t	ft_atoi(const char *str)
 {
 	long long	sign;
 	long long	count;
-	int			i;
+	int32_t			i;
 
 	i = 0;
 	sign = 1;

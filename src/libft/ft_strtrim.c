@@ -1,6 +1,6 @@
 #include "libft.h"
 
-int	charset(const char *set, char p)
+int32_t	charset(const char *set, char p)
 {
 	while (*set)
 	{
@@ -11,10 +11,10 @@ int	charset(const char *set, char p)
 	return (0);
 }
 
-int	get_length(const char *str, const char *set)
+int32_t	get_length(const char *str, const char *set)
 {
-	int	len;
-	int	i;
+	int32_t	len;
+	int32_t	i;
 
 	i = 0;
 	len = ft_strlen(str);
@@ -25,7 +25,7 @@ int	get_length(const char *str, const char *set)
 	return (len - i);
 }
 
-char	*place_string(char *str, const char *s1, const char *set, int len)
+char	*place_string(char *str, const char *s1, const char *set, int32_t len)
 {
 	char	*ret;
 
@@ -45,7 +45,7 @@ char	*place_string(char *str, const char *s1, const char *set, int len)
 
 char	*ft_strtrim(const char *s1, const char *set)
 {
-	int		len;
+	int32_t		len;
 	char	*ret;
 
 	len = get_length(s1, set);

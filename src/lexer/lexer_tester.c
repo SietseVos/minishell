@@ -16,7 +16,7 @@ void	run_test(char *str)
 	printf("\n");
 }
 
-int main()
+int32_t main()
 {
 	run_test("this is a test without \"|mistakes<<\"");
 	run_test("this is a>test>><> with|||| multiple \"|mistakes<<\"");

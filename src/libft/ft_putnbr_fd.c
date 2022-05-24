@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int32_t n, int32_t fd)
 {
 	char	c;
 

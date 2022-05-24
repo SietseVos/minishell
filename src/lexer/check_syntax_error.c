@@ -1,10 +1,10 @@
 
 #include "minishell.h"
 
-static void	write_syntax_error(char *str, int *i)
+static void	write_syntax_error(char *str, int32_t *i)
 {
-	int	char_count;
-	int	j;
+	int32_t	char_count;
+	int32_t	j;
 
 	j = *i;
 	char_count = 0;
@@ -20,13 +20,13 @@ static void	write_syntax_error(char *str, int *i)
 	// set exit value?? (258?)
 }
 
-static void	skip_spaces(char *str, int *i)
+static void	skip_spaces(char *str, int32_t *i)
 {
 	while (str[*i] && str[*i] == ' ')
 		*i += 1;
 }
 
-static void	skip_till_special_char(char *str, int *i)
+static void	skip_till_special_char(char *str, int32_t *i)
 {
 	while (str[*i] != '\0'
 		&& str[*i] != '\''
@@ -37,7 +37,7 @@ static void	skip_till_special_char(char *str, int *i)
 		*i += 1;
 }
 
-static bool	check_for_error(char *str, int *i)
+static bool	check_for_error(char *str, int32_t *i)
 {
 	if (*i == 0 && str[*i] == '|')
 	{
@@ -61,7 +61,7 @@ static bool	check_for_error(char *str, int *i)
 
 bool	check_syntax_error(char *str)
 {
-	int	i;
+	int32_t	i;
 
 	i = 0;
 	while (str[i])

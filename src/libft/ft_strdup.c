@@ -2,7 +2,7 @@
 
 char	*ft_strdup(const char *s1)
 {
-	int		i;
+	int32_t		i;
 	char	*ret;
 
 	i = 0;

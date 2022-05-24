@@ -1,4 +1,4 @@
-int	ft_isalnum(int str)
+int32_t	ft_isalnum(int32_t str)
 {
 	if ((str >= '0' && str <= '9')
 		|| (str >= 'A' && str <= 'Z')

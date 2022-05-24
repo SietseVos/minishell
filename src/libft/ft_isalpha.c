@@ -1,4 +1,4 @@
-int	ft_isalpha(int str)
+int32_t	ft_isalpha(int32_t str)
 {
 	if ((str >= 'a' && str <= 'z')
 		|| (str >= 'A' && str <= 'Z'))

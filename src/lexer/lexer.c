@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static bool missing_space(char *str, int i)
+static bool missing_space(char *str, int32_t i)
 {
 	if (i != 0 && str[i]							// check if space should be in front
 		&& ((str[i] == '<' && str[i - 1] != '<')
@@ -18,10 +18,10 @@ static bool missing_space(char *str, int i)
 	return (false);
 }
 
-static int	get_missing_space_count(char *str)
+static int32_t	get_missing_space_count(char *str)
 {
-	int	i;
-	int	spaces;
+	int32_t	i;
+	int32_t	spaces;
 
 	i = 0;
 	spaces = 0;
@@ -37,8 +37,8 @@ static int	get_missing_space_count(char *str)
 
 static void	fill_output(char *input, char *output)
 {
-	int	i;
-	int	j;
+	int32_t	i;
+	int32_t	j;
 
 	i = 0;
 	j = 0;
@@ -59,8 +59,8 @@ static void	fill_output(char *input, char *output)
 
 char	*lexer(char	*input)
 {
-	int		i;
-	int		spaces;
+	int32_t	i;
+	int32_t	spaces;
 	char	*output;
 
 	i = 0;

@@ -3,7 +3,7 @@
 
 static void	str_copy(char *take, char *place)
 {
-	int i;
+	int32_t i;
 
 	i = 0;
 	while (take[i])
@@ -14,9 +14,9 @@ static void	str_copy(char *take, char *place)
 	place[i] = '\0';
 }
 
-static int	env_list_size(env_vars_t *env_list)
+static int32_t	env_list_size(env_vars_t *env_list)
 {
-	int	i;
+	int32_t	i;
 
 	i = 0;
 	while (env_list)
@@ -31,7 +31,7 @@ char	**env_list_to_array(env_vars_t *env_list)
 {
 	env_vars_t	*list;
 	char		**env_array;
-	int			i;
+	int32_t		i;
 
 	i = 0;
 	list = env_list;

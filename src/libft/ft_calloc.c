@@ -4,7 +4,7 @@
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ptr;
-	int		fill;
+	int32_t		fill;
 
 	if (count == 0)
 		count = 1;

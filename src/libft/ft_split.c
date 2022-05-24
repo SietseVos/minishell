@@ -2,7 +2,7 @@
 
 static char	*putstr(const char *s, char c)
 {
-	int		count;
+	int32_t		count;
 	char	*ret;
 
 	count = 0;
@@ -21,9 +21,9 @@ static char	*putstr(const char *s, char c)
 	return (ret - count);
 }
 
-static int	countw(const char *s, char c)
+static int32_t	countw(const char *s, char c)
 {
-	int	count;
+	int32_t	count;
 
 	count = 0;
 	while (*s != 0)
@@ -39,7 +39,7 @@ static int	countw(const char *s, char c)
 	return (count);
 }
 
-static void	free_data(char **ret, int *countrev, int count)
+static void	free_data(char **ret, int32_t *countrev, int32_t count)
 {
 	while (*countrev > 0)
 	{
@@ -51,9 +51,9 @@ static void	free_data(char **ret, int *countrev, int count)
 	*countrev = count;
 }
 
-static void	putwords(char **ret, int count, const char *s, char c)
+static void	putwords(char **ret, int32_t count, const char *s, char c)
 {
-	int	countrev;
+	int32_t	countrev;
 
 	countrev = 0;
 	while (countrev < count)
@@ -71,7 +71,7 @@ static void	putwords(char **ret, int count, const char *s, char c)
 
 char	**ft_split(const char *s, char c)
 {
-	int		count;
+	int32_t		count;
 	char	**ret;
 
 	count = countw(s, c);

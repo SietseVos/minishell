@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parse.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/05/24 16:49:34 by svos          ########   odam.nl         */
+/*   Updated: 2022/05/24 20:40:57 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	int	i;
+	int32_t	i;
 
 	i = 0;
 	if (str == NULL)
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-action_t	*create_node(int strlen, char *str, int type)
+action_t	*create_node(int32_t strlen, char *str, int32_t type)
 {
 	action_t	*node;
 
@@ -41,11 +41,11 @@ action_t	*create_node(int strlen, char *str, int type)
 	return (node);
 }
 
-action_t	*found_redirect(char *input, int *i, int type, env_vars_t *envp)
+action_t	*found_redirect(char *input, int32_t *i, int32_t type, env_vars_t *envp)
 {
 	action_t	*node;
-	int			strlen;
-	int			endskip;
+	int32_t		strlen;
+	int32_t		endskip;
 
 	strlen = 0;
 	while (input[*i] != ' ')
@@ -76,7 +76,7 @@ action_t	*found_redirect(char *input, int *i, int type, env_vars_t *envp)
 	return (node);
 }
 
-action_t	*parse_file(char *input, int *i, env_vars_t *envp)
+action_t	*parse_file(char *input, int32_t *i, env_vars_t *envp)
 {
 	action_t	*node;
 
@@ -93,7 +93,7 @@ action_t	*parse_file(char *input, int *i, env_vars_t *envp)
 	return (node);
 }
 
-action_t	*determine_type(char *input, int *i, env_vars_t *envp)
+action_t	*determine_type(char *input, int32_t *i, env_vars_t *envp)
 {
 	if (input[*i] == '<' || input[*i] == '>')
 		return (parse_file(input, i, envp));
@@ -103,7 +103,7 @@ action_t	*determine_type(char *input, int *i, env_vars_t *envp)
 
 action_t	*parser(char *input, env_vars_t *envp)
 {
-	int			i;
+	int32_t			i;
 	action_t	*ret;
 
 	i = 0;
@@ -115,7 +115,7 @@ action_t	*parser(char *input, env_vars_t *envp)
 	return (ret);
 }
 
-int	main(int argc, char **argv, char **envp)
+int32_t	main(int32_t argc, char **argv, char **envp)
 {
 	char test;
 	env_vars_t	**envlist;

@@ -8,9 +8,9 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		*lst = new;
 	else
 	{
-		point = *lst;
-		while (point ->next != 0)
-			point = point ->next;
-		point ->next = new;
+		point32_t = *lst;
+		while (point32_t ->next != 0)
+			point32_t = point32_t ->next;
+		point32_t ->next = new;
 	}
 }

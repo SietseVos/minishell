@@ -3,8 +3,8 @@
 
 bool in_string(char c, bool reset)
 {
-	static int	double_quote = 0;
-	static int	single_quote = 0;
+	static int32_t	double_quote = 0;
+	static int32_t	single_quote = 0;
 
 	if (reset)
 	{
@@ -31,7 +31,7 @@ bool in_string(char c, bool reset)
 	return (true);
 }
 
-void	skip_string(char *str, int *i)
+void	skip_string(char *str, int32_t *i)
 {
 	while (str[*i] && in_string(str[*i], false))
 		*i += 1;

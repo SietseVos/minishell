@@ -3,7 +3,7 @@
 
 static void	str_copy(char *take, char *place)
 {
-	int i;
+	int32_t i;
 
 	i = 0;
 	while (take[i])
@@ -14,7 +14,7 @@ static void	str_copy(char *take, char *place)
 	place[i] = '\0';
 }
 
-static env_vars_t *new_env_node(int strlen)
+static env_vars_t *new_env_node(int32_t strlen)
 {
 	env_vars_t *new;
 
@@ -31,8 +31,8 @@ static env_vars_t *new_env_node(int strlen)
 void	create_env_vars_list(char **envp, env_vars_t **env_head)
 {
 	env_vars_t	*tmp;
-	int			strlen;
-	int			i;
+	int32_t		strlen;
+	int32_t		i;
 
 	i = 0;
 	while (envp[i])

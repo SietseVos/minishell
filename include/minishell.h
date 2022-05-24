@@ -20,7 +20,7 @@
 typedef struct action_s
 {
 	char			**arg;
-	int				type;
+	int32_t			type;
 	struct action_s *next;
 }	action_t;
 
@@ -42,7 +42,7 @@ typedef struct root_s
 	void		cd(char **argument, env_vars_t *env);
 	void		exit_shell(char **argument);
 	void		pwd(char **argument);
-	int			strings_in_array(char **str);
+	int32_t		strings_in_array(char **str);
 
 /* ----------------------------------------------------------------------- */
 
@@ -62,7 +62,7 @@ char			**env_list_to_array(env_vars_t *env_list);
 
 char			*lexer(char *input);
 bool			in_string(char c, bool reset);
-void			skip_string(char *str, int *i);
+void			skip_string(char *str, int32_t *i);
 bool			check_syntax_error(char *str);
 
 /* ----------------------------------------------------------------------- */
@@ -71,11 +71,11 @@ bool			check_syntax_error(char *str);
 
 /* ------------------------------	parser	------------------------------ */
 
-int				strlen_til_space(char *str, int *strlen, char **envp);
+int32_t			strlen_til_space(char *str, int32_t *strlen, char **envp);
 void			*nullerr(char *errmsg);
-int				is_operator(char c);
-int				check_str_end(char *str, int i, int n);
-int				strlen_til_quote(char *str, int *strlen, char c, char **envp);
+int32_t			is_operator(char c);
+int32_t			check_str_end(char *str, int32_t i, int32_t n);
+int32_t			strlen_til_quote(char *str, int32_t *strlen, char c, char **envp);
 
 /* ----------------------------------------------------------------------- */
 

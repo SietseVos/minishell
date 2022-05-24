@@ -3,8 +3,8 @@
 
 static void	str_add(char *take, char *place)
 {
-	int i;
-	int	j;
+	int32_t i;
+	int32_t	j;
 
 	i = 0;
 	j = 0;
@@ -22,7 +22,7 @@ static void	str_add(char *take, char *place)
 static char	*create_new_pwd_str(char *pwd)
 {
 	char	*new;
-	int		strlen;
+	int32_t		strlen;
 
 	strlen = ft_strlen(pwd);
 	new = malloc(sizeof(char) * (strlen + 8));

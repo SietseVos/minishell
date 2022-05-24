@@ -1,6 +1,6 @@
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, int32_t c, size_t n)
 {
 	unsigned char		t;
 	const unsigned char	*p;

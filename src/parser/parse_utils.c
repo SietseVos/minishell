@@ -3,18 +3,18 @@
 /*                                                        ::::::::            */
 /*   parse_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/05/24 17:32:16 by svos          ########   odam.nl         */
+/*   Updated: 2022/05/24 20:40:40 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_str_end(char *str, int i, int n)
+int32_t	check_str_end(char *str, int32_t i, int32_t n)
 {
-	int	count;
+	int32_t	count;
 
 	count = 0;
 	while (count <= n)
@@ -26,7 +26,7 @@ int	check_str_end(char *str, int i, int n)
 	return (-1);
 }
 
-int	is_operator(char c)
+int32_t	is_operator(char c)
 {
 	if (c == '<' || c == '>' || c == '|')
 		return (true);
@@ -39,9 +39,9 @@ void	*nullerr(char *errmsg)
 	return (NULL);
 }
 
-int	envvarlen(char *str, char end)
+int32_t	envvarlen(char *str, char end)
 {
-	int	ret;
+	int32_t	ret;
 
 	ret = 0;
 	while (str[ret] != end && str[ret] != ' ' && str[ret] != '\0')
@@ -49,10 +49,10 @@ int	envvarlen(char *str, char end)
 	return (ret);
 }
 
-int	interpvar_strlen(char *str, char c, int *strlen, env_vars_t *envp)
+int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
 {
-	int		i;
-	int		varlen;
+	int32_t	i;
+	int32_t	varlen;
 	char	*tocmp;
 
 	i = 0;
@@ -67,10 +67,10 @@ int	interpvar_strlen(char *str, char c, int *strlen, env_vars_t *envp)
 	return (0);
 }
 
-int	strlen_til_space(char *str, int *strlen, env_vars_t *envp)
+int32_t	strlen_til_space(char *str, int32_t *strlen, env_vars_t *envp)
 {
-	int	endskip;
-	int	i;
+	int32_t	endskip;
+	int32_t	i;
 
 	i = 0;
 	endskip = 0;
@@ -86,10 +86,10 @@ int	strlen_til_space(char *str, int *strlen, env_vars_t *envp)
 	return (endskip);
 }
 
-int	strlen_til_quote(char *str, int *strlen, char c, env_vars_t *envp)
+int32_t	strlen_til_quote(char *str, int32_t *strlen, char c, env_vars_t *envp)
 {
-	int	endskip;
-	int	i;
+	int32_t	endskip;
+	int32_t	i;
 
 	i = 0;
 	endskip = 0;
