@@ -21,7 +21,7 @@ void	placestr(const char *s, size_t len, char *str)
 	str[i] = 0;
 }
 
-char	*ft_substr(char const *s, unsigned int32_t start, size_t len)
+char	*ft_substr(char const *s, uint32_t start, size_t len)
 {
 	char	*str;
 

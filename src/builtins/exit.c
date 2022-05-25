@@ -7,12 +7,12 @@ static void		exit_shell_error(char *str)
 	exit(255);
 }
 
-static long long	atoll(char *str)
+static int64_t	ft_atoll(char *str)
 {
-	unsigned long long	tmp;
-	long long			return_value;
-	int32_t				sign;
-	int32_t				i;
+	uint64_t	tmp;
+	int64_t		return_value;
+	int32_t		sign;
+	int32_t		i;
 
 	i = 0;
 	tmp = 0;
@@ -50,18 +50,18 @@ static bool	check_for_wrong_argument(char *str)
 
 void	exit_shell(char **argument)
 {
-	long long	arg;
+	int64_t	arg;
 
 	if (!argument)
 		exit(0);
 	if (strings_in_array(argument) > 1)
 	{
 		printf("bash: exit: too many arguments\n");
-		// set exit value 1
+		g_exit_status = 1;
 		return ;
 	}
-	if (check_for_wrong_argument(argument))
-		exit_shell_error(argument);
-	arg = atoll(argument);
+	if (check_for_wrong_argument(argument[0]))
+		exit_shell_error(argument[0]);
+	arg = ft_atoll(argument[0]);
 	exit((int8_t)arg);
 }

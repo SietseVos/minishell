@@ -4,14 +4,28 @@
 static void	str_copy(char *take, char *place)
 {
 	int32_t i;
+	int32_t	j;
 
 	i = 0;
+	j = 0;
 	while (take[i])
 	{
-		place[i] = take[i];
+		if (i > 0 && take[i - 1] == '=')
+			break ;
+		place[j] = take[i];
 		i++;
+		j++;
 	}
-	place[i] = '\0';
+	place[j] = '"';
+	j++;
+	while (take[i])
+	{
+		place[j] = take[i];
+		i++;
+		j++;
+	}
+	place[j] = '"';
+	place[j + 1] = '\0';
 }
 
 static env_vars_t *new_env_node(int32_t strlen)
@@ -21,7 +35,7 @@ static env_vars_t *new_env_node(int32_t strlen)
 	new = malloc(sizeof(env_vars_t));
 	if (!new)
 		exit(404);
-	new->str = malloc(strlen * sizeof(char));
+	new->str = malloc(strlen + 2 * sizeof(char));
 	if (!new->str)
 		exit(404);
 	new->next = NULL;

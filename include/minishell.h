@@ -17,6 +17,8 @@
 # define TOSTDOUT 6
 # define NOINPUT 7
 
+int32_t	g_exit_status;
+
 typedef struct action_s
 {
 	char			**arg;
@@ -43,6 +45,7 @@ typedef struct root_s
 	void		exit_shell(char **argument);
 	void		pwd(char **argument);
 	int32_t		strings_in_array(char **str);
+	void		unset(char **arg, env_vars_t **list);
 
 /* ----------------------------------------------------------------------- */
 
@@ -53,6 +56,7 @@ typedef struct root_s
 void			add_env_node(env_vars_t *env, char *str);
 void			create_env_vars_list(char **envp, env_vars_t **env_head);
 char			**env_list_to_array(env_vars_t *env_list);
+env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
 
 /* ----------------------------------------------------------------------- */
 

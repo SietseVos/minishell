@@ -13,8 +13,8 @@ typedef struct env_vars_s
 
 typedef struct action_s
 {
-	int32_t				input_fd;
-	int32_t				output_fd;
+	int32_t			input_fd;
+	int32_t			output_fd;
 	char			*command;
 	char			*argument;
 	struct action_s *next;
