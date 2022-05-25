@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/05/24 20:40:57 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/05/25 09:54:27 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ action_t	*found_redirect(char *input, int32_t *i, int32_t type, env_vars_t *envp
 	node = create_node(strlen, input + *i, type);
 	if (node == NULL)
 		return (nullerr("redirect node malloc fail"));
-	if (input[*i - 1] == '"')
+	if (input[*i - 1] == '\'')
 		ft_strlcpy(node ->arg, input + *i, strlen + 1);
 	else
 		interpert_str(node ->arg, input + *i, strlen + 1);
