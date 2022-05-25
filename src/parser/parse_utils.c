@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/05/25 09:23:17 by svos          ########   odam.nl         */
+/*   Updated: 2022/05/25 16:59:33 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
 {
 	int32_t	i;
 	int32_t	varlen;
-	char	*tocmp;
 
 	i = 0;
 	varlen = envvarlen(str, c);
@@ -73,6 +72,7 @@ int32_t	strlen_til_space(char *str, int32_t *strlen, env_vars_t *envp)
 
 	i = 0;
 	endskip = 0;
+	printf("entered strlen_til_space function\n");
 	while (str[i] != ' ' && str[i] != '\0')
 	{
 		if (str[i] == '$')

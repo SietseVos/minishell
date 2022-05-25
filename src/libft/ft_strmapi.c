@@ -2,7 +2,7 @@
 
 char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 {
-	unsigned int32_t	i;
+	unsigned int	i;
 	char			*str;
 
 	i = 0;

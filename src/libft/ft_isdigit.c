@@ -1,3 +1,5 @@
+#include "libft.h"
+
 int32_t	ft_isdigit(int32_t str)
 {
 	if (str < '0' || str > '9')

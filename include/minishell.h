@@ -76,6 +76,7 @@ void			*nullerr(char *errmsg);
 int32_t			is_operator(char c);
 int32_t			check_str_end(char *str, int32_t i, int32_t n);
 int32_t			strlen_til_quote(char *str, int32_t *strlen, char c, env_vars_t *envp);
+int32_t			envvarlen(char *str, char end);
 
 /* ----------------------------------------------------------------------- */
 

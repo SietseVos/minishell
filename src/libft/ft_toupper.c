@@ -1,3 +1,5 @@
+#include "libft.h"
+
 int32_t	ft_toupper(int32_t a)
 {
 	if (a >= 'a' && a <= 'z')

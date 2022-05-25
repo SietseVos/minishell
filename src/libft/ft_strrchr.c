@@ -1,3 +1,5 @@
+#include "libft.h"
+
 char	*ft_strrchr(const char *s, int32_t c)
 {
 	unsigned char	t;
