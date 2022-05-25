@@ -1,3 +1,5 @@
+#include "libft.h"
+
 int32_t	ft_atoi(const char *str)
 {
 	long long	sign;

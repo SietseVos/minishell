@@ -1,3 +1,5 @@
+#include "libft.h"
+
 int32_t	ft_tolower(int32_t b)
 {
 	if (b >= 'A' && b <= 'Z')

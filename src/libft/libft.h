@@ -37,9 +37,7 @@ char	*ft_strtrim(const char *s1, const char *set);
 char	**ft_split(const char *s, char c);
 char	*ft_itoa(int32_t n);
 char	*ft_strmapi(const char *s, char (*f)(unsigned int, char));
-char	testfunction(uint32_t i, char c);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
-void	testfunction2(uint32_t i, char *c);
 void	ft_putchar_fd(char c, int32_t fd);
 void	ft_putstr_fd(char *s, int32_t fd);
 void	ft_putendl_fd(char *s, int32_t fd);
@@ -54,9 +52,7 @@ void	deletion_test(void *remove);
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	printlst(t_list *print);
 t_list	*newlst(int32_t len);
-void	testfunction3(void *val);
 void	ft_lstiter(t_list *lst, void (*f)(void*));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-void	*testfunction4(void *val);
 
 #endif
