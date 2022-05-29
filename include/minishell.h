@@ -43,9 +43,11 @@ typedef struct root_s
 
 	void		cd(char **argument, env_vars_t *env);
 	void		exit_shell(char **argument);
-	void		pwd(char **argument);
+	void		pwd(void);
 	int32_t		strings_in_array(char **str);
+	void		export(char **args, env_vars_t *env);
 	void		unset(char **arg, env_vars_t **list);
+	void		echo(char **args);
 
 /* ----------------------------------------------------------------------- */
 
@@ -56,6 +58,7 @@ typedef struct root_s
 void			add_env_node(env_vars_t *env, char *str);
 void			create_env_vars_list(char **envp, env_vars_t **env_head);
 char			**env_list_to_array(env_vars_t *env_list);
+int32_t			env_list_size(env_vars_t *env_list);
 env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
 
 /* ----------------------------------------------------------------------- */
@@ -83,6 +86,14 @@ void			*nullerr(char *errmsg);
 int32_t			is_operator(char c);
 int32_t			check_str_end(char *str, int32_t i, int32_t n);
 void			printenvp(env_vars_t *print);
+
+/* ----------------------------------------------------------------------- */
+
+//*************************************************************************//
+
+/* ------------------------------	signals	------------------------------ */
+
+void	init_signals(void);
 
 /* ----------------------------------------------------------------------- */
 

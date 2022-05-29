@@ -19,23 +19,21 @@ static void	str_add(char *take, char *place)
 	place[j] = '\0';
 }
 
-static char	*create_new_pwd_str(char *pwd, char *var)
+static char	*create_new_pwd_str(char *pwd, char *upfront)
 {
 	int32_t	strlen_pwd;
-	int32_t	strlen_var;
+	int32_t	strlen_upfront;
 	char	*new;
 
 	strlen_pwd = ft_strlen(pwd);
-	strlen_var = ft_strlen(var);
-	new = malloc(sizeof(char) * (strlen_pwd + strlen_var + 3));
+	strlen_upfront = ft_strlen(upfront);
+	new = ft_calloc(strlen_pwd + strlen_upfront + 3, sizeof(char));
 	if (!new)
 		exit(404);
-	new[0] = '\0';
-	str_add(var, new);
-	str_add("\"", new);
-	str_add(pwd, new);
-	str_add("\"", new);
-	free(pwd);
+	if (upfront)
+		str_add(upfront, new);
+	if (pwd)
+		str_add(pwd, new);
 	return (new);
 }
 
@@ -46,41 +44,76 @@ static void	change_pwd_path(env_vars_t *env)
 	char		*pwd;
 	
 	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		exit(404);
 	new_pwd = create_new_pwd_str(pwd, "PWD=");
+	free(pwd);
 	path = get_variable_node(env, "PWD=");
 	if (path)
-	{
-		free(path->str);
 		path->str = new_pwd;
-	}
+	else
+		free(new_pwd);
 }
 
-void	change_old_pwd_path(env_vars_t *env, char *old_pwd)
+static void	change_old_pwd_path(env_vars_t *env, bool *has_been_null)
 {
-	env_vars_t	*path;
-	char		*new_old_pwd;
-	
-	new_old_pwd = create_new_pwd_str(old_pwd, "OLDPWD=");
-	path = get_variable_node(env, "OLDPWD=");
-	if (path)
+	env_vars_t	*oldpwd_node;
+	env_vars_t	*pwd_node;
+	char		*cwd;
+
+	oldpwd_node = get_variable_node(env, "OLDPWD=");
+	pwd_node = get_variable_node(env, "PWD=");
+	if (oldpwd_node && pwd_node)
 	{
-		free(path->str);
-		path->str = new_old_pwd;
+		*has_been_null = false;
+		free(oldpwd_node->str);
+		oldpwd_node->str = ft_calloc(strlen(pwd_node->str + 4), sizeof(char));
+		if (!oldpwd_node->str)
+			exit(404);
+		str_add("OLD", oldpwd_node->str);
+		str_add(pwd_node->str, oldpwd_node->str);
 	}
+	else if (oldpwd_node && !pwd_node && *has_been_null)
+	{
+		free(oldpwd_node->str);
+		cwd = getcwd(NULL, 0);
+		if (!cwd)
+			exit(404);
+		oldpwd_node->str = create_new_pwd_str(cwd, "OLDPWD=");
+		free(cwd);
+	}
+	else if (oldpwd_node && !pwd_node && !*has_been_null)
+	{
+		free(oldpwd_node->str);
+		oldpwd_node->str = create_new_pwd_str(NULL, "OLDPWD=");
+		*has_been_null = true;
+	}
+	if (pwd_node)
+		free(pwd_node->str);
 }
 
 void	cd(char **argument, env_vars_t *env)
 {
-	char	*old_pwd;
+	static bool	has_been_null = false;
+	static bool	start_of_program = true;
+	char		*old_pwd;
 
-	old_pwd = getcwd(NULL, 0);
+	if (start_of_program)
+	{
+		start_of_program = false;
+		old_pwd = create_new_pwd_str(NULL, "OLDPWD=");
+		add_env_node(env, old_pwd);
+	}
+	change_old_pwd_path(env, &has_been_null);
 	if (chdir(argument[0]) != 0)
 	{
 		g_exit_status = 1;
-		free(old_pwd);
 		printf("bash: cd: %s: No such file or directory\n", argument[0]);
 		return ;
 	}
-	change_old_pwd_path(env, old_pwd);
 	change_pwd_path(env);
+	g_exit_status = 0;
 }
+// OLDPWD is the string of PWD before changing it, after calling cd the first time after unsetting PWD,
+// OLDPWD will have an empty string, otherwise it will be filled with the last dir. 
+// this proccess resets if PWD gets added with export again.

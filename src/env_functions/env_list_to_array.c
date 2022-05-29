@@ -14,7 +14,7 @@ static void	str_copy(char *take, char *place)
 	place[i] = '\0';
 }
 
-static int32_t	env_list_size(env_vars_t *env_list)
+int32_t	env_list_size(env_vars_t *env_list)
 {
 	int32_t	i;
 

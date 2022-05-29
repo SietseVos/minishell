@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-void	pwd(char **argument)
+void	pwd(void)
 {
 	char *pwd;
 

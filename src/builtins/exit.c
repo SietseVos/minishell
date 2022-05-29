@@ -53,7 +53,7 @@ void	exit_shell(char **argument)
 	int64_t	arg;
 
 	if (!argument)
-		exit(0);
+		exit(g_exit_status);
 	if (strings_in_array(argument) > 1)
 	{
 		printf("bash: exit: too many arguments\n");

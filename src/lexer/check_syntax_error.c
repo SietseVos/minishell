@@ -17,7 +17,7 @@ static void	write_syntax_error(char *str, int32_t *i)
 		printf("bash: syntax error near unexpected token `%c%c'\n", str[*i], str[*i]);
 	else
 		printf("bash: syntax error near unexpected token `%c'\n", str[*i]);
-	// set exit value?? (258?)
+	g_exit_status = 258;
 }
 
 static void	skip_spaces(char *str, int32_t *i)
