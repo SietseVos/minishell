@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/05/26 16:13:01 by svos          ########   odam.nl         */
+/*   Updated: 2022/05/27 15:59:09 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,40 @@ int32_t	strlen_quote(char *str)
 	return (ret);
 }
 
+void	strcpy_interpvar(char *dst, char *src, int32_t strlen, env_vars_t *envp)
+{
+	int32_t	i;
+	int32_t	j;
 
+	i = 0;
+	j = 0;
+	printf("strlen in strcpy_interpvar function: %d\n", strlen);
+	while (src[j] != '\0' && strlen > i + 1)
+	{
+		if (src[j] == '$')
+		{
+			dst[i] = src[j];
+			j += place_envvar(dst + i, src + j, envp, &i);
+		}
+		else
+		{
+			dst[i] = src[j];
+			i++;
+			j++;
+		}
+	}
+	dst[i] = '\0';
+}
+
+void	place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp)
+{
+	if (*src == '\'')
+		ft_strlcpy(dst, src + 1, strlen);
+	else if (*src == '"')
+		strcpy_interpvar(dst, src + 1, strlen, envp);
+	else
+		strcpy_interpvar(dst, src, strlen, envp);
+}
 
 int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
 {
@@ -97,4 +130,16 @@ int32_t	strlen_til_quote(char *str, int32_t *strlen, char c, env_vars_t *envp)
 	while (endskip < 2 && str[i + endskip] != '\0')
 		endskip++;
 	return (endskip);
+}
+
+int32_t	skipstring(char *str, char quote)
+{
+	int	i;
+
+	i = 1;
+	while (str[i] != quote && str[i] != '\0')
+		i++;
+	if (str[i] == quote)
+		return (i + 1);
+	return (i);
 }
