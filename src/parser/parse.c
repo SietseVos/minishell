@@ -6,40 +6,11 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/05/27 15:47:39 by svos          ########   odam.nl         */
+/*   Updated: 2022/05/30 16:23:31 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int32_t	place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i)
-{
-	int32_t	varlen;
-
-	varlen = envvarlen(src, '"');
-	printf("varlen in place_envvar: %d\n", varlen);
-	while (envp)
-	{
-		if (ft_strncmp(envp ->str, src + 1, varlen - 1) == 0 && envp ->str[varlen - 1] == '=')
-		{
-			printf("found environment variable in place_envvar: %s\n", envp ->str + varlen - 1);
-			ft_strlcpy(dst, envp ->str + varlen + 1, strlen_quote(envp ->str + varlen) + 1);
-			*i += strlen_quote(envp ->str + varlen);
-			return (varlen);
-		}
-		envp = envp ->next;
-	}
-	return (varlen);
-}
-
-int32_t	read_input_str(char *str, int *strlen, env_vars_t *envp)
-{
-	if (*str == '"')
-		return (strlen_til_quote(str + 1, strlen, '"', envp));
-	else if (*str == '\'')
-		return (strlen_til_quote(str + 1, strlen, '\'', envp));
-	return (strlen_til_space(str, strlen, envp));
-}
 
 action_t	*determine_kind(char *input, int32_t *i, env_vars_t *envp)
 {
@@ -85,7 +56,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	// printf("Look mom I'm on a terminal!\n");
 	create_env_vars_list(envp, &envlist);
 	// printenvp(envlist);
-	test = strdup("\" $USER fd dsds   fds\" fdsd");
+	test = strdup("\"$USER $USER fd dsds   fds\" \"fdsd\"");
 	inlst = parser(test, envlist);
 	printchararr(inlst ->arg);
 	// printf("output: -%s-\n", *inlst ->arg);
