@@ -1,62 +1,76 @@
 
 #include "minishell.h"
 
-void	print_export(env_vars_t *env)
+static void	print_export(env_vars_t *env)
 {
 	char	**env_strings;
-	char	*tmp;
-	int32_t	lst_size;
 	int32_t	i;
-	int32_t	j;
 
-	printf("past lst size\n");
-	lst_size = env_list_size(env);
+	i = 0;
 	env_strings = env_list_to_array(env);
-	i = 0;
-	while (env_strings[i])
-	{
-		printf(" BEFORE declare - x %s\n", env_strings[i]);
-		i++;
-	}
-	while (lst_size) // does not work
-	{
-		i = 0;
-		while (env_strings[i] && env_strings[i + 1])
-		{
-			j = 0;
-			while (env_strings[i][j] && env_strings[i + 1][j])
-			{	
-				if (env_strings[i][j] == '=')
-					break ;
-				else
-				{
-					// printf("swapping strings %s and %s\n", env_strings[i], env_strings[i + 1]);
-					tmp = env_strings[i];
-					env_strings[i] = env_strings[i + 1];
-					env_strings[i + 1] = tmp;
-					break ;
-				}
-				if (env_strings[i][j] < env_strings[i + 1][j])
-				{
-					// printf("swapping strings %s and %s\n", env_strings[i], env_strings[i + 1]);
-					tmp = env_strings[i];
-					env_strings[i] = env_strings[i + 1];
-					env_strings[i + 1] = tmp;
-					break ;
-				}
-				j++;
-			}
-			i++;
-		}
-		lst_size--;
-	}
-	i = 0;
-	// (put quotes around variable!!)
+	bubble_sort_array(env_strings, env_list_size(env));
+	add_quotes_after_equal(env_strings);
 	while (env_strings[i])
 	{
 		printf("declare - x %s\n", env_strings[i]);
+		free(env_strings[i]);
 		i++;
 	}
+	free(env_strings);
+}
+
+static bool	check_valid_input(char	*input)
+{
+	int32_t	i;
+
+	i = 0;
+	if ((input[0] >= '0' && input[0] <= '9') || input[0] == '=')
+		return (true);
+	while (input[i])
+	{
+		if (input[i] == '=')
+			break ;
+		else if (input[i] == '-')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+static void	add_to_list(char *input, env_vars_t *env)
+{
+	char	*new_node;
+
+	new_node = ft_calloc(ft_strlen(input) + 1, sizeof(char));
+	if (!new_node)
+		exit(404);
+	ft_strlcpy(new_node, input, ft_strlen(input) + 1);
+	add_env_node(env, new_node);
+}
+
+static void	replace_current_in_list(char *input, env_vars_t *env)
+{
+	env_vars_t	*to_replace;
+	char		*variable;
+	int32_t		i;
+
+	i = 0;
+	variable = ft_calloc(ft_strlen(input) + 1, sizeof(char));
+	if (!variable)
+		exit(404);
+	while (input[i] && input[i] != '=')
+	{
+		variable[i] = input[i];
+		i++;
+	}
+	to_replace = get_variable_node(env, variable);
+	while (input[i])
+	{
+		variable[i] = input[i];
+		i++;
+	}
+	free(to_replace->str);
+	to_replace->str = variable;
 }
 
 void	export(char **args, env_vars_t *env)
@@ -64,18 +78,23 @@ void	export(char **args, env_vars_t *env)
 	int32_t	i;
 
 	i = 0;
-	printf("entering export\n");
 	if (!*args)
 		print_export(env);
-	// else
-	// {
-	// 	while (args[i])
-	// 	{
-	//		// if invalid input
-	// 		// if has =
-	// 		// if has value
-	// 		// if no =
-	// 		i++;
-	// 	}
-	// }
+	else
+	{
+		while (args[i])
+		{
+			if (check_valid_input(args[i]))
+				printf("bash: export: `%s': not a valid identifier\n", args[i]);
+			else if (args[i][0] && args[i][0] == '_' && args[i][1] && args[i][1] == '=') // checks for shell variable, can't be edited by the user
+				continue ;
+			else if (is_already_in_list(args[i], env))
+				replace_current_in_list(args[i], env);
+			else
+				add_to_list(args[i], env);
+			i++;
+		}
+	}
 }
+
+// dont allow _= variable, should be shell maintained only and cant? be changed.

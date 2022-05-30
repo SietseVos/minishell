@@ -75,40 +75,11 @@ int32_t main(int argc, char **argv, char **envp)
 	char 		*arg4[] = {"test", "test2", "test3", NULL};
 	char 		*arg5[] = {"PATH", "VSCODE", "PWD", NULL};
 	char 		*arg6[] = {"PWD", NULL};
+	char 		*arg7[] = {"PWD=test", "1PWD=test", "P-WD=test", NULL};
 
 	create_env_vars_list(envp, &list);
+	export(arg7, list);
 	export(arg0, list);
-	// print_pwd_nodes(list);
-	// print_env_list(list);
-	// printf("PWD unset\n");
-	// run_unset(arg6, list);
-	// print_pwd_nodes(list);
-	// print_env_list(list);
-	// printf("PWD cd ..\n");
-	// run_test_cd(arg1, list);
-	// print_pwd_nodes(list);
-	// print_env_list(list);
-	// printf("PWD cd ..\n");
-	// run_test_cd(arg1, list);
-	// print_pwd_nodes(list);
-	// run_test_cd(arg1, list);
-	// print_pwd_nodes(list);
-	// print_env_list(list);
-	// printf("----------------- cd Tests -----------------\n");
-	// printf("---------------- test 01: %s ---------------\n", arg1[0]);
-	// run_test_cd(arg1, list);
-	// printf("---------------- test 02: %s ---------------\n", arg2[0]);
-	// run_test_cd(arg2, list);
-	// printf("---------------- test 03: %s ---------------\n", arg3[0]);
-	// run_test_cd(arg3, list);
-	// printf("-----------------   ----   -----------------\n\n");
-	// printf("----------------- pwd Test -----------------\n");
-	// run_test_pwd(arg2);
-	// printf("-----------------   ----   -----------------\n\n");
-	// printf("----------------- unset Test -----------------\n");
-	// run_unset(arg4, list);
-	// run_unset(arg5, list);
-	// printf("-----------------   ----   -----------------\n\n");
 	// system("leaks a.out");
 	return (0);
 }
@@ -117,4 +88,4 @@ int32_t main(int argc, char **argv, char **envp)
 
 // empty lines should not be added to the history (up arrow)
 
-// gcc unset.c echo.c cd.c exit.c export.c pwd.c strings_in_array.c builtin_tester.c ../env_functions/add_env_node.c ../env_functions/create_env_vars_list.c ../env_functions/env_list_to_array.c ../env_functions/get_variable_node.c -I ../../include/ -I ../../src/libft ../../src/libft/libft.a -fsanitize=address -g
+// gcc unset.c export_utils.c echo.c cd.c exit.c export.c pwd.c strings_in_array.c builtin_tester.c ../env_functions/add_env_node.c ../env_functions/create_env_vars_list.c ../env_functions/env_list_to_array.c ../env_functions/get_variable_node.c -I ../../include/ -I ../../src/libft ../../src/libft/libft.a -fsanitize=address -g

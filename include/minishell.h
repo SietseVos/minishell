@@ -46,6 +46,9 @@ typedef struct root_s
 	void		pwd(void);
 	int32_t		strings_in_array(char **str);
 	void		export(char **args, env_vars_t *env);
+	void		bubble_sort_array(char **env_strings, int32_t lst_size);
+	void		add_quotes_after_equal(char **strings);
+	bool		is_already_in_list(char	*input, env_vars_t *env);
 	void		unset(char **arg, env_vars_t **list);
 	void		echo(char **args);
 

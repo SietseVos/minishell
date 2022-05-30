@@ -107,6 +107,6 @@ void	create_env_vars_list(char **envp, env_vars_t **env_head)
 		str_copy(envp[i], tmp->str);
 		i++;
 	}
-	remove_oldpwd_from_list(env_head);
+	remove_oldpwd_from_list(env_head);		// remove _= too (shell variable)
 	increment_shell_level(*env_head);		// maybe put this inside of main
 }
