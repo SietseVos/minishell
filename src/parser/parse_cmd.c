@@ -92,7 +92,6 @@ action_t	*parse_cmd(char *input, int32_t *i, env_vars_t *envp)
 	int32_t		endskip;
 	int32_t		j;
 
-	strlen = 0;
 	j = 0;
 	cmdarrlen = get_cmdarrlen(input + *i);
 	node = create_cmdnode(cmdarrlen);
@@ -100,16 +99,19 @@ action_t	*parse_cmd(char *input, int32_t *i, env_vars_t *envp)
 		return (nullerr("failed to create cmd node"));
 	while (cmdarrlen > j)
 	{
-		printf("looped 'the' loop\n");
+		strlen = 0;
+		printf("looping through cmdargs\n\n");
 		endskip = read_input_str(input + *i, &strlen, envp);
-		printf("endskip: %d\n", endskip);
-		node ->arg[j] = malloc (sizeof(char) * strlen);
+		printf("endskip: %d, strlen: %d\n", endskip, strlen);
+		node ->arg[j] = malloc (sizeof(char) * strlen + 1);
 		if (node ->arg[j] == NULL)
 			return (nullerr("node argstring malloc failure"));
 		// make malloc failure function
-		place_str_in_node(node ->arg[j], input + *i, strlen + 1, envp);
-		printf("ending string: %c\n", input[*i + strlen]);
+		*i += place_str_in_node(node ->arg[j], input + *i, strlen + 1, envp);
+		printf("string that has been placed in node: %s\n", node ->arg[j]);
+		printf("ending string: -%c-\n", input[*i + strlen]);
 		*i = *i + strlen + endskip;
+		printf("ending string (after endskip): -%c-\n", input[*i]);
 		j++;
 	}
 	node ->type = determine_cmdtype(input + *i, &node ->arg[j]);

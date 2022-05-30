@@ -89,11 +89,12 @@ void			*nullerr(char *errmsg);
 int32_t			is_operator(char c);
 int32_t			check_str_end(char *str, int32_t i, int32_t n);
 void			printenvp(env_vars_t *print);
-void			place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp);
+int32_t			place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp);
 int32_t			place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i);
 action_t		*parse_file(char *input, int32_t *i, env_vars_t *envp);
 action_t		*parse_cmd(char *input, int32_t *i, env_vars_t *envp);
 int32_t			skipstring(char *str, char quote);
+int32_t			read_input_str(char *str, int *strlen, env_vars_t *envp);
 int32_t			read_input_str(char *str, int *strlen, env_vars_t *envp);
 
 /* ----------------------------------------------------------------------- */
