@@ -29,23 +29,18 @@ action_t	*found_redirect(char *input, int32_t *i, int32_t type, env_vars_t *envp
 {
 	action_t	*node;
 	int32_t		strlen;
-	int32_t		endskip;
 
 	strlen = 0;
 	while (input[*i] != ' ')
 		*i += 1;
 	*i += 1;
-	endskip = read_input_str(input + *i, &strlen, envp);
-	printf("current char: %c, strlen: %d, endskip: %d\n", input[*i], strlen, endskip);
+	read_input_str(input + *i, &strlen, envp);
 	if (input[*i] == '\0' || is_operator(input[*i]) == true)
 		return (nullerr("no string after space of redirect"));
 	node = create_filenode(strlen, type);
 	if (node == NULL)
 		return (nullerr("redirect node malloc fail"));
-	place_str_in_node(*node ->arg, input + *i, strlen + 1, envp);
-	if (input[*i] == '"' || input[*i] == '\'')
-		*i += 1;
-	*i = *i + strlen + endskip;
+	*i += place_str_in_node(*node ->arg, input + *i, strlen + 1, envp);
 	return (node);
 }
 

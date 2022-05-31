@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/05/30 16:23:31 by svos          ########   odam.nl         */
+/*   Updated: 2022/05/31 15:20:19 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,40 @@ action_t	*determine_kind(char *input, int32_t *i, env_vars_t *envp)
 	// return (NULL);
 }
 
+action_t	*action_node_fail(action_t *tofree)
+{
+	action_t	*temp;
+
+	temp = tofree;
+	while (tofree)
+	{
+		tofree = tofree ->next;
+		free(temp);
+		temp = tofree;
+	}
+	return (nullerr("failed to make next node"));
+}
+
 action_t	*parser(char *input, env_vars_t *envp)
 {
 	int32_t			i;
 	action_t	*ret;
+	action_t	*lst;
 
 	i = 0;
-	ret = determine_kind(input, &i, envp);
-	// while (input[i])
-	// {
-	// 	ret ->next = determine_type(input, &i);
-	// }
+	lst = determine_kind(input, &i, envp);
+	if (lst == NULL)
+		return (nullerr("failed to make first node"));
+	ret = lst;
+	while (input[i])
+	{
+		lst ->next = determine_kind(input, &i, envp);
+		if (lst ->next == NULL)
+			return (action_node_fail(ret));
+		lst = lst ->next;
+	}
+	lst ->next = NULL;
+	///returning wrong pointer
 	return (ret);
 }
 
@@ -47,20 +70,33 @@ void	printchararr(char **toprint)
 	}
 }
 
+void	print_actions(action_t *inlst)
+{
+	while (inlst)
+	{
+		printf("=====\nnode:\ntype: %d\n", inlst ->type);
+		printchararr(inlst ->arg);
+		inlst = inlst ->next;
+	}
+}
+
 int32_t	main(int32_t argc, char **argv, char **envp)
 {
 	char		*test;
 	env_vars_t	*envlist;
 	action_t	*inlst;
 
-	// printf("Look mom I'm on a terminal!\n");
 	create_env_vars_list(envp, &envlist);
 	// printenvp(envlist);
-	test = strdup("\"$USER $USER fd dsds   fds\" \"fdsd\"");
+	test = strdup("< f fj | jfkdls jfiow nvn eiowior");
 	inlst = parser(test, envlist);
-	printchararr(inlst ->arg);
-	// printf("output: -%s-\n", *inlst ->arg);
+	if (inlst == NULL)
+	{
+		printf("parsing error\n");
+		return (0);
+	}
+	print_actions(inlst);
 	return (0);
 }
 
-// gcc parse.c parse_utils.c parse_utils_small.c parse_cmd.c parse_file.c ../env_functions/create_env_vars_list.c ../../src/libft/ft_strlcpy.c ../../src/libft/ft_strlen.c ../../src/libft/ft_strdup.c ../../src/libft/ft_strncmp.c -I ../../include/ -I ../../src/libft ../../src/libft/libft.a -fsanitize=address -g
+// gcc parse.c read_from_str.c write_to_lst.c parse_utils_small.c parse_cmd.c parse_file.c ../env_functions/create_env_vars_list.c ../../src/libft/ft_strlcpy.c ../../src/libft/ft_strlen.c ../../src/libft/ft_strdup.c ../../src/libft/ft_strncmp.c -I ../../include/ -I ../../src/libft ../../src/libft/libft.a -fsanitize=address -g

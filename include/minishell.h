@@ -16,6 +16,8 @@
 # define PIPE 5
 # define TOSTDOUT 6
 # define NOINPUT 7
+# define INPIPE 8
+
 
 int32_t	g_exit_status;
 
@@ -81,8 +83,8 @@ bool			check_syntax_error(char *str);
 
 /* ------------------------------	parser	------------------------------ */
 
-int32_t			strlen_til_space(char *str, int32_t *strlen, env_vars_t *envp);
-int32_t			strlen_til_quote(char *str, int32_t *strlen, char c, env_vars_t *envp);
+void			strlen_til_space(char *str, int32_t *strlen, env_vars_t *envp);
+void			strlen_til_quote(char *str, int32_t *strlen, char c, env_vars_t *envp);
 int32_t			strlen_quote(char *str);
 int32_t			envvarlen(char *str, char end);
 void			*nullerr(char *errmsg);
@@ -94,8 +96,7 @@ int32_t			place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i);
 action_t		*parse_file(char *input, int32_t *i, env_vars_t *envp);
 action_t		*parse_cmd(char *input, int32_t *i, env_vars_t *envp);
 int32_t			skipstring(char *str, char quote);
-int32_t			read_input_str(char *str, int *strlen, env_vars_t *envp);
-int32_t			read_input_str(char *str, int *strlen, env_vars_t *envp);
+void			read_input_str(char *str, int *strlen, env_vars_t *envp);
 
 /* ----------------------------------------------------------------------- */
 

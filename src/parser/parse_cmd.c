@@ -17,17 +17,12 @@ int32_t	get_cmdarrlen(char *str)
 				break;
 			}
 			else if (str[i] == '"' || str[i] == '\'')
-			{
-				// printf("i before skipstring: %d, char: %c\n", i, str[i]);
 				i += skipstring(str, str[i]);
-				// printf("i after skipstring: %d, char: %c\n", i, str[i]);
-			}
 			else
 				i++;
 		}
 		ret++;
 	}
-	printf("wordcount: %d\n", ret);
 	return (ret);
 }
 
@@ -52,11 +47,21 @@ int32_t	look_for_other_types(char *str)
 	return (TOSTDOUT);
 }
 
-int32_t	determine_cmdtype(char *input, char **last_str)
+int32_t	determine_cmdtype(char *input, char **last_str, int32_t *i)
 {
+	int	j;
+
+	j = 0;
 	*last_str = NULL;
 	if (*input == '|')
+	{
+		while (input[j] != '\0' && j < 2)
+		{
+			j++;
+			*i += 1;
+		}
 		return (PIPE);
+	}
 	if (*input == '<')
 		return (look_for_other_types(input));
 	if (*input == '>')
@@ -84,12 +89,24 @@ action_t	*create_cmdnode(int32_t arrlen)
 	return (node);
 }
 
+action_t	*arg_malloc_fail(action_t *node, int32_t j)
+{
+	j--;
+	while (j >= 0)
+	{
+		free(node ->arg[j]);
+		j--;
+	}
+	free(node ->arg);
+	free(node);
+	return (nullerr("failed to malloc argstring"));
+}
+
 action_t	*parse_cmd(char *input, int32_t *i, env_vars_t *envp)
 {
 	action_t	*node;
 	int32_t		strlen;
 	int32_t		cmdarrlen;
-	int32_t		endskip;
 	int32_t		j;
 
 	j = 0;
@@ -100,20 +117,13 @@ action_t	*parse_cmd(char *input, int32_t *i, env_vars_t *envp)
 	while (cmdarrlen > j)
 	{
 		strlen = 0;
-		printf("looping through cmdargs\n\n");
-		endskip = read_input_str(input + *i, &strlen, envp);
-		printf("endskip: %d, strlen: %d\n", endskip, strlen);
-		node ->arg[j] = malloc (sizeof(char) * strlen + 1);
+		read_input_str(input + *i, &strlen, envp);
+		node ->arg[j] = malloc(sizeof(char) * strlen + 1);
 		if (node ->arg[j] == NULL)
-			return (nullerr("node argstring malloc failure"));
-		// make malloc failure function
+			return (arg_malloc_fail(node, j));
 		*i += place_str_in_node(node ->arg[j], input + *i, strlen + 1, envp);
-		printf("string that has been placed in node: %s\n", node ->arg[j]);
-		printf("ending string: -%c-\n", input[*i + strlen]);
-		*i = *i + strlen + endskip;
-		printf("ending string (after endskip): -%c-\n", input[*i]);
 		j++;
 	}
-	node ->type = determine_cmdtype(input + *i, &node ->arg[j]);
+	node ->type = determine_cmdtype(input + *i, &node ->arg[j], i);
 	return (node);
 }
