@@ -1,16 +1,43 @@
 NAME = minishell
 
+BUILTINS =	cd.c										\
+			echo.c										\
+			env.c										\
+			exit.c										\
+			export_utils.c								\
+			export.c									\
+			pwd.c										\
+			strings_in_array.c							\
+			unset.c										\
+
+ENV =		add_env_node.c								\
+			create_env_vars_list.c						\
+			env_list_to_array.c							\
+			get_variable_node.c							\
+
+EXECUTER =	\
+
 LEXER =		lexer.c										\
 			in_string.c									\
 			check_syntax_error.c						\
 
-ENV_FUNC =	create_env_vars_list.c						\
-			add_env_node.c								\
-			env_list_to_array.c							\
-			
-SRC =	$(addprefix src/env_functions/,$(ENV_FUNC))		\
+PARSER =	parse_cmd.c									\
+			parse_file.c								\
+			parse_utils_small.c							\
+			parse.c										\
+			read_from_str.c								\
+			write_to_lst.c								\
+
+SIGNALS =	signals.c									\
+
+SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
+		$(addprefix src/env_functions/, $(ENV))			\
 		$(addprefix src/lexer/, $(LEXER))				\
+		$(addprefix src/signals/, $(SIGNALS))			\
 		src/main.c
+
+# $(addprefix src/parser/, $(PARSER))				\
+$(addprefix src/executer/, $(EXECUTER))			\
 
 BREW_DIR		= $(shell brew --prefix)
 LIBREADLINE		= $(BREW_DIR)/opt/readline/lib

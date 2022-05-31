@@ -43,17 +43,19 @@ static void	increment_shell_level(env_vars_t *list)
 	}
 }
 
-static void	remove_oldpwd_from_list(env_vars_t **list)
+static void	remove_exess_from_list(env_vars_t **list)
 {
 	env_vars_t	*pre;
 	env_vars_t	*tmp;
 	env_vars_t	*next;
 	int32_t		i;
 
+	i = 0;
 	tmp = *list;
 	while (tmp)
 	{
-		if (ft_strncmp("OLDPWD=", tmp->str, 7) == 0)
+		if (ft_strncmp("OLDPWD=", tmp->str, 7) == 0
+			|| ft_strncmp("_=", tmp->str, 2) == 0)
 		{
 			next = tmp->next;
 			free(tmp->str);
@@ -107,6 +109,6 @@ void	create_env_vars_list(char **envp, env_vars_t **env_head)
 		str_copy(envp[i], tmp->str);
 		i++;
 	}
-	remove_oldpwd_from_list(env_head);		// remove _= too (shell variable)
+	remove_exess_from_list(env_head);		// remove _= and OLDPWD=
 	increment_shell_level(*env_head);		// maybe put this inside of main
 }

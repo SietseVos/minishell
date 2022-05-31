@@ -8,6 +8,7 @@ static void	remove_from_list(char *arg, env_vars_t **list)
 	env_vars_t	*next;
 	int32_t		i;
 
+	i = 0;
 	tmp = *list;
 	while (tmp)
 	{

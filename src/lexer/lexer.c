@@ -72,5 +72,6 @@ char	*lexer(char	*input)
 	if (!output)
 		exit(404);
 	fill_output(input, output);
+	free(input);
 	return (output);
 }
