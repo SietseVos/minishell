@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/05/31 15:20:19 by svos          ########   odam.nl         */
+/*   Updated: 2022/05/31 17:41:05 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	printchararr(char **toprint)
 	int32_t	i;
 
 	i = 0;
-	printf("in character array:\n");
+	printf("\033[1;34min Arguments:\033[0m\n");
 	while (toprint[i] != NULL)
 	{
 		printf("-%s-\n", toprint[i]);
@@ -74,29 +74,47 @@ void	print_actions(action_t *inlst)
 {
 	while (inlst)
 	{
-		printf("=====\nnode:\ntype: %d\n", inlst ->type);
+		printf("\033[1;36m===== node =====\033[31m\n");
+		if (inlst ->type == 0)
+			printf("Type: Infile\n");
+		else if (inlst ->type == 1)
+			printf("Type: Outfile\n");
+		else if (inlst ->type == 2)
+			printf("Type: Append\n");
+		else if (inlst ->type == 3)
+			printf("Type: Heredoc\n");
+		else if (inlst ->type == 4)
+			printf("Type: Trunicate\n");
+		else if (inlst ->type == 5)
+			printf("Type: Pipe \n");
+		else if (inlst ->type == 6)
+			printf("Type: std out\n");
+		else if (inlst ->type == 7)
+			printf("Type: noinput\n");
+		else if (inlst ->type == 8)
+			printf("Type: inpipe\n");
 		printchararr(inlst ->arg);
 		inlst = inlst ->next;
 	}
 }
 
-int32_t	main(int32_t argc, char **argv, char **envp)
-{
-	char		*test;
-	env_vars_t	*envlist;
-	action_t	*inlst;
+// int32_t	main(int32_t argc, char **argv, char **envp)
+// {
+// 	char		*test;
+// 	env_vars_t	*envlist;
+// 	action_t	*inlst;
 
-	create_env_vars_list(envp, &envlist);
-	// printenvp(envlist);
-	test = strdup("< f fj | jfkdls jfiow nvn eiowior");
-	inlst = parser(test, envlist);
-	if (inlst == NULL)
-	{
-		printf("parsing error\n");
-		return (0);
-	}
-	print_actions(inlst);
-	return (0);
-}
+// 	create_env_vars_list(envp, &envlist);
+// 	// printenvp(envlist);
+// 	test = strdup("< f fj | jfkdls jfiow nvn eiowior");
+// 	inlst = parser(test, envlist);
+// 	if (inlst == NULL)
+// 	{
+// 		printf("parsing error\n");
+// 		return (0);
+// 	}
+// 	print_actions(inlst);
+// 	return (0);
+// }
 
 // gcc parse.c read_from_str.c write_to_lst.c parse_utils_small.c parse_cmd.c parse_file.c ../env_functions/create_env_vars_list.c ../../src/libft/ft_strlcpy.c ../../src/libft/ft_strlen.c ../../src/libft/ft_strdup.c ../../src/libft/ft_strncmp.c -I ../../include/ -I ../../src/libft ../../src/libft/libft.a -fsanitize=address -g

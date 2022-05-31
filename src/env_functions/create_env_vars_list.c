@@ -14,33 +14,32 @@ static void	str_copy(char *take, char *place)
 	place[i] = '\0';
 }
 
-static void	increment_shell_level(env_vars_t *list)
+static int32_t	increment_shell_level(env_vars_t *list)
 {
 	int32_t	level;
 	char	*new_str;
 	char	*new_num;
 
-	while (list)
+	list = get_variable_node(list, "SHLVL=");
+	if (!list)
+		return (0);
+	level = ft_atoi(&list->str[6]);
+	level++;
+	new_num = ft_itoa(level);
+	if (!new_num)
+		return (-1);
+	new_str = malloc(sizeof(char) * (ft_strlen(new_num) + 7));
+	if (!new_str)
 	{
-		if (ft_strncmp("SHLVL=", list->str, 6) == 0)
-		{
-			level = ft_atoi(&list->str[6]);
-			level++;
-			new_num = ft_itoa(level);
-			if (!new_num)
-				exit(404);
-			new_str = malloc(sizeof(char) * (ft_strlen(new_num) + 7));
-			if (!new_str)
-				exit(404);
-			str_copy("SHLVL=", new_str);
-			ft_strlcat(new_str, new_num, ft_strlen(new_num) + 7);
-			free(new_num);
-			free(list->str);
-			list->str = new_str;
-			break ;
-		}
-		list = list->next;
+		free(new_num);
+		return (-1);
 	}
+	str_copy("SHLVL=", new_str);
+	ft_strlcat(new_str, new_num, ft_strlen(new_num) + 7);
+	free(new_num);
+	free(list->str);
+	list->str = new_str;
+	return (0);
 }
 
 static void	remove_exess_from_list(env_vars_t **list)
@@ -78,15 +77,18 @@ static env_vars_t *new_env_node(int32_t strlen)
 
 	new = malloc(sizeof(env_vars_t));
 	if (!new)
-		exit(404);
+		return (NULL);
 	new->str = malloc(strlen + 2 * sizeof(char));
 	if (!new->str)
-		exit(404);
+	{
+		free(new);
+		return (NULL);
+	}
 	new->next = NULL;
 	return (new);
 }
 
-void	create_env_vars_list(char **envp, env_vars_t **env_head)
+bool	create_env_vars_list(char **envp, env_vars_t **env_head)
 {
 	env_vars_t	*tmp;
 	int32_t		strlen;
@@ -99,16 +101,25 @@ void	create_env_vars_list(char **envp, env_vars_t **env_head)
 		if (i == 0)
 		{
 			tmp = new_env_node(strlen + 1);
+			if (!tmp)
+				return (false);
 			*env_head = tmp;
 		}
 		else
 		{
 			tmp->next = new_env_node(strlen + 1);
+			if (!tmp->next)
+			{
+				free_env_list(*env_head);
+				return (false);
+			}
 			tmp = tmp->next;
 		}
 		str_copy(envp[i], tmp->str);
 		i++;
 	}
-	remove_exess_from_list(env_head);		// remove _= and OLDPWD=
-	increment_shell_level(*env_head);		// maybe put this inside of main
+	remove_exess_from_list(env_head);				// remove _= and OLDPWD=
+	if (increment_shell_level(*env_head) == -1)		// maybe put this inside of main
+		return (false);
+	return (true);		
 }

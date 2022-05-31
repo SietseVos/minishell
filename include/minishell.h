@@ -34,22 +34,15 @@ typedef struct env_vars_s
 	struct env_vars_s	*next;
 }	env_vars_t;
 
-typedef struct root_s
-{
-	action_t	*action;
-	env_vars_t	*env;
-}	root_t;
-
-
 /* ---------------------------	builtins	------------------------------ */
 
-	void		cd(char **argument, env_vars_t *env);
+	int32_t		cd(char **argument, env_vars_t *env);
 	void		exit_shell(char **argument);
 	void		pwd(void);
 	int32_t		strings_in_array(char **str);
-	void		export(char **args, env_vars_t *env);
+	bool		export(char **args, env_vars_t *env);
 	void		bubble_sort_array(char **env_strings, int32_t lst_size);
-	void		add_quotes_after_equal(char **strings);
+	int32_t		add_quotes_after_equal(char **strings);
 	bool		is_already_in_list(char	*input, env_vars_t *env);
 	void		unset(char **arg, env_vars_t **list);
 	void		echo(char **args);
@@ -60,8 +53,10 @@ typedef struct root_s
 
 /* --------------------------	env_functions	-------------------------- */
 
-void			add_env_node(env_vars_t *env, char *str);
-void			create_env_vars_list(char **envp, env_vars_t **env_head);
+int32_t			add_env_node(env_vars_t *env, char *str);
+bool			create_env_vars_list(char **envp, env_vars_t **env_head);
+char			**free_array_till_index(char **array, int32_t index);
+void			free_env_list(env_vars_t *list);
 char			**env_list_to_array(env_vars_t *env_list);
 int32_t			env_list_size(env_vars_t *env_list);
 env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
@@ -97,6 +92,10 @@ action_t		*parse_file(char *input, int32_t *i, env_vars_t *envp);
 action_t		*parse_cmd(char *input, int32_t *i, env_vars_t *envp);
 int32_t			skipstring(char *str, char quote);
 void			read_input_str(char *str, int *strlen, env_vars_t *envp);
+action_t		*parser(char *input, env_vars_t *envp);
+
+
+void	print_actions(action_t *inlst);
 
 /* ----------------------------------------------------------------------- */
 

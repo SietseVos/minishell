@@ -3,7 +3,7 @@
 
 int32_t	main(int32_t argc, char **argv, char **envp)
 {
-	// action_t	*actions;
+	action_t	*actions;
 	env_vars_t	*env;
 	char		*input;
 
@@ -15,13 +15,21 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	while (test < 5)
 	{
 		test++;
-		input = readline("\033[1;33mMinihell >\033[0m ");
-		if (input[0] != '\0')
-			add_history(input);
+		input = readline("\033[1;31mMinihell>\033[0m ");
+		if (!input || (input && input[0] == '\0'))
+			continue ;
+		add_history(input);
 		input = lexer(input);
-		printf("lexer output: %s\n", input);
-		// actions = parser(input, env);
+		if (!input)
+			continue ;
+		actions = parser(input, env);
+		if (!actions)
+		{
+			free(input);
+			continue ;
+		}
 		free(input);
+		// print_actions(actions);
 		// execute(actions, env);
 	}
 	(void) argc;

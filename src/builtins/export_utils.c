@@ -62,7 +62,7 @@ static void	set_quotes_in_string(char **string, int32_t str, char *tmp, bool *pa
 	string[str] = tmp;
 }
 
-void	add_quotes_after_equal(char **strings)
+int32_t	add_quotes_after_equal(char **strings)
 {
 	int32_t	i;
 	bool	past_equals;
@@ -74,10 +74,11 @@ void	add_quotes_after_equal(char **strings)
 		past_equals = false;
 		tmp = ft_calloc(strlen(strings[i]) + 3, sizeof(char));
 		if (!tmp)
-			exit(404);
+			return (-1);
 		set_quotes_in_string(strings, i, tmp, &past_equals);
 		i++;
 	}
+	return (0);
 }
 
 bool	is_already_in_list(char	*input, env_vars_t *env)

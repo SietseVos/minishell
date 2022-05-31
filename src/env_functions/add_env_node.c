@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-void	add_env_node(env_vars_t *env, char *str)
+int32_t	add_env_node(env_vars_t *env, char *str)
 {
 	while (env->next)
 	{
@@ -9,8 +9,9 @@ void	add_env_node(env_vars_t *env, char *str)
 	}
 	env->next = malloc(sizeof(env_vars_t) * 1);
 	if (!env->next)
-		exit(404);
+		return (-1);
 	env = env->next;
 	env->next = NULL;
 	env->str = str;
+	return (0);
 }
