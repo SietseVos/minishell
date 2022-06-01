@@ -21,10 +21,12 @@ char	**free_array_till_index(char **array, int32_t index)
 	i = 0;
 	while (i < index)
 	{
-		free(array[i]);
+		if (array[i])
+			free(array[i]);
 		i++;
 	}
-	free(array);
+	if (array)
+		free(array);
 	return (NULL);
 }
 

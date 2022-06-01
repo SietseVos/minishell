@@ -1,19 +1,12 @@
-			STRUCTURE:
-	*	One node for every command with an attatched argument.
-	*	Node contains a type to indicate what to do with it.
+	*	Fix cd and its env list changer
 	*
-
-			LEXER:
-	*	return single string that has a space before and afetr every command and argument.
-	*	Create a linked list of the enviroment variables.
 	*
-
-			PARSER:
-	*	Creates a list of all the commands with the arguments attatched.
-	*	Replaces the contents of the arguments with the content of the linked enviroment variable. 
 	*
-
-			EXECUTOR:
+	*
+	*
+	*
+	*
+	*
 	*
 	*
 	*

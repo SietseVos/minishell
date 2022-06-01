@@ -5,19 +5,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft.h"
-# define INFILE 0
-# define OUTFILE 1
-# define APPEND 2
-# define HDOC 3
-# define TRUNC 4
-# define PIPE 5
-# define TOSTDOUT 6
-# define NOINPUT 7
-# define INPIPE 8
 
+#define uint32_t u_int32_t
+#define uint64_t u_int64_t
+
+// legacy code
+#define ruben int8_t 	// this was orginally used as a solution to a complitaced problem ruben (cat), ruben (the best) and int32_t encouncered during their adventures in minihell
+#define sietse int32_t	// sietse also wanted to feel special so we made him a data type aswell :)
+
+enum type
+{
+	INFILE,
+	OUTFILE,
+	APPEND,
+	HDOC,
+	TRUNC,
+	PIPE,
+	TOSTDOUT,
+	NOINPUT,
+	INPIPE
+};
 
 int32_t	g_exit_status;
 
@@ -39,6 +50,7 @@ typedef struct env_vars_s
 	int32_t		cd(char **argument, env_vars_t *env);
 	void		exit_shell(char **argument);
 	void		pwd(void);
+	void		env(env_vars_t *list);
 	int32_t		strings_in_array(char **str);
 	bool		export(char **args, env_vars_t *env);
 	void		bubble_sort_array(char **env_strings, int32_t lst_size);
@@ -60,6 +72,14 @@ void			free_env_list(env_vars_t *list);
 char			**env_list_to_array(env_vars_t *env_list);
 int32_t			env_list_size(env_vars_t *env_list);
 env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
+
+/* ----------------------------------------------------------------------- */
+
+//*************************************************************************//
+
+/* ---------------------------	executer	------------------------------ */
+
+void	execute(action_t *actions, env_vars_t *list);
 
 /* ----------------------------------------------------------------------- */
 

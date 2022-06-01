@@ -39,12 +39,12 @@ static bool	check_for_wrong_argument(char *str)
 	int32_t i;
 
 	i = 0;
-	if (str[0] == '-')
+	if (str[0] == '-' && str[1] != '\0')
 		i++;
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 		i++;
 	if (i >= 19 || str[i] != '\0')
-		return (false);
+		return (true);
 	return (false);
 }
 
@@ -54,14 +54,17 @@ void	exit_shell(char **argument)
 
 	if (!argument)
 		exit(g_exit_status);
+	if (strings_in_array(argument) == 0)
+		exit(0);
+	if (check_for_wrong_argument(argument[0]))
+		exit_shell_error(argument[0]);
 	if (strings_in_array(argument) > 1)
 	{
 		printf("bash: exit: too many arguments\n");
 		g_exit_status = 1;
 		return ;
 	}
-	if (check_for_wrong_argument(argument[0]))
-		exit_shell_error(argument[0]);
 	arg = ft_atoll(argument[0]);
+	free_array_till_index(argument, strings_in_array(argument));
 	exit((int8_t)arg);
 }

@@ -16,7 +16,7 @@ static void	str_add(char *take, char *place)
 		i++;
 		j++;
 	}
-	place[j] = '\0';
+	// place[j] = '\0';
 }
 
 static char	*create_new_pwd_str(char *pwd, char *upfront)
@@ -102,6 +102,14 @@ int32_t	cd(char **argument, env_vars_t *env)
 	static bool	start_of_program = true;
 	char		*old_pwd;
 
+	if (!*argument)
+		return (-1);
+	if (chdir(argument[0]) != 0)
+	{
+		g_exit_status = 1;
+		printf("bash: cd: %s: No such file or directory\n", argument[0]);
+		return (1);
+	}
 	if (start_of_program)
 	{
 		start_of_program = false;
@@ -114,12 +122,6 @@ int32_t	cd(char **argument, env_vars_t *env)
 	}
 	if (change_old_pwd_path(env, &has_been_null) == -1)
 		return (-1);
-	if (chdir(argument[0]) != 0)
-	{
-		g_exit_status = 1;
-		printf("bash: cd: %s: No such file or directory\n", argument[0]);
-		return (1);
-	}
 	if (change_pwd_path(env) == -1)
 		return (-1);	
 	g_exit_status = 0;

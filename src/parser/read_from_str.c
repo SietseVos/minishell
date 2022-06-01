@@ -17,10 +17,8 @@ int32_t	strlen_quote(char *str)
 
 int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
 {
-	int32_t	i;
 	int32_t	varlen;
 
-	i = 0;
 	varlen = envvarlen(str, c);
 	while (envp)
 	{

@@ -59,11 +59,9 @@ static void	fill_output(char *input, char *output)
 
 char	*lexer(char	*input)
 {
-	int32_t	i;
 	int32_t	spaces;
 	char	*output;
 
-	i = 0;
 	// check for syntax error (multiple >>>> in a row)
 	if (check_syntax_error(input))
 		return (NULL);

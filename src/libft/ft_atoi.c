@@ -4,9 +4,7 @@ int32_t	ft_atoi(const char *str)
 {
 	long long	sign;
 	long long	count;
-	int32_t			i;
 
-	i = 0;
 	sign = 1;
 	count = 0;
 	while ((*str >= '\t' && *str <= '\r') || *str == ' ')

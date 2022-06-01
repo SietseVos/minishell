@@ -16,7 +16,7 @@ ENV =		add_env_node.c								\
 			get_variable_node.c							\
 			free_env_list.c								\
 
-EXECUTER =	\
+EXECUTER =	executer.c									
 
 LEXER =		lexer.c										\
 			in_string.c									\
@@ -33,17 +33,19 @@ SIGNALS =	signals.c									\
 
 SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 		$(addprefix src/env_functions/, $(ENV))			\
+		$(addprefix src/executer/, $(EXECUTER))			\
 		$(addprefix src/lexer/, $(LEXER))				\
 		$(addprefix src/parser/, $(PARSER))				\
 		$(addprefix src/signals/, $(SIGNALS))			\
 		src/main.c
 
-$(addprefix src/executer/, $(EXECUTER))			\
 
 BREW_DIR		= $(shell brew --prefix)
 LIBREADLINE		= $(BREW_DIR)/opt/readline/lib
 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g
+FLAGS = -Wall -Werror -Wextra
+#		-fsanitize=address -g
+
 
 INCLUDE_DIRS = -I src/libft -I include -I $(BREW_DIR)/opt/readline/include 
 

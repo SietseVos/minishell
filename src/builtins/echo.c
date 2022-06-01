@@ -23,6 +23,11 @@ void	echo(char **args)
 	int32_t		i;
 
 	i = 0;
+	if (!*args)
+	{
+		printf("\n");
+		return ;
+	}
 	if (is_n_flag(args[0]))
 	{
 		newline = false;
@@ -35,6 +40,8 @@ void	echo(char **args)
 	{
 		printf("%s", args[i]);
 		i++;
+		if (args[i])
+			printf(" ");
 	}
 	if (newline)
 		printf("\n");
