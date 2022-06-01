@@ -20,9 +20,11 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 			continue ;
 		add_history(input);
 		input = lexer(input);
+		printf("lexer output:\n-%s-\n", input);
 		if (!input)
 			continue ;
 		actions = parser(input, env);
+		print_actions(actions);
 		if (!actions)
 		{
 			free(input);

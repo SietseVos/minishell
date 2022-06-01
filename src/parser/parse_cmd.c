@@ -13,7 +13,8 @@ int32_t	get_cmdarrlen(char *str)
 		{
 			if (str[i] == ' ')
 			{
-				i++;
+				while (str[i] == ' ')
+					i++;
 				break;
 			}
 			else if (str[i] == '"' || str[i] == '\'')
@@ -55,7 +56,9 @@ int32_t	determine_cmdtype(char *input, char **last_str, int32_t *i)
 	*last_str = NULL;
 	if (*input == '|')
 	{
-		while (input[j] != '\0' && j < 2)
+		j++;
+		*i += 1;
+		while (input[j] != '\0' && input[j] == ' ')
 		{
 			j++;
 			*i += 1;
