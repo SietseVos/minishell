@@ -39,6 +39,12 @@ typedef struct action_s
 	struct action_s *next;
 }	action_t;
 
+typedef struct heredoc_s
+{
+	char				*str;
+	struct env_vars_s	*next;
+}	heredoc_t;
+
 typedef struct env_vars_s
 {
 	char				*str;

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/02 11:40:13 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/02 16:20:23 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,20 @@ int32_t	interp_exit_status(int32_t varlen, char *dst, int32_t *i)
 	
 	j = 0;
 	cpy = g_exit_status;
+	printf("exit_status value: %d\n", g_exit_status);
 	while (cpy > 0)
 	{
-		dst[j] = cpy % 10;
-		cpy /= 10;
+		cpy = cpy / 10;
 		j++;
+	}
+	cpy = g_exit_status;
+	j--;
+	while (cpy > 0)
+	{
+		dst[j] = cpy % 10 + '0';
+		printf("currently in string: -%c- and j: %d\n", dst[j], j);
+		cpy = cpy / 10;
+		j--;
 		*i += 1;
 	}
 	return (varlen);
@@ -34,7 +43,7 @@ int32_t	place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i)
 	int32_t	varlen;
 
 	varlen = envvarlen(src, '"');
-	if (varlen == 2 && src + 1 == '?')
+	if (varlen == 2 && src[1] == '?')
 		return (interp_exit_status(varlen, dst, i));
 	while (envp)
 	{
