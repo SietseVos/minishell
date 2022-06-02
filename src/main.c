@@ -39,3 +39,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	(void) argv;
 	return (0);
 }
+
+
+// < Makefile cat -e | cat -e > out.ofdsuiod | ls | cat -e > out.two
+// < Makefile cat -e | cat -e | cat -e | cat -e < testing.c | cat -e  > out.two

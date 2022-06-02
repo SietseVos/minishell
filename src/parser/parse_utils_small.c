@@ -32,7 +32,9 @@ int32_t	envvarlen(char *str, char end)
 	int32_t	ret;
 
 	ret = 1;
-	while (str[ret] != end && str[ret] != ' ' && str[ret] != '\0' && str[ret] != '$' && str[ret] != '=')
+	if (str[ret] == '?')
+		return (2);
+	while (str[ret] != end && str[ret] != ' ' && str[ret] != '\0' && str[ret] != '$' && str[ret] != '=' && str[ret] != '?')
 		ret++;
 	return (ret);
 }

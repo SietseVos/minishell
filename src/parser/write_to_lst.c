@@ -6,17 +6,36 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/01 17:08:43 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/02 11:40:13 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int32_t	interp_exit_status(int32_t varlen, char *dst, int32_t *i)
+{
+	int32_t	j;
+	int32_t	cpy;
+	
+	j = 0;
+	cpy = g_exit_status;
+	while (cpy > 0)
+	{
+		dst[j] = cpy % 10;
+		cpy /= 10;
+		j++;
+		*i += 1;
+	}
+	return (varlen);
+}
 
 int32_t	place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i)
 {
 	int32_t	varlen;
 
 	varlen = envvarlen(src, '"');
+	if (varlen == 2 && src + 1 == '?')
+		return (interp_exit_status(varlen, dst, i));
 	while (envp)
 	{
 		if (ft_strncmp(envp ->str, src + 1, varlen - 1) == 0 && envp ->str[varlen - 1] == '=')
