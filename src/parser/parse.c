@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/01 20:42:51 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/02 16:20:45 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,23 +98,24 @@ void	print_actions(action_t *inlst)
 	}
 }
 
-// int32_t	main(int32_t argc, char **argv, char **envp)
-// {
-// 	char		*test;
-// 	env_vars_t	*envlist;
-// 	action_t	*inlst;
+int32_t	main(int32_t argc, char **argv, char **envp)
+{
+	char		*test;
+	env_vars_t	*envlist;
+	action_t	*inlst;
 
-// 	create_env_vars_list(envp, &envlist);
-// 	// printenvp(envlist);
-// 	test = strdup("< f fj | jfkdls jfiow nvn eiowior");
-// 	inlst = parser(test, envlist);
-// 	if (inlst == NULL)
-// 	{
-// 		printf("parsing error\n");
-// 		return (0);
-// 	}
-// 	print_actions(inlst);
-// 	return (0);
-// }
+	create_env_vars_list(envp, &envlist);
+	g_exit_status = 17890;
+	// printenvp(envlist);
+	test = strdup("< f fj | jfkdls $? nvn eiowior");
+	inlst = parser(test, envlist);
+	if (inlst == NULL)
+	{
+		printf("parsing error\n");
+		return (0);
+	}
+	print_actions(inlst);
+	return (0);
+}
 
-// gcc parse.c read_from_str.c write_to_lst.c parse_utils_small.c parse_cmd.c parse_file.c ../env_functions/create_env_vars_list.c ../../src/libft/ft_strlcpy.c ../../src/libft/ft_strlen.c ../../src/libft/ft_strdup.c ../../src/libft/ft_strncmp.c -I ../../include/ -I ../../src/libft ../../src/libft/libft.a -fsanitize=address -g
+// gcc parse.c read_from_str.c write_to_lst.c parse_utils_small.c parse_cmd.c parse_file.c ../env_functions/create_env_vars_list.c ../env_functions/free_env_list.c ../env_functions/get_variable_node.c ../libft/ft_strlcpy.c ../libft/ft_strlen.c ../libft/ft_strdup.c ../libft/ft_strncmp.c -I ../../include/ -I ../libft ../libft/libft.a -fsanitize=address -g

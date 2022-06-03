@@ -1,7 +1,7 @@
-	*	Fix cd and its env list changer
-	*
-	*
-	*
+	*	REDO cd
+	*	Create executer structure for piping & forking
+	*	Create redirect structure
+	*	
 	*
 	*
 	*

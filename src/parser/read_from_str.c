@@ -22,7 +22,7 @@ int32_t	exit_status_numblen(int32_t *strlen, int32_t varlen)
 	cpy = g_exit_status;
 	while (cpy > 0)
 	{
-		cpy /= 10;
+		cpy = cpy / 10;
 		*strlen += 1;
 	}
 	return (varlen);

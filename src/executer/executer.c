@@ -101,14 +101,40 @@ static int32_t	find_command_and_execute(char **arguments, env_vars_t *list)
 	return (0);
 }
 
+bool	actions_contain_pipe(action_t *actions)
+{
+	while (actions)
+	{
+		if (actions->type == PIPE)
+			return (true);
+		actions = actions->next;
+	}
+	return (false);
+}
+
+bool	actions_only_builtins(action_t *actions) // check ytpe 
+{
+	while (actions)
+	{
+		if (!((ft_strncmp(actions->arg[0], "cd", 3) == 0)
+			|| (ft_strncmp(actions->arg[0], "echo", 5) == 0)
+			|| (ft_strncmp(actions->arg[0], "env", 4) == 0)
+			|| (ft_strncmp(actions->arg[0], "exit", 5) == 0)
+			|| (ft_strncmp(actions->arg[0], "export", 7) == 0)
+			|| (ft_strncmp(actions->arg[0], "pwd", 4) == 0)
+			|| (ft_strncmp(actions->arg[0], "unset", 6) == 0)))
+			return (false);
+		actions = actions->next;
+	}
+	return (true);
+}
+
 void	execute(action_t *actions, env_vars_t *list)
 {
 	bool		return_value_b;
 	int32_t		return_value_i;
 	action_t	*start;
-	// int32_t		i;
 
-	// i = 0;
 	start = actions;
 	while (actions)
 	{
