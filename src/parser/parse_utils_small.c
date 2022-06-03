@@ -21,12 +21,6 @@ int32_t	is_operator(char c)
 	return (false);
 }
 
-void	*nullerr(char *errmsg)
-{
-	printf("%s\n",errmsg);
-	return (NULL);
-}
-
 int32_t	envvarlen(char *str, char end)
 {
 	int32_t	ret;
@@ -37,14 +31,4 @@ int32_t	envvarlen(char *str, char end)
 	while (str[ret] != end && str[ret] != ' ' && str[ret] != '\0' && str[ret] != '$' && str[ret] != '=' && str[ret] != '?')
 		ret++;
 	return (ret);
-}
-
-void	printenvp(env_vars_t *print)
-{
-	while (print != 0)
-	{
-		printf("%s\n", print ->str);
-		print = print ->next;
-	}
-	printf("\n");
 }

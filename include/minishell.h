@@ -86,6 +86,8 @@ env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
 /* ---------------------------	executer	------------------------------ */
 
 void	execute(action_t *actions, env_vars_t *list);
+bool	executer(action_t *acts, env_vars_t *envp);
+bool	pipe_command(action_t *acts, int32_t fdread, int32_t fdwrite, env_vars_t *envp);
 
 /* ----------------------------------------------------------------------- */
 
@@ -106,12 +108,9 @@ bool			check_syntax_error(char *str);
 
 void			strlen_til_space(char *str, int32_t *strlen, env_vars_t *envp);
 void			strlen_til_quote(char *str, int32_t *strlen, char c, env_vars_t *envp);
-int32_t			strlen_quote(char *str);
 int32_t			envvarlen(char *str, char end);
-void			*nullerr(char *errmsg);
 int32_t			is_operator(char c);
 int32_t			check_str_end(char *str, int32_t i, int32_t n);
-void			printenvp(env_vars_t *print);
 int32_t			place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp);
 int32_t			place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i);
 action_t		*parse_file(char *input, int32_t *i, env_vars_t *envp);
@@ -130,6 +129,18 @@ void	print_actions(action_t *inlst);
 /* ------------------------------	signals	------------------------------ */
 
 void	init_signals(void);
+
+/* ----------------------------------------------------------------------- */
+
+//*************************************************************************//
+
+/* ------------------------------	utils	------------------------------ */
+
+bool			boolerr(char *errmsg);
+void			*nullerr(char *errmsg);
+void			print_actions(action_t *inlst);
+void			printenvp(env_vars_t *print);
+void			printchararr(char **toprint);
 
 /* ----------------------------------------------------------------------- */
 

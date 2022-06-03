@@ -32,15 +32,17 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 			continue ;
 		}
 		// free(input);
-		// print_actions(actions);
-		execute(actions, env);
+		print_actions(actions);
+		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
+			return (0);
+		executer(actions, env);
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?
-	(void) argc;
-	(void) argv;
+	(void)	argc;
+	(void)	argv;
 	return (0);
 }
 
-
+// weird bash cases
 // < Makefile cat -e | cat -e > out.ofdsuiod | ls | cat -e > out.two
 // < Makefile cat -e | cat -e | cat -e | cat -e < testing.c | cat -e  > out.two

@@ -170,4 +170,32 @@ void	execute(action_t *actions, env_vars_t *list)
 	free_action_list(&start);
 }
 
+bool	executer(action_t *acts, env_vars_t *envp)
+{
+	int32_t	fdread;
+	int32_t	fdwrite;
 
+	fdread = 0;
+	fdwrite = 1;
+	while (acts)
+	{
+		if (acts->type == INFILE)
+		{
+			fdread = open(acts->arg[0], O_RDONLY);
+			if (fdread < 0)
+				return (boolerr("failed to open file for reading"));
+		}
+		else if (acts->type == TRUNC || acts->type == APPEND)
+		{
+			fdwrite = open(acts->arg[0], O_WRONLY | O_CREAT, 0777);
+			if (fdwrite < 0)
+				return (boolerr("failed to open file for writing"));
+		}
+		else
+		{
+			fdread = pipe_command(acts, fdread, fdwrite, envp);
+		}
+		acts = acts->next;
+	}
+	return (true);
+}

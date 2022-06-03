@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/02 16:20:45 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/03 13:14:19 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,19 @@ action_t	*determine_kind(char *input, int32_t *i, env_vars_t *envp)
 	if (input[*i] == '<' || input[*i] == '>')
 		return (parse_file(input, i, envp));
 	return (parse_cmd(input, i, envp));
-	// return (NULL);
+}
+
+void	free_chararr(char **tofree)
+{
+	int	i;
+
+	i = 0;
+	while (tofree[i])
+	{
+		free(tofree[i]);
+		i++;
+	}
+	free(tofree);
 }
 
 action_t	*action_node_fail(action_t *tofree)
@@ -28,6 +40,7 @@ action_t	*action_node_fail(action_t *tofree)
 	while (tofree)
 	{
 		tofree = tofree ->next;
+		free_chararr(temp ->arg);
 		free(temp);
 		temp = tofree;
 	}
@@ -57,65 +70,24 @@ action_t	*parser(char *input, env_vars_t *envp)
 	return (ret);
 }
 
-void	printchararr(char **toprint)
-{
-	int32_t	i;
+// int32_t	main(int32_t argc, char **argv, char **envp)
+// {
+// 	char		*test;
+// 	env_vars_t	*envlist;
+// 	action_t	*inlst;
 
-	i = 0;
-	printf("\033[1;34min Arguments:\033[0m\n");
-	while (toprint[i] != NULL)
-	{
-		printf("-%s-\n", toprint[i]);
-		i++;
-	}
-}
-
-void	print_actions(action_t *inlst)
-{
-	while (inlst)
-	{
-		printf("\033[1;36m===== node =====\033[31m\n");
-		if (inlst ->type == 0)
-			printf("Type: Infile\n");
-		else if (inlst ->type == 1)
-			printf("Type: Outfile\n");
-		else if (inlst ->type == 2)
-			printf("Type: Append\n");
-		else if (inlst ->type == 3)
-			printf("Type: Heredoc\n");
-		else if (inlst ->type == 4)
-			printf("Type: Trunicate\n");
-		else if (inlst ->type == 5)
-			printf("Type: Pipe \n");
-		else if (inlst ->type == 6)
-			printf("Type: std out\n");
-		else if (inlst ->type == 7)
-			printf("Type: noinput\n");
-		else if (inlst ->type == 8)
-			printf("Type: inpipe\n");
-		printchararr(inlst ->arg);
-		inlst = inlst ->next;
-	}
-}
-
-int32_t	main(int32_t argc, char **argv, char **envp)
-{
-	char		*test;
-	env_vars_t	*envlist;
-	action_t	*inlst;
-
-	create_env_vars_list(envp, &envlist);
-	g_exit_status = 17890;
-	// printenvp(envlist);
-	test = strdup("< f fj | jfkdls $? nvn eiowior");
-	inlst = parser(test, envlist);
-	if (inlst == NULL)
-	{
-		printf("parsing error\n");
-		return (0);
-	}
-	print_actions(inlst);
-	return (0);
-}
+// 	create_env_vars_list(envp, &envlist);
+// 	g_exit_status = 17890;
+// 	// printenvp(envlist);
+// 	test = strdup("< f fj | jfkdls $? nvn eiowior");
+// 	inlst = parser(test, envlist);
+// 	if (inlst == NULL)
+// 	{
+// 		printf("parsing error\n");
+// 		return (0);
+// 	}
+// 	print_actions(inlst);
+// 	return (0);
+// }
 
 // gcc parse.c read_from_str.c write_to_lst.c parse_utils_small.c parse_cmd.c parse_file.c ../env_functions/create_env_vars_list.c ../env_functions/free_env_list.c ../env_functions/get_variable_node.c ../libft/ft_strlcpy.c ../libft/ft_strlen.c ../libft/ft_strdup.c ../libft/ft_strncmp.c -I ../../include/ -I ../libft ../libft/libft.a -fsanitize=address -g

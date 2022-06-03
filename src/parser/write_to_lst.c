@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/02 16:20:23 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/03 10:58:48 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int32_t	interp_exit_status(int32_t varlen, char *dst, int32_t *i)
 	
 	j = 0;
 	cpy = g_exit_status;
-	printf("exit_status value: %d\n", g_exit_status);
 	while (cpy > 0)
 	{
 		cpy = cpy / 10;
@@ -30,7 +29,6 @@ int32_t	interp_exit_status(int32_t varlen, char *dst, int32_t *i)
 	while (cpy > 0)
 	{
 		dst[j] = cpy % 10 + '0';
-		printf("currently in string: -%c- and j: %d\n", dst[j], j);
 		cpy = cpy / 10;
 		j--;
 		*i += 1;
@@ -49,8 +47,8 @@ int32_t	place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i)
 	{
 		if (ft_strncmp(envp ->str, src + 1, varlen - 1) == 0 && envp ->str[varlen - 1] == '=')
 		{
-			ft_strlcpy(dst, envp ->str + varlen, strlen_quote(envp ->str + varlen) + 1);
-			*i += strlen_quote(envp ->str + varlen);
+			ft_strlcpy(dst, envp ->str + varlen, ft_strlen(envp ->str + varlen) + 1);
+			*i += ft_strlen(envp ->str + varlen);
 			return (varlen);
 		}
 		envp = envp ->next;

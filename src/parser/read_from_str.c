@@ -1,20 +1,5 @@
 #include "minishell.h"
 
-int32_t	strlen_quote(char *str)
-{
-	int32_t	i;
-	int32_t	ret;
-
-	i = 0;
-	ret = 0;
-	while (str[i] != '\0')
-	{
-		ret++;
-		i++;
-	}
-	return (ret);
-}
-
 int32_t	exit_status_numblen(int32_t *strlen, int32_t varlen)
 {
 	int32_t	cpy;

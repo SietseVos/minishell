@@ -16,7 +16,8 @@ ENV =		add_env_node.c								\
 			get_variable_node.c							\
 			free_env_list.c								\
 
-EXECUTER =	executer.c									
+EXECUTER =	executer.c									\
+			run_command.c								\
 
 LEXER =		lexer.c										\
 			in_string.c									\
@@ -31,12 +32,16 @@ PARSER =	parse_cmd.c									\
 
 SIGNALS =	signals.c									\
 
+UTILS =		errors.c									\
+			printing.c									\
+
 SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 		$(addprefix src/env_functions/, $(ENV))			\
 		$(addprefix src/executer/, $(EXECUTER))			\
 		$(addprefix src/lexer/, $(LEXER))				\
 		$(addprefix src/parser/, $(PARSER))				\
 		$(addprefix src/signals/, $(SIGNALS))			\
+		$(addprefix src/utils/, $(UTILS))				\
 		src/main.c
 
 

@@ -97,6 +97,7 @@ action_t	*arg_malloc_fail(action_t *node, int32_t j)
 	j--;
 	while (j >= 0)
 	{
+		printf("freeing %s\n", node ->arg[j]);
 		free(node ->arg[j]);
 		j--;
 	}

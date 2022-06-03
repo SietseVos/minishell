@@ -53,7 +53,7 @@ action_t	*parse_file(char *input, int32_t *i, env_vars_t *envp)
 	if (input[*i] == '<' && input[*i + 1] == ' ')
 		node = found_redirect(input, i, INFILE, envp);
 	if (input[*i] == '>' && input[*i + 1] == ' ')
-		node = found_redirect(input, i, OUTFILE, envp);
+		node = found_redirect(input, i, TRUNC, envp);
 	if (input[*i] == '<' && input[*i + 1] == '<')
 		node = found_redirect(input, i, HDOC, envp);
 	if (input[*i] == '>' && input[*i + 1] == '>')
