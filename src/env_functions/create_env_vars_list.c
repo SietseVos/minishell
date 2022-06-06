@@ -20,7 +20,7 @@ static int32_t	increment_shell_level(env_vars_t *list) // LEAKS????
 	char	*new_str;
 	char	*new_num;
 
-	list = get_variable_node(list, "SHLVL=");
+	list = get_variable_node(list, "SHLVL");
 	if (!list)
 		return (0);
 	level = ft_atoi(&list->str[6]);
@@ -50,11 +50,16 @@ static void	remove_exess_from_list(env_vars_t **list)
 	int32_t		i;
 
 	i = 0;
+	tmp = get_variable_node(*list, "OLDPWD=");
+	if (tmp)
+	{
+		tmp->str[6] = '\0';
+		tmp->has_value = false;
+	}
 	tmp = *list;
 	while (tmp)
 	{
-		if (ft_strncmp("OLDPWD=", tmp->str, 7) == 0
-			|| ft_strncmp("_=", tmp->str, 2) == 0)
+		if (ft_strncmp("_=", tmp->str, 2) == 0)
 		{
 			next = tmp->next;
 			free(tmp->str);
@@ -63,7 +68,7 @@ static void	remove_exess_from_list(env_vars_t **list)
 				*list = next;
 			else
 				pre->next = next;
-			break ;
+			tmp = pre;
 		}
 		i++;
 		pre = tmp;

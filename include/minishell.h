@@ -13,6 +13,10 @@
 #define uint32_t u_int32_t
 #define uint64_t u_int64_t
 
+#define null	1
+#define old 	3
+#define quotes	2
+
 // legacy code
 #define ruben int8_t 	// this was orginally used as a solution to a complitaced problem ruben (cat), ruben (the best) and int32_t encouncered during their adventures in minihell
 #define sietse int32_t	// sietse also wanted to feel special so we made him a data type aswell :)
@@ -48,12 +52,18 @@ typedef struct heredoc_s
 typedef struct env_vars_s
 {
 	char				*str;
+	bool				has_value;
 	struct env_vars_s	*next;
 }	env_vars_t;
 
 /* ---------------------------	builtins	------------------------------ */
 
 	int32_t		cd(char **argument, env_vars_t *env);
+	int32_t		chdir_error(char *str);
+	char		*create_new_cd_str(char *var, char *pwd);
+	int32_t		set_oldpwd(env_vars_t *oldpwd_node);
+	int32_t		move_pwd_to_oldpwd(env_vars_t *oldpwd_node, env_vars_t *pwd_node, bool *has_been_null);
+	int32_t		create_empty_oldpwd(env_vars_t *oldpwd_node, bool *has_been_null);
 	void		exit_shell(char **argument);
 	void		pwd(void);
 	void		env(env_vars_t *list);

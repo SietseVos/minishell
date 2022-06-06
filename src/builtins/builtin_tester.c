@@ -78,8 +78,15 @@ int32_t main(int argc, char **argv, char **envp)
 	char 		*arg7[] = {"PWD=test", "1PWD=test", "P-WD=test", NULL};
 
 	create_env_vars_list(envp, &list);
-	export(arg7, list);
+	printf("				----------------------------------------------\n");
 	export(arg0, list);
+	// env(list);
+	printf("				----------------------------------------------\n");
+	cd(arg1, list);
+	printf("				----------------------------------------------\n");
+	// env(list);
+	export(arg0, list);
+	// export(arg7, list);
 	// system("leaks a.out");
 	return (0);
 }
@@ -88,4 +95,4 @@ int32_t main(int argc, char **argv, char **envp)
 
 // empty lines should not be added to the history (up arrow)
 
-// gcc unset.c export_utils.c echo.c cd.c exit.c export.c pwd.c strings_in_array.c builtin_tester.c ../env_functions/add_env_node.c ../env_functions/create_env_vars_list.c ../env_functions/env_list_to_array.c ../env_functions/get_variable_node.c -I ../../include/ -I ../../src/libft ../../src/libft/libft.a -fsanitize=address -g
+// gcc unset.c env.c cd_utils.c export_utils.c echo.c cd.c exit.c export.c pwd.c strings_in_array.c builtin_tester.c ../env_functions/free_env_list.c ../env_functions/add_env_node.c ../env_functions/create_env_vars_list.c ../env_functions/env_list_to_array.c ../env_functions/get_variable_node.c -I ../../include/ -I ../../src/libft ../../src/libft/libft.a -fsanitize=address -g

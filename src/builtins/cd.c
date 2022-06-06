@@ -1,39 +1,28 @@
 
 #include "minishell.h"
 
-static void	str_add(char *take, char *place)
-{
-	int32_t i;
-	int32_t	j;
-
-	i = 0;
-	j = 0;
-	while (place[j])
-		j++;
-	while (take[i])
-	{
-		place[j] = take[i];
-		i++;
-		j++;
-	}
-	// place[j] = '\0';
-}
-
-static char	*create_new_pwd_str(char *pwd, char *upfront)
+/*
+	*	This function concatinates the given strings into one, newly allocated string.
+	*	It does not free any of the given strings.
+	*	@param var Variable to be in front of the working directory.
+	*	@param pwd Path of working directory.
+	*	@return [NULL] if allocation fails, otherwise the new string.
+*/
+char	*create_new_cd_str(char *var, char *pwd)
 {
 	int32_t	strlen_pwd;
-	int32_t	strlen_upfront;
+	int32_t	strlen_var;
+	int32_t	new_str_size;
 	char	*new;
 
 	strlen_pwd = ft_strlen(pwd);
-	strlen_upfront = ft_strlen(upfront);
-	new = ft_calloc(strlen_pwd + strlen_upfront + 3, sizeof(char));
+	strlen_var = ft_strlen(var);
+	new_str_size = strlen_pwd + strlen_var + null;
+	new = ft_calloc(new_str_size, sizeof(char));
 	if (!new)
 		return (NULL);
-	if (upfront)
-		str_add(upfront, new);
-	if (pwd)
-		str_add(pwd, new);
+	ft_strlcat(new, var, new_str_size);
+	ft_strlcat(new, pwd, new_str_size);
 	return (new);
 }
 
@@ -43,18 +32,18 @@ static int32_t	change_pwd_path(env_vars_t *env)
 	char		*new_pwd;
 	char		*pwd;
 	
+	path = get_variable_node(env, "PWD");
+	if (!path)
+		return (1);
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (-1);
-	new_pwd = create_new_pwd_str(pwd, "PWD=");
+	new_pwd = create_new_cd_str("PWD=", pwd);
+	free(pwd);
 	if (!new_pwd)
 		return (-1);
-	free(pwd);
-	path = get_variable_node(env, "PWD=");
-	if (path)
-		path->str = new_pwd;
-	else
-		free(new_pwd);
+	free(path->str);
+	path->str = new_pwd;
 	return (0);
 }
 
@@ -62,37 +51,58 @@ static int32_t	change_old_pwd_path(env_vars_t *env, bool *has_been_null)
 {
 	env_vars_t	*oldpwd_node;
 	env_vars_t	*pwd_node;
-	char		*cwd;
 
-	oldpwd_node = get_variable_node(env, "OLDPWD=");
-	pwd_node = get_variable_node(env, "PWD=");
+	oldpwd_node = get_variable_node(env, "OLDPWD");
+	pwd_node = get_variable_node(env, "PWD");
 	if (oldpwd_node && pwd_node)
 	{
-		*has_been_null = false;
-		free(oldpwd_node->str);
-		oldpwd_node->str = ft_calloc(strlen(pwd_node->str + 4), sizeof(char));
-		if (!oldpwd_node->str)
+		if (move_pwd_to_oldpwd(oldpwd_node, pwd_node, has_been_null) == -1)
 			return (-1);
-		str_add("OLD", oldpwd_node->str);
-		str_add(pwd_node->str, oldpwd_node->str);
 	}
 	else if (oldpwd_node && !pwd_node && *has_been_null)
 	{
-		free(oldpwd_node->str);
-		cwd = getcwd(NULL, 0);
-		if (!cwd)
+		if (set_oldpwd(oldpwd_node) == -1)
 			return (-1);
-		oldpwd_node->str = create_new_pwd_str(cwd, "OLDPWD=");
-		free(cwd);
 	}
 	else if (oldpwd_node && !pwd_node && !*has_been_null)
 	{
-		free(oldpwd_node->str);
-		oldpwd_node->str = create_new_pwd_str(NULL, "OLDPWD=");
-		*has_been_null = true;
+		if (create_empty_oldpwd(oldpwd_node, has_been_null) == -1)
+			return (-1);
 	}
-	if (pwd_node)
-		free(pwd_node->str);
+	// if (pwd_node)
+	// 	free(pwd_node->str);
+	return (0);
+}
+
+static int32_t	first_cd_call(bool *start_of_program, env_vars_t *env)
+{
+	env_vars_t	*oldpwd_node;
+	char 		*old_pwd;
+
+	oldpwd_node = get_variable_node(env, "OLDPWD");
+	if (*start_of_program == false)
+		return (0);
+	*start_of_program = false;
+	if (oldpwd_node)
+	{
+		oldpwd_node->has_value = true;
+		free(oldpwd_node->str);
+		oldpwd_node->str = NULL;
+		oldpwd_node->str = ft_strdup("OLDPWD=");
+		if (!oldpwd_node->str)
+			return (-1);
+	}
+	else
+	{
+		old_pwd = ft_strdup("OLDPWD=");
+		if (!old_pwd)
+			return (-1);
+		if (add_env_node(env, old_pwd) == -1)
+		{
+			free(old_pwd);
+			return (-1);
+		}
+	}
 	return (0);
 }
 
@@ -100,26 +110,13 @@ int32_t	cd(char **argument, env_vars_t *env)
 {
 	static bool	has_been_null = false;
 	static bool	start_of_program = true;
-	char		*old_pwd;
 
 	if (!*argument)
 		return (-1);
 	if (chdir(argument[0]) != 0)
-	{
-		g_exit_status = 1;
-		printf("bash: cd: %s: No such file or directory\n", argument[0]);
-		return (1);
-	}
-	if (start_of_program)
-	{
-		start_of_program = false;
-		old_pwd = create_new_pwd_str(NULL, "OLDPWD=");
-		if (add_env_node(env, old_pwd) == -1)
-		{
-			free(old_pwd);
-			return (-1);
-		}
-	}
+		return (chdir_error(argument[0]));
+	if (first_cd_call(&start_of_program, env) == -1)
+		return (-1);
 	if (change_old_pwd_path(env, &has_been_null) == -1)
 		return (-1);
 	if (change_pwd_path(env) == -1)

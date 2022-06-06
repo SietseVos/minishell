@@ -1,6 +1,7 @@
 NAME = minishell
 
 BUILTINS =	cd.c										\
+			cd_utils.c									\
 			echo.c										\
 			env.c										\
 			exit.c										\
