@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include <sys/wait.h>
 
 static bool	run_command(action_t *acts, char **envp)
 {

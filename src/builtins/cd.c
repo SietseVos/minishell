@@ -110,16 +110,25 @@ int32_t	cd(char **argument, env_vars_t *env)
 {
 	static bool	has_been_null = false;
 	static bool	start_of_program = true;
+	env_vars_t *home_path;
 
 	if (!*argument)
-		return (-1);
-	if (chdir(argument[0]) != 0)
+	{
+		home_path = get_variable_node(env, "HOME");
+		if (!home_path || home_path->has_value == false)
+		{
+			g_exit_status = 1;
+			printf("bash: cd: HOME not set\n");
+			return (0);
+		}
+		else if (chdir(&home_path->str[5]) != 0)
+			return (chdir_error(&home_path->str[5]));
+	}
+	else if (chdir(argument[0]) != 0)
 		return (chdir_error(argument[0]));
-	if (first_cd_call(&start_of_program, env) == -1)
-		return (-1);
-	if (change_old_pwd_path(env, &has_been_null) == -1)
-		return (-1);
-	if (change_pwd_path(env) == -1)
+	if (first_cd_call(&start_of_program, env) == -1
+		|| change_old_pwd_path(env, &has_been_null) == -1
+		|| change_pwd_path(env) == -1)
 		return (-1);	
 	g_exit_status = 0;
 	return (0);

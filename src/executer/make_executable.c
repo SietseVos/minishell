@@ -2,9 +2,6 @@
 
 void	free_pp(char **pp, int size)
 {
-	int	count;
-
-	count = 0;
 	while (size >= 0)
 	{
 		free(pp[size]);
