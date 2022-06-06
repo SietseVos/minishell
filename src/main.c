@@ -25,7 +25,6 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		if (!input)
 			continue ;
 		actions = parser(input, env);
-		// print_actions(actions);
 		if (!actions)
 		{
 			free(input);
@@ -35,7 +34,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		print_actions(actions);
 		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 			return (0);
-		executer(actions, env);
+		executer_setup(actions, env);
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?
 	(void)	argc;
@@ -46,3 +45,4 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 // weird bash cases
 // < Makefile cat -e | cat -e > out.ofdsuiod | ls | cat -e > out.two
 // < Makefile cat -e | cat -e | cat -e | cat -e < testing.c | cat -e  > out.two
+// export TEST=test | echo $TEST

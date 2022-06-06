@@ -50,4 +50,3 @@ void	print_actions(action_t *inlst)
 		inlst = inlst ->next;
 	}
 }
-
