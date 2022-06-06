@@ -19,6 +19,7 @@ ENV =		add_env_node.c								\
 
 EXECUTER =	executer.c									\
 			run_command.c								\
+			make_executable.c							\
 
 LEXER =		lexer.c										\
 			in_string.c									\

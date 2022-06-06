@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/03 10:58:48 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/06 09:26:31 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ int32_t	interp_exit_status(int32_t varlen, char *dst, int32_t *i)
 	
 	j = 0;
 	cpy = g_exit_status;
+	if (cpy == 0)
+	{
+		dst[j] = '0';
+		*i += 1;
+		return (varlen);
+	}
 	while (cpy > 0)
 	{
 		cpy = cpy / 10;
@@ -66,10 +72,7 @@ void	strcpy_interpvar(char *dst, char *src, int32_t strlen, env_vars_t *envp)
 	while (src[j] != '\0' && strlen > i + 1)
 	{
 		if (src[j] == '$')
-		{
-			dst[i] = src[j];
 			j += place_envvar(dst + i, src + j, envp, &i);
-		}
 		else
 		{
 			dst[i] = src[j];

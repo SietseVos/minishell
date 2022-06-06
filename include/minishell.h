@@ -96,8 +96,13 @@ env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
 /* ---------------------------	executer	------------------------------ */
 
 void	execute(action_t *actions, env_vars_t *list);
-bool	executer(action_t *acts, env_vars_t *envp);
-bool	pipe_command(action_t *acts, int32_t fdread, int32_t fdwrite, env_vars_t *envp);
+bool	executer(action_t *acts, char **envp);
+bool	pipe_command(action_t *acts, int32_t fdread, int32_t fdwrite, char **envp);
+char	*get_executable(char *cmd, char **envp);
+int		pplen(char **pp);
+void	free_pp(char **pp, int size);
+void	pipe_to_file(char **cmd, int32_t fdread, int32_t fdwrite, char **envp);
+bool	executer_setup(action_t *acts, env_vars_t *envp);
 
 /* ----------------------------------------------------------------------- */
 

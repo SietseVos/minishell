@@ -170,7 +170,73 @@ void	execute(action_t *actions, env_vars_t *list)
 	free_action_list(&start);
 }
 
-bool	executer(action_t *acts, env_vars_t *envp)
+bool	open_in_or_outfile(int *fdread, int *fdwrite, action_t *acts)
+{
+	if (acts->type == INFILE)
+	{
+		*fdread = open(acts->arg[0], O_RDONLY);
+		if (*fdread < 0)
+			return (boolerr("failed to open file for reading"));
+	}
+	else if (acts->type == TRUNC || acts->type == APPEND)
+	{
+		*fdwrite = open(acts->arg[0], O_WRONLY | O_CREAT, 0777);
+		if (*fdwrite < 0)
+			return (boolerr("failed to open file for writing"));
+	}
+	return (true);
+}
+
+bool	is_builtin(char *str)
+{
+	if ((ft_strncmp(str, "cd", 3) == 0)
+			|| (ft_strncmp(str, "echo", 5) == 0)
+			|| (ft_strncmp(str, "env", 4) == 0)
+			|| (ft_strncmp(str, "exit", 5) == 0)
+			|| (ft_strncmp(str, "export", 7) == 0)
+			|| (ft_strncmp(str, "pwd", 4) == 0)
+			|| (ft_strncmp(str, "unset", 6) == 0))
+		return (true);
+	return (false);
+}
+
+bool	get_cmd_format(action_t *acts, char **envp)
+{
+	char	*ret;
+
+	if (access(acts->arg[0], F_OK) == 0)
+		return (true);
+	if (is_builtin(acts->arg[0]) == true)
+		return (true);
+	ret = get_executable(acts->arg[0], envp);
+	if (ret == NULL)
+		return (boolerr("failed to get executable"));
+	free(acts->arg[0]);
+	acts->arg[0] = ret;
+	return (true);
+}
+
+bool	executer_setup(action_t *acts, env_vars_t *envp)
+{
+	int32_t	fdreadcpy;
+	int32_t	fdwritecpy;
+
+	fdreadcpy = dup(0);
+	if (fdreadcpy == -1)
+		return (boolerr("failed to dup fdreadcpy"));
+	fdwritecpy = dup(1);
+	if (fdwritecpy == -1)
+		return (boolerr("failed to dup fdwritecpy"));
+	if (executer(acts, env_list_to_array(envp)) == false)
+		return (boolerr("failed to execute executer"));
+	if (dup2(fdreadcpy, 0) == -1)
+		return (boolerr("failed to reset stdin"));
+	if (dup2(fdwritecpy, 1) == -1)
+		return (boolerr("failed to reset stdout"));
+	return (true);
+}
+
+bool	executer(action_t *acts, char **envp)
 {
 	int32_t	fdread;
 	int32_t	fdwrite;
@@ -179,20 +245,23 @@ bool	executer(action_t *acts, env_vars_t *envp)
 	fdwrite = 1;
 	while (acts)
 	{
-		if (acts->type == INFILE)
+		if (acts->type == INFILE || acts->type == TRUNC || acts->type == APPEND)
 		{
-			fdread = open(acts->arg[0], O_RDONLY);
-			if (fdread < 0)
-				return (boolerr("failed to open file for reading"));
+			if (open_in_or_outfile(&fdread, &fdwrite, acts) == false)
+				return (boolerr("failed to open file"));
 		}
-		else if (acts->type == TRUNC || acts->type == APPEND)
+		else if (acts ->next == NULL)
 		{
-			fdwrite = open(acts->arg[0], O_WRONLY | O_CREAT, 0777);
-			if (fdwrite < 0)
-				return (boolerr("failed to open file for writing"));
+			if (get_cmd_format(acts,envp) == false)
+				return (boolerr("failed to get commands foramt"));
+			// printf("command: %s\n", acts->arg[0]);
+			pipe_to_file(acts->arg, fdread, fdwrite, envp);
 		}
 		else
 		{
+			if (get_cmd_format(acts, envp) == false)
+				return (boolerr("failed to get commands foramt"));
+			// printf("command: %s\n", acts->arg[0]);
 			fdread = pipe_command(acts, fdread, fdwrite, envp);
 		}
 		acts = acts->next;
