@@ -121,6 +121,8 @@ int32_t	cd(char **argument, env_vars_t *env)
 			printf("bash: cd: HOME not set\n");
 			return (0);
 		}
+		else if (home_path->str[5] == '\0')			// unset HOME then export HOME=
+			return (0);
 		else if (chdir(&home_path->str[5]) != 0)
 			return (chdir_error(&home_path->str[5]));
 	}
