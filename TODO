@@ -1,10 +1,4 @@
-	*	REDO cd
-	*	Create executer structure for piping & forking
-	*	Create redirect structure
-	*	
-	*
-	*
-	*
+	*	make executables run through relative / absolute path
 	*
 	*
 	*

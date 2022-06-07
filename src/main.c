@@ -30,7 +30,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 			free(input);
 			continue ;
 		}
-		// free(input);
+		free(input);
 		// print_actions(actions);
 		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 			return (0);

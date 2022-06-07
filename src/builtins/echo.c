@@ -5,6 +5,8 @@ static bool	is_n_flag(char *str)
 {
 	int32_t	i;
 
+	if (!str)
+		return (false);
 	if (str[0] != '-')
 		return (false);
 	i = 1;
