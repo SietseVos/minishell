@@ -112,7 +112,7 @@ int32_t	cd(char **argument, env_vars_t *env)
 	static bool	start_of_program = true;
 	env_vars_t *home_path;
 
-	if (!*argument)
+	if (!*argument || argument[0][0] == '\0')
 	{
 		home_path = get_variable_node(env, "HOME");
 		if (!home_path || home_path->has_value == false)

@@ -30,8 +30,13 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 			free(input);
 			continue ;
 		}
-		// free(input);
-		print_actions(actions);
+<<<<<<< HEAD
+		free(input);
+		// print_actions(actions);
+=======
+		free(input);
+		// print_actions(actions);
+>>>>>>> 89d49be4c9a1e0b440a755b8afe30f978f92a891
 		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 			return (0);
 		executer_setup(actions, env);
