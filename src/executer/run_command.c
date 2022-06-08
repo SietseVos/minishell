@@ -14,21 +14,24 @@ void	pipe_to_file(char **cmd, int32_t fdread, int32_t fdwrite, char **envp)
 {
 	int32_t	pid;
 	int32_t	status;
+	char	buf[10000];
 
 	pid = fork();
 	if (pid == -1)
 		boolerr("failed to fork");
 	if (pid == 0)
 	{
-		printf("dupping fd %d to stdout.\n", fdwrite);
 		dup2(fdwrite, 1);
+		printf("dupping fd %d to stdout.\n", fdwrite);
+		read(fdread, buf, 100);
+		printf("in fdread: %s\n", buf);
 		dup2(fdread, 0);
 		execve(cmd[0], cmd, envp);
 	}
 	waitpid(pid, &status, 0);
 }
 
-bool	pipe_command(action_t *acts, int32_t fdread, char **envp)
+int32_t	pipe_command(action_t *acts, int32_t fdread, char **envp)
 {
 	int32_t	fd[2];
 	int32_t	pid;
@@ -55,6 +58,7 @@ bool	pipe_command(action_t *acts, int32_t fdread, char **envp)
 			close(fdread);
 		// waitpid(pid, &status, 0);
 		printf("entered parent\n");
+		printf("new fd should be: %d\n", fd[0]);
 		return (fd[0]);
 	}
 	exit(0);

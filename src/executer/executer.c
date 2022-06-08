@@ -216,34 +216,11 @@ bool	get_cmd_format(action_t *acts, char **envp)
 	return (true);
 }
 
-bool	executer_setup(action_t *acts, env_vars_t *envp)
-{
-	int32_t	fdreadcpy;
-	int32_t	fdwritecpy;
-
-	fdreadcpy = dup(0);
-	if (fdreadcpy == -1)
-		return (boolerr("failed to dup fdreadcpy"));
-	fdwritecpy = dup(1);
-	if (fdwritecpy == -1)
-		return (boolerr("failed to dup fdwritecpy"));
-	if (executer(acts, env_list_to_array(envp)) == false)
-		return (boolerr("failed to execute executer"));
-	if (dup2(fdreadcpy, 0) == -1)
-		return (boolerr("failed to reset stdin"));
-	if (dup2(fdwritecpy, 1) == -1)
-		return (boolerr("failed to reset stdout"));
-	printf("file descriptors have been reset.\n");
-	return (true);
-}
-
-bool	executer(action_t *acts, char **envp)
+bool	executer(action_t *acts, char **envp, int32_t fdwrite)
 {
 	int32_t	fdread;
-	int32_t	fdwrite;
 
 	fdread = 0;
-	fdwrite = 1;
 	while (acts)
 	{
 		if (acts->type == INFILE || acts->type == TRUNC || acts->type == APPEND)
@@ -263,8 +240,31 @@ bool	executer(action_t *acts, char **envp)
 				return (boolerr("failed to get commands foramt"));
 			// printf("command: %s\n", acts->arg[0]);
 			fdread = pipe_command(acts, fdread, envp);
+			// printf("new fdread after pipe: %d\n", fdread);
 		}
+		printf("stdout still working\n");
 		acts = acts->next;
 	}
+	return (true);
+}
+
+bool	executer_setup(action_t *acts, env_vars_t *envp)
+{
+	int32_t	fdreadcpy;
+	int32_t	fdwritecpy;
+
+	fdreadcpy = dup(0);
+	if (fdreadcpy == -1)
+		return (boolerr("failed to dup fdreadcpy"));
+	fdwritecpy = dup(1);
+	if (fdwritecpy == -1)
+		return (boolerr("failed to dup fdwritecpy"));
+	if (executer(acts, env_list_to_array(envp), fdwritecpy) == false)
+		return (boolerr("failed to execute executer"));
+	if (dup2(fdreadcpy, 0) == -1)
+		return (boolerr("failed to reset stdin"));
+	if (dup2(fdwritecpy, 1) == -1)
+		return (boolerr("failed to reset stdout"));
+	printf("file descriptors have been reset.\n");
 	return (true);
 }

@@ -30,13 +30,8 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 			free(input);
 			continue ;
 		}
-<<<<<<< HEAD
 		free(input);
-		// print_actions(actions);
-=======
-		free(input);
-		// print_actions(actions);
->>>>>>> 89d49be4c9a1e0b440a755b8afe30f978f92a891
+		print_actions(actions);
 		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 			return (0);
 		executer_setup(actions, env);
@@ -52,3 +47,5 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 // < Makefile cat -e | cat -e > out.ofdsuiod | ls | cat -e > out.two
 // < Makefile cat -e | cat -e | cat -e | cat -e < testing.c | cat -e  > out.two
 // export TEST=test | echo $TEST
+// ls | cat -e > out.two out.txt
+// ls | cat -e < Makefile out.txt testing.c
