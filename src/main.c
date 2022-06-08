@@ -31,11 +31,11 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 			continue ;
 		}
 		// free(input);
-		// print_actions(actions);
+		print_actions(actions);
 		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 			return (0);
-		// executer_setup(actions, env);
-		execute(actions, env);
+		executer_setup(actions, env);
+		// execute(actions, env);
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?
 	(void)	argc;

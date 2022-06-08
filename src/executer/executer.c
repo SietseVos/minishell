@@ -233,6 +233,7 @@ bool	executer_setup(action_t *acts, env_vars_t *envp)
 		return (boolerr("failed to reset stdin"));
 	if (dup2(fdwritecpy, 1) == -1)
 		return (boolerr("failed to reset stdout"));
+	printf("file descriptors have been reset.\n");
 	return (true);
 }
 
@@ -252,9 +253,8 @@ bool	executer(action_t *acts, char **envp)
 		}
 		else if (acts ->next == NULL)
 		{
-			if (get_cmd_format(acts,envp) == false)
+			if (get_cmd_format(acts, envp) == false)
 				return (boolerr("failed to get commands foramt"));
-			// printf("command: %s\n", acts->arg[0]);
 			pipe_to_file(acts->arg, fdread, fdwrite, envp);
 		}
 		else
@@ -262,7 +262,7 @@ bool	executer(action_t *acts, char **envp)
 			if (get_cmd_format(acts, envp) == false)
 				return (boolerr("failed to get commands foramt"));
 			// printf("command: %s\n", acts->arg[0]);
-			fdread = pipe_command(acts, fdread, fdwrite, envp);
+			fdread = pipe_command(acts, fdread, envp);
 		}
 		acts = acts->next;
 	}
