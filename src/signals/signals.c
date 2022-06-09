@@ -13,6 +13,6 @@ void	handle_ctrl_c(int sig)
 
 void	init_signals(void)
 {
-	signal(SIGINT, handle_ctrl_c);
+	// signal(SIGINT, handle_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 }

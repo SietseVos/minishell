@@ -65,14 +65,15 @@ int32_t	determine_cmdtype(char *input, char **last_str, int32_t *i)
 		}
 		return (PIPE);
 	}
-	if (*input == '<')
-		return (look_for_other_types(input));
-	if (*input == '>')
-	{
-		if (*input + 1 == '>')
-			return (HDOC);
-		return (TRUNC);
-	}
+	// if (*input == '<')
+	// 	return (look_for_other_types(input));
+	// printf("passed\n");
+	// if (*input == '>')
+	// {
+	// 	if (*input + 1 == '>')
+	// 		return (APPEND);
+	// 	return (TRUNC);
+	// }
 	return (TOSTDOUT);
 }
 

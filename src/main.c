@@ -34,7 +34,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		print_actions(actions);
 		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 			return (0);
-		executer_setup(actions, env);
+		// executer_setup(actions, env);
 		// execute(actions, env);
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?
@@ -49,3 +49,8 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 // export TEST=test | echo $TEST
 // ls | cat -e > out.two out.txt
 // ls | cat -e < Makefile out.txt testing.c
+// cat -e < Makefile > out.txt | cat -e < testing.c > out.two
+
+/* cat -e:
+	argument > infile redirect > pipe
+	 */
