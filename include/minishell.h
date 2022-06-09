@@ -23,15 +23,12 @@
 
 enum type
 {
-	INFILE,
-	OUTFILE,
-	APPEND,
-	HDOC,
-	TRUNC,
-	PIPE,
-	TOSTDOUT,
-	NOINPUT,
-	INPIPE
+	INFILE,				// open file read mode
+	APPEND,				// open file append mode
+	HDOC,				// run heredoc
+	TRUNC,				// open file trunc mode
+	PIPE,				// empty node with pipe
+	TOSTDOUT,			// command
 };
 
 int32_t	g_exit_status;

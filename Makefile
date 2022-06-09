@@ -21,6 +21,9 @@ EXECUTER =	executer.c									\
 			run_command.c								\
 			make_executable.c							\
 
+FILES =		infile.c									\
+			outfile.c									\
+
 LEXER =		lexer.c										\
 			in_string.c									\
 			check_syntax_error.c						\
@@ -40,6 +43,7 @@ UTILS =		errors.c									\
 SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 		$(addprefix src/env_functions/, $(ENV))			\
 		$(addprefix src/executer/, $(EXECUTER))			\
+		$(addprefix src/files/, $(FILES))				\
 		$(addprefix src/lexer/, $(LEXER))				\
 		$(addprefix src/parser/, $(PARSER))				\
 		$(addprefix src/signals/, $(SIGNALS))			\
