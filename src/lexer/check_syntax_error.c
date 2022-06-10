@@ -22,9 +22,9 @@ static void	write_syntax_error(char *str, int32_t *i)
 	g_exit_status = 258;
 }
 
-static void	skip_spaces(char *str, int32_t *i)
+static void	skip_whitespace(char *str, int32_t *i)
 {
-	while (str[*i] && str[*i] == ' ')
+	while (str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
 		*i += 1;
 }
 
@@ -51,7 +51,7 @@ static bool	check_for_error(char *str, int32_t *i)
 		*i += 1;
 		if (str[*i] == str[*i - 1] && str[*i] != '|')
 			*i += 1;
-		skip_spaces(str, i);
+		skip_whitespace(str, i);
 		if (str[*i] == '>' || str[*i] == '<' || str[*i] == '|' || str[*i] == '\0')
 		{
 			write_syntax_error(str, i);

@@ -48,7 +48,7 @@ static bool	check_for_wrong_argument(char *str)
 	return (false);
 }
 
-void	exit_shell(char **argument)
+void	exit_shell(char **argument, bool print)
 {
 	int64_t	arg;
 
@@ -66,5 +66,7 @@ void	exit_shell(char **argument)
 	}
 	arg = ft_atoll(argument[0]);
 	free_array_till_index(argument, strings_in_array(argument));
+	if (print)
+		printf("exit\n");
 	exit((int8_t)arg);
 }

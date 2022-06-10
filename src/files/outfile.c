@@ -37,9 +37,9 @@ int32_t	get_outfile_fd(action_t	*action)
 			if (check_premissions(action->arg[0]) == false)
 				return (-1);
 			if (action->type == APPEND)
-				fd = open(action->arg[0], O_APPEND);
+				fd = open(action->arg[0], O_WRONLY | O_APPEND);
 			else
-				fd = open(action->arg[0], O_TRUNC);
+				fd = open(action->arg[0], O_WRONLY | O_TRUNC);
 			if (fd == -1)
 				return (-1);
 		}

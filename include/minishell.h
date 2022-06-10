@@ -61,7 +61,7 @@ typedef struct env_vars_s
 	int32_t		set_oldpwd(env_vars_t *oldpwd_node);
 	int32_t		move_pwd_to_oldpwd(env_vars_t *oldpwd_node, env_vars_t *pwd_node, bool *has_been_null);
 	int32_t		create_empty_oldpwd(env_vars_t *oldpwd_node, bool *has_been_null);
-	void		exit_shell(char **argument);
+	void		exit_shell(char **argument, bool print);
 	void		pwd(void);
 	void		env(env_vars_t *list);
 	int32_t		strings_in_array(char **str);
@@ -92,13 +92,22 @@ env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
 
 /* ---------------------------	executer	------------------------------ */
 
-void	execute(action_t *actions, env_vars_t *list);
-int32_t	pipe_command(action_t *acts, int32_t fdread, char **envp);
-char	*get_executable(char *cmd, char **envp);
-int		pplen(char **pp);
-void	free_pp(char **pp, int size);
-void	pipe_to_file(char **cmd, int32_t fdread, int32_t fdwrite, char **envp);
-bool	executer_setup(action_t *acts, env_vars_t *envp);
+void			execute(action_t *actions, env_vars_t *list);
+int32_t			pipe_command(action_t *acts, int32_t fdread, char **envp);
+char			*get_executable(char *cmd, char **envp);
+int				pplen(char **pp);
+void			free_pp(char **pp, int size);
+void			pipe_to_file(char **cmd, int32_t fdread, int32_t fdwrite, char **envp);
+bool			executer_setup(action_t *acts, env_vars_t *envp);
+
+/* ----------------------------------------------------------------------- */
+
+//*************************************************************************//
+
+/* -----------------------------	files	------------------------------ */
+
+int32_t			get_infile_fd(action_t	*action);
+int32_t			get_outfile_fd(action_t	*action);
 
 /* ----------------------------------------------------------------------- */
 
@@ -139,7 +148,7 @@ void	print_actions(action_t *inlst);
 
 /* ------------------------------	signals	------------------------------ */
 
-void	init_signals(void);
+void			init_signals(void);
 
 /* ----------------------------------------------------------------------- */
 

@@ -57,7 +57,6 @@ LIBREADLINE		= $(BREW_DIR)/opt/readline/lib
 FLAGS = -Wall -Werror -Wextra
 #		-fsanitize=address -g
 
-
 INCLUDE_DIRS = -I src/libft -I include -I $(BREW_DIR)/opt/readline/include 
 
 LIB_DIRS = src/libft/libft.a -L$(LIBREADLINE) -lreadline 

@@ -1,6 +1,6 @@
 	*	make executables run through relative / absolute path
-	*
-	*
-	*
+	*	get tabs working
+	*	heredocs
+	*	check only whitespace input
 	*
 	*

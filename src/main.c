@@ -16,9 +16,14 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	while (test < 50)
 	{
 		test++;
-		input = readline("\033[1;31mMinihell>\033[0m ");
-		if (!input || (input && input[0] == '\0'))
+		input = readline("\033[1;31m😈 Minihell 😈 >\033[0m ");
+		if (!input)
+			exit(g_exit_status); // free env vars & history first
+		else if (input[0] == '\0')
+		{
+			free(input);
 			continue ;
+		}
 		add_history(input);
 		input = lexer(input);
 		// printf("lexer output:\n-%s-\n", input);
