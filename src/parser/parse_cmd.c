@@ -54,17 +54,17 @@ int32_t	determine_cmdtype(char *input, char **last_str, int32_t *i)
 
 	j = 0;
 	*last_str = NULL;
-	if (*input == '|')
-	{
-		j++;
-		*i += 1;
-		while (input[j] != '\0' && input[j] == ' ')
-		{
-			j++;
-			*i += 1;
-		}
-		return (PIPE);
-	}
+	// if (*input == '|')
+	// {
+	// 	j++;
+	// 	*i += 1;
+	// 	while (input[j] != '\0' && input[j] == ' ')
+	// 	{
+	// 		j++;
+	// 		*i += 1;
+	// 	}
+	// 	return (TOSTDOUT);
+	// }
 	// if (*input == '<')
 	// 	return (look_for_other_types(input));
 	// printf("passed\n");
@@ -74,6 +74,8 @@ int32_t	determine_cmdtype(char *input, char **last_str, int32_t *i)
 	// 		return (APPEND);
 	// 	return (TRUNC);
 	// }
+	(void) i;
+	(void) input;
 	return (TOSTDOUT);
 }
 

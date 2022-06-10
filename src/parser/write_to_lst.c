@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/06 09:26:31 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/10 18:17:46 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,20 @@ int32_t	len_to_next_arg(char *str, char delim)
 
 	ret = 0;
 	endskip = 0;
-	while (str[ret] != delim && str[ret] != '\0')
-		ret++;
-	while (str[ret + endskip] == delim && str[ret + endskip] != '\0')
-		endskip++;
+	if (delim == ' ')
+	{
+		while (str[ret] != delim && str[ret] != '\t' && str[ret] != '\0')
+			ret++;
+		while ((str[ret + endskip] == delim || str[ret + endskip] == '\t') && str[ret + endskip] != '\0')
+			endskip++;
+	}
+	else
+	{
+		while (str[ret] != delim && str[ret] != '\0')
+			ret++;
+		while (str[ret + endskip] == delim && str[ret + endskip] != '\0')
+			endskip++;
+	}
 	while (str[ret + endskip] == ' ' && str[ret + endskip] != '\0')
 		endskip++;
 	return (ret + endskip);

@@ -42,7 +42,7 @@ void	strlen_til_space(char *str, int32_t *strlen, env_vars_t *envp)
 	int32_t	i;
 
 	i = 0;
-	while (str[i] != ' ' && str[i] != '\0')
+	while (str[i] != ' ' && str[i] != '\0' && str[i] != '\t')
 	{
 		if (str[i] == '$')
 			i += interpvar_strlen(str + i, ' ', strlen, envp);

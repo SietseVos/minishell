@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/09 14:33:50 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/10 18:20:56 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 action_t	*determine_kind(char *input, int32_t *i, env_vars_t *envp)
 {
+	printf("pointer pointing to: -%c-\n", input[*i]);
+	if (input[*i] == '|')
+		return (parse_pipe(input, i));
 	if (input[*i] == '<' || input[*i] == '>')
 		return (parse_file(input, i, envp));
 	return (parse_cmd(input, i, envp));
@@ -54,6 +57,7 @@ action_t	*parser(char *input, env_vars_t *envp)
 	action_t	*lst;
 
 	i = 0;
+	// string"newstring"anotherstring		This doesn't work
 	lst = determine_kind(input, &i, envp);
 	if (lst == NULL)
 		return (nullerr("failed to make first node"));
@@ -64,9 +68,9 @@ action_t	*parser(char *input, env_vars_t *envp)
 		if (lst ->next == NULL)
 			return (action_node_fail(ret));
 		lst = lst ->next;
+		printf("made a node\n");
 	}
 	lst ->next = NULL;
-	///returning wrong pointer
 	return (ret);
 }
 

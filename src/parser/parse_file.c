@@ -35,6 +35,7 @@ action_t	*found_redirect(char *input, int32_t *i, int32_t type, env_vars_t *envp
 		*i += 1;
 	*i += 1;
 	read_input_str(input + *i, &strlen, envp);
+	printf("strlen of arg in filenode: %d\n", strlen);
 	if (input[*i] == '\0' || is_operator(input[*i]) == true)
 		return (nullerr("no string after space of redirect"));
 	node = create_filenode(strlen, type);
@@ -48,15 +49,16 @@ action_t	*parse_file(char *input, int32_t *i, env_vars_t *envp)
 {
 	action_t	*node;
 
+	node = NULL;
 	if (check_str_end(input, *i, 2) >= 0)
 		return (nullerr("no string after redirect"));
-	if (input[*i] == '<' && input[*i + 1] == ' ')
+	else if (input[*i] == '<' && input[*i + 1] == ' ')
 		node = found_redirect(input, i, INFILE, envp);
-	if (input[*i] == '>' && input[*i + 1] == ' ')
+	else if (input[*i] == '>' && input[*i + 1] == ' ')
 		node = found_redirect(input, i, TRUNC, envp);
-	if (input[*i] == '<' && input[*i + 1] == '<')
+	else if (input[*i] == '<' && input[*i + 1] == '<')
 		node = found_redirect(input, i, HDOC, envp);
-	if (input[*i] == '>' && input[*i + 1] == '>')
+	else if (input[*i] == '>' && input[*i + 1] == '>')
 		node = found_redirect(input, i, APPEND, envp);
 	return (node);
 }
