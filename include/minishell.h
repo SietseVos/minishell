@@ -129,6 +129,7 @@ action_t		*parse_cmd(char *input, int32_t *i, env_vars_t *envp);
 int32_t			skipstring(char *str, char quote);
 void			read_input_str(char *str, int *strlen, env_vars_t *envp);
 action_t		*parser(char *input, env_vars_t *envp);
+action_t		*parse_pipe(char *input, int32_t *i);
 
 
 void	print_actions(action_t *inlst);

@@ -30,10 +30,11 @@ LEXER =		lexer.c										\
 
 PARSER =	parse_cmd.c									\
 			parse_file.c								\
-			parse_utils_small.c							\
+			parse_utils.c								\
 			parse.c										\
 			read_from_str.c								\
 			write_to_lst.c								\
+			parse_pipe.c								\
 
 SIGNALS =	signals.c									\
 
