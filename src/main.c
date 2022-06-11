@@ -35,11 +35,11 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 			continue ;
 		}
 		free(input);
-		print_actions(actions);
+		// print_actions(actions);
+		// executer_setup(actions, env);
+		executer(actions, env);
 		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 			return (0);
-		// executer_setup(actions, env);
-		// execute(actions, env);
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?
 	(void)	argc;
@@ -54,6 +54,11 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 // ls | cat -e > out.two out.txt
 // ls | cat -e < Makefile out.txt testing.c
 // cat -e < Makefile > out.txt | cat -e < testing.c > out.two
+
+// bash-3.2$ exit 123 > out
+// exit 
+// 
+// 
 
 /* cat -e:
 	argument > infile redirect > pipe

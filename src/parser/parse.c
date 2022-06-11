@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/10 18:20:56 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/11 15:04:35 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 action_t	*determine_kind(char *input, int32_t *i, env_vars_t *envp)
 {
-	printf("pointer pointing to: -%c-\n", input[*i]);
+	// printf("pointer pointing to: -%c-\n", input[*i]);
 	if (input[*i] == '|')
 		return (parse_pipe(input, i));
 	if (input[*i] == '<' || input[*i] == '>')

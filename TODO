@@ -3,4 +3,4 @@
 	*	heredocs
 	*	check only whitespace input
 	*
-	*
+	*	echo -nnnnnnnn "this is a test!" > test.out ---- SEGFAULT --- #0 0x10a902508 in get_cmdarrlen parse_cmd.c:12

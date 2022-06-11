@@ -48,14 +48,22 @@ static bool	check_for_wrong_argument(char *str)
 	return (false);
 }
 
-void	exit_shell(char **argument, bool print)
+void	exit_shell(char **argument, bool print) // should print to stderr??
 {
 	int64_t	arg;
 
 	if (!argument)
+	{
+		if (print)
+			write(STDERR_FILENO, "exit\n", 6);
 		exit(g_exit_status);
+	}
 	if (strings_in_array(argument) == 0)
+	{
+		if (print)
+			write(STDERR_FILENO, "exit\n", 6);
 		exit(0);
+	}
 	if (check_for_wrong_argument(argument[0]))
 		exit_shell_error(argument[0]);
 	if (strings_in_array(argument) > 1)
@@ -67,6 +75,6 @@ void	exit_shell(char **argument, bool print)
 	arg = ft_atoll(argument[0]);
 	free_array_till_index(argument, strings_in_array(argument));
 	if (print)
-		printf("exit\n");
+		write(STDERR_FILENO, "exit\n", 6);
 	exit((int8_t)arg);
 }

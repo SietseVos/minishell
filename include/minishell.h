@@ -92,7 +92,7 @@ env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
 
 /* ---------------------------	executer	------------------------------ */
 
-void			execute(action_t *actions, env_vars_t *list);
+int32_t			executer(action_t *actions, env_vars_t *list);
 int32_t			pipe_command(action_t *acts, int32_t fdread, char **envp);
 char			*get_executable(char *cmd, char **envp);
 int				pplen(char **pp);

@@ -2,7 +2,7 @@
 #include "minishell.h"
 #include <signal.h>
 
-void	handle_ctrl_c(int sig)
+void	handle_ctrl_c(int sig) // make it handle child proccessess 
 {
 	(void)sig;
 	printf("\n");
