@@ -77,11 +77,12 @@ int32_t	set_in_out(action_t *actions, int32_t *in_fd, int32_t *out_fd)
 	return (0);
 }
 
-bool	actions_only_builtins(action_t *actions) // check ytpe 
+bool	actions_only_builtins(action_t *actions) 
 {
 	while (actions && actions->type != PIPE)
 	{
-		if (!((ft_strncmp(actions->arg[0], "cd", 3) == 0)
+		if (actions->type == TOSTDOUT
+			&& !((ft_strncmp(actions->arg[0], "cd", 3) == 0)
 			|| (ft_strncmp(actions->arg[0], "echo", 5) == 0)
 			|| (ft_strncmp(actions->arg[0], "env", 4) == 0)
 			|| (ft_strncmp(actions->arg[0], "exit", 5) == 0)
@@ -250,6 +251,13 @@ int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
 	return (return_value);
 }
 
+// int32_t	run_with_pipes(action_t *actions, env_vars_t *list, int32_t pipe_count)
+// {
+// 	int32_t **pipes;
+
+// 	pipes = setup_pipes(pipe_count);
+// }
+
 int32_t	executer(action_t *actions, env_vars_t *list)
 {
 	int32_t	pipe_count;
@@ -258,7 +266,10 @@ int32_t	executer(action_t *actions, env_vars_t *list)
 	return_value = 0;
 	pipe_count = get_pipe_count(actions);
 	if (pipe_count)
+	{
+		// return_value = run_with_pipes(actions, list, pipe_count);
 		printf("Pipes detected! currently not supported\n");// return_value = run with forks
+	}
 	else
 		return_value = run_no_pipes(actions, list);
 	return (return_value);

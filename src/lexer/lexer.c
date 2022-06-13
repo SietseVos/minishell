@@ -5,15 +5,20 @@
 
 static bool missing_space(char *str, int32_t i)
 {
-	if (i != 0 && str[i]							// check if space should be in front
+	if (i != 0 && str[i] && str[i - 1] != ' '						// check if space should be in front
 		&& ((str[i] == '<' && str[i - 1] != '<')
 		|| (str[i] == '>' && str[i - 1] != '>')
-		|| str[i] == '|') && str[i - 1] != ' ')
+		|| (str[i] == '|') || (str[i] == '\'')
+		|| (str[i] == '"' )))
+		{
+		printf("true! %c\n", str[i]);
 		return (true);
+		}
 	if (i != 0 && str[i] && str[i] != ' ' && 		// check if space should be after
 		((str[i - 1] == '>' && str[i] != '>')
 		|| (str[i - 1] == '<' && str[i] != '<')
-		|| (str[i - 1] == '|')))
+		|| (str[i - 1] == '|') || (str[i - 1] == '\'')
+		|| (str[i - 1] == '"')))
 		return (true);
 	return (false);
 }
