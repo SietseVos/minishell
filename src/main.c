@@ -37,7 +37,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		free(input);
 		print_actions(actions);
 		// executer_setup(actions, env);
-		executer(actions, env);
+		// executer(actions, env);
 		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 			return (0);
 	}

@@ -142,6 +142,8 @@ int32_t			skipstring(char *str, char quote);
 void			read_input_str(char *str, int *strlen, env_vars_t *envp);
 action_t		*parser(char *input, env_vars_t *envp);
 action_t		*parse_pipe(char *input, int32_t *i);
+bool			join_split_cmds(action_t *lst);
+bool			merge_nodes(action_t *dst, action_t **src, action_t **prevnextptr);
 
 
 void	print_actions(action_t *inlst);
@@ -165,6 +167,7 @@ void			*nullerr(char *errmsg);
 void			print_actions(action_t *inlst);
 void			printenvp(env_vars_t *print);
 void			printchararr(char **toprint);
+void			free_double_array(char **array);
 
 /* ----------------------------------------------------------------------- */
 
