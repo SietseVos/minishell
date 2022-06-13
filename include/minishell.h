@@ -17,6 +17,9 @@
 #define old 	3
 #define quotes	2
 
+#define	PIPE_READ	0
+#define PIPE_WRITE	1
+
 // legacy code
 #define ruben int8_t 	// this was orginally used as a solution to a complitaced problem ruben (cat), ruben (the best) and int32_t encouncered during their adventures in minihell
 #define sietse int32_t	// sietse also wanted to feel special so we made him a data type aswell :)

@@ -4,7 +4,7 @@
 static int32_t	get_pipe_count(action_t *actions)
 {
 	int32_t	pipe_count;
-
+	
 	pipe_count = 0;
 	while (actions)
 	{
@@ -226,11 +226,11 @@ int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
 	}
 	else
 	{
+		if (set_in_out(actions, &in_fd, &out_fd) == -1)
+			return (-1);
 		while (actions && actions->type != TOSTDOUT)
 			actions = actions->next;
 		if (!actions)
-			return (-1);
-		if (set_in_out(actions, &in_fd, &out_fd) == -1)
 			return (-1);
 		fork_fd = fork();
 		if (fork_fd == 0)
@@ -251,26 +251,131 @@ int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
 	return (return_value);
 }
 
-// int32_t	run_with_pipes(action_t *actions, env_vars_t *list, int32_t pipe_count)
-// {
-// 	int32_t **pipes;
+void	set_actions_next_pipe(action_t **actions)
+{
+	action_t	*tmp;
 
-// 	pipes = setup_pipes(pipe_count);
-// }
+	tmp = *actions;
+	while (tmp && tmp->type != PIPE)
+		tmp = tmp->next;
+	if (tmp && tmp->type == PIPE)
+		tmp = tmp->next;
+	*actions = tmp;
+}
+
+pid_t	save_pid(pid_t new_pid, int32_t pid_count)
+{
+	static int32_t	i = 0;
+	static pid_t	*pids = NULL;
+	pid_t			return_v;
+
+	if (pid_count)
+	{
+		pids = malloc(sizeof(pid_t) * pid_count);
+		if (!pids)
+			return (-1);
+	}
+	else if (new_pid)
+	{
+		pids[i] = new_pid;
+		i++;
+	}
+	else if (!new_pid && !pid_count)
+	{
+		return_v = -1;
+		if (i > 0)
+			return_v = pids[i - 1];
+		free(pids);
+		return (return_v);
+	}
+	return (0);
+}
+
+int32_t	run_child(action_t *actions, env_vars_t *list, int32_t *fd, int32_t fd_in)
+{
+	int32_t	return_execute;
+	int32_t in_fd;
+	int32_t out_fd;
+
+	close(fd[PIPE_WRITE]);
+	printf("closing pipe read %d in child\n", fd[PIPE_WRITE]);
+	printf("child reading from %d and writing to %d\n", fd_in, fd[PIPE_READ]);
+	dup2(fd[PIPE_READ], STDOUT_FILENO);
+	dup2(fd_in, STDIN_FILENO);
+
+	if (set_in_out(actions, &in_fd, &out_fd) == -1)
+		return (-1);
+	while (actions && actions->type != TOSTDOUT)
+		actions = actions->next;
+	if (!actions)
+		return (-1);
+	return_execute = find_command_and_execute(actions->arg, list);
+	if (return_execute == -1)
+		return (-1);
+	else if (return_execute == 0)
+	{
+		printf("bash: %s: command not found\n", actions->arg[0]);
+		return (1);
+	}
+	reset_in_out(in_fd, out_fd);
+	return (g_exit_status);
+}
+
+int32_t	run_with_pipes(action_t *actions, env_vars_t *list, int32_t fd_in)
+{
+	action_t	*tmp;
+	pid_t		fork_pid;
+	int32_t		fd[2];
+
+	tmp = actions;
+	static int32_t test = 0;
+	test++;	
+	printf("test %d\n", test);
+	printf("pipes left: %d\n", get_pipe_count(actions));
+	if (get_pipe_count(actions) < 1)
+		return (0);
+	if (pipe(fd) == -1)
+		return (-1);
+	printf("pipe created! fds: %d - %d\n", fd[0], fd[1]);
+	fork_pid = fork();
+	if (fork_pid == -1)
+		return (-1);
+	else if (fork_pid == 0)
+		return (run_child(tmp, list, fd, fd_in));
+	if (fd_in > 0)
+	{
+		close(fd_in);
+		printf("closing fd in %d in parent\n", fd_in);
+	}
+	close(fd[PIPE_WRITE]);
+	printf("closing pipe write %d on parent\n", fd[PIPE_WRITE]);
+	save_pid(fork_pid, 0);
+	set_actions_next_pipe(&tmp);
+	return (run_with_pipes(tmp, list, fd[PIPE_READ]));
+}
+
+pid_t	get_return_value_last_child(void)
+{
+	pid_t	last_return_value;
+
+	last_return_value = save_pid(0, 0);
+	return (last_return_value);
+}
 
 int32_t	executer(action_t *actions, env_vars_t *list)
 {
-	int32_t	pipe_count;
-	int32_t	return_value;
-
-	return_value = 0;
-	pipe_count = get_pipe_count(actions);
-	if (pipe_count)
+	if (get_pipe_count(actions))
 	{
-		// return_value = run_with_pipes(actions, list, pipe_count);
-		printf("Pipes detected! currently not supported\n");// return_value = run with forks
+		if (save_pid(-1, get_pipe_count(actions) + 1) == -1)
+			return (-1);
+		if (run_with_pipes(actions, list, STDIN_FILENO) == -1)
+			return (-1);
+		dup2(STDERR_FILENO, STDIN_FILENO);
+		// printf("Pipes detected! currently not supported\n");// return_value = run with forks
 	}
 	else
-		return_value = run_no_pipes(actions, list);
-	return (return_value);
+	{
+		return (run_no_pipes(actions, list));
+	}
+	return (get_return_value_last_child());
 }
