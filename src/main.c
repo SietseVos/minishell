@@ -25,7 +25,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		}
 		add_history(input);
 		input = lexer(input);
-		// printf("lexer output:\n-%s-\n", input);
+		printf("lexer output:\n-%s-\n", input);
 		if (!input)
 			continue ;
 		actions = parser(input, env);
@@ -35,9 +35,9 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 			continue ;
 		}
 		free(input);
-		// print_actions(actions);
+		print_actions(actions);
 		// executer_setup(actions, env);
-		executer(actions, env);
+		// executer(actions, env);
 		if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 			return (0);
 	}
