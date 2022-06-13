@@ -35,11 +35,14 @@ PARSER =	parse_cmd.c									\
 			read_from_str.c								\
 			write_to_lst.c								\
 			parse_pipe.c								\
+			parse_list.c								\
+			merge_nodes.c								\
 
 SIGNALS =	signals.c									\
 
 UTILS =		errors.c									\
 			printing.c									\
+			freeing.c									\
 
 SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 		$(addprefix src/env_functions/, $(ENV))			\
