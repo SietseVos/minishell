@@ -15,19 +15,19 @@ static int32_t	get_pipe_count(action_t *actions)
 	return (pipe_count);
 }
 
-static void	free_double_array(char **array)
-{
-	int32_t	i;
+// static void	free_double_array(char **array)
+// {
+// 	int32_t	i;
 
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	if (array)
-		free(array);
-}
+// 	i = 0;
+// 	while (array[i])
+// 	{
+// 		free(array[i]);
+// 		i++;
+// 	}
+// 	if (array)
+// 		free(array);
+// }
 
 static int32_t	dup_correct_fd(int32_t (file_function)(action_t *), action_t *actions, int32_t direction)
 {
