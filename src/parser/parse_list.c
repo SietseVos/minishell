@@ -41,7 +41,7 @@ bool	merge_cmdfrags(action_t *lst, int32_t cmdfrags)
 	{
 		if (lst->type == TOSTDOUT)
 		{
-			if (merge_nodes(cmdnode, &lst, prevnextptr) == false)
+			if (merge_nodes(cmdnode, lst, prevnextptr) == false)
 				return (false);
 			cmdfrags--;
 		}
