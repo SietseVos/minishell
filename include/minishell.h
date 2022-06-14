@@ -49,6 +49,8 @@ typedef struct heredoc_s
 	struct env_vars_s	*next;
 }	heredoc_t;
 
+
+
 typedef struct env_vars_s
 {
 	char				*str;

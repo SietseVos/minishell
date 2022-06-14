@@ -15,20 +15,6 @@ static int32_t	get_pipe_count(action_t *actions)
 	return (pipe_count);
 }
 
-static void	free_double_array(char **array)
-{
-	int32_t	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	if (array)
-		free(array);
-}
-
 static int32_t	dup_correct_fd(int32_t (file_function)(action_t *), action_t *actions, int32_t direction)
 {
 	int32_t	fd;
@@ -43,7 +29,7 @@ static int32_t	dup_correct_fd(int32_t (file_function)(action_t *), action_t *act
 	return (fd);
 }
 
-void	reset_in_out(int32_t in_fd, int32_t out_fd)
+void	reset_redirections(int32_t in_fd, int32_t out_fd)
 {
 	if (in_fd > 0)
 	{
@@ -59,7 +45,7 @@ void	reset_in_out(int32_t in_fd, int32_t out_fd)
 	}
 }
 
-int32_t	set_in_out(action_t *actions, int32_t *in_fd, int32_t *out_fd)
+int32_t	set_redirections(action_t *actions, int32_t *in_fd, int32_t *out_fd)
 {
 	*in_fd = dup_correct_fd(get_infile_fd, actions, STDIN_FILENO);
 	if (*in_fd == -1)
@@ -219,14 +205,14 @@ int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
 	return_value = 0;
 	if (actions_only_builtins(actions))
 	{
-		if (set_in_out(actions, &in_fd, &out_fd) == -1)
+		if (set_redirections(actions, &in_fd, &out_fd) == -1)
 			return (-1);
 		if (run_buildins(actions, list) == -1)
 			return (-1);
 	}
 	else
 	{
-		if (set_in_out(actions, &in_fd, &out_fd) == -1)
+		if (set_redirections(actions, &in_fd, &out_fd) == -1)
 			return (-1);
 		while (actions && actions->type != TOSTDOUT)
 			actions = actions->next;
@@ -247,7 +233,7 @@ int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
 		}
 		waitpid(fork_fd, &return_value, 0);
 	}
-	reset_in_out(in_fd, out_fd);
+	reset_redirections(in_fd, out_fd);
 	return (return_value);
 }
 
@@ -294,88 +280,107 @@ pid_t	save_pid(pid_t new_pid, int32_t pid_count)
 int32_t	run_child(action_t *actions, env_vars_t *list, int32_t *fd, int32_t fd_in)
 {
 	int32_t	return_execute;
-	int32_t in_fd;
-	int32_t out_fd;
+	int32_t infile_fd;
+	int32_t outfile_fd;
 
-	close(fd[PIPE_WRITE]);
-	printf("closing pipe read %d in child\n", fd[PIPE_WRITE]);
-	printf("child reading from %d and writing to %d\n", fd_in, fd[PIPE_READ]);
-	dup2(fd[PIPE_READ], STDOUT_FILENO);
 	dup2(fd_in, STDIN_FILENO);
-
-	if (set_in_out(actions, &in_fd, &out_fd) == -1)
-		return (-1);
+	close(fd[PIPE_WRITE]);
+	if (get_pipe_count(actions) > 1)
+	{
+		printf("closing pipe read %d in child\n", fd[PIPE_WRITE]);
+		printf("child reading from %d and writing to %d\n", fd_in, fd[PIPE_READ]);
+		dup2(fd[PIPE_READ], STDOUT_FILENO);
+	}
+	else if (get_pipe_count(actions) == 1)
+	{
+		close(fd[PIPE_READ]);
+		printf("last pipe! closing pipe read: fd %d\n", fd[PIPE_READ]);
+	}
+	if (!actions)
+		printf("No actions left!\n");
+	if (set_redirections(actions, &infile_fd, &outfile_fd) == -1)
+		exit (-1);
 	while (actions && actions->type != TOSTDOUT)
 		actions = actions->next;
 	if (!actions)
-		return (-1);
+		exit (-1);
 	return_execute = find_command_and_execute(actions->arg, list);
 	if (return_execute == -1)
-		return (-1);
+		exit (-1);
 	else if (return_execute == 0)
 	{
 		printf("bash: %s: command not found\n", actions->arg[0]);
-		return (1);
+		exit (1);
 	}
-	reset_in_out(in_fd, out_fd);
-	return (g_exit_status);
+	reset_redirections(infile_fd, outfile_fd);
+	exit (g_exit_status);
 }
 
 int32_t	run_with_pipes(action_t *actions, env_vars_t *list, int32_t fd_in)
 {
-	action_t	*tmp;
 	pid_t		fork_pid;
+	int32_t		pipe_count;
 	int32_t		fd[2];
 
-	tmp = actions;
-	static int32_t test = 0;
-	test++;	
-	printf("test %d\n", test);
-	printf("pipes left: %d\n", get_pipe_count(actions));
-	if (get_pipe_count(actions) < 1)
+	pipe_count = get_pipe_count(actions);
+	printf("pipes left: %d\n", pipe_count);
+	if (pipe_count == 0)
+	{
+		fork_pid = fork();
+		if (fork_pid == -1)
+			return (-1);
+		else if (fork_pid == 0)
+			return (run_child(actions, list, fd, fd_in));
 		return (0);
-	if (pipe(fd) == -1)
-		return (-1);
-	printf("pipe created! fds: %d - %d\n", fd[0], fd[1]);
+	}
+	else if (pipe_count > 0)
+	{
+		if (pipe(fd) == -1)
+			return (-1);
+		printf("pipe created! fds: %d - %d\n", fd[0], fd[1]);
+	}
 	fork_pid = fork();
 	if (fork_pid == -1)
 		return (-1);
 	else if (fork_pid == 0)
-		return (run_child(tmp, list, fd, fd_in));
+		return (run_child(actions, list, fd, fd_in));
 	if (fd_in > 0)
-	{
 		close(fd_in);
-		printf("closing fd in %d in parent\n", fd_in);
-	}
 	close(fd[PIPE_WRITE]);
 	printf("closing pipe write %d on parent\n", fd[PIPE_WRITE]);
-	save_pid(fork_pid, 0);
-	set_actions_next_pipe(&tmp);
-	return (run_with_pipes(tmp, list, fd[PIPE_READ]));
+	save_pid(fork_pid, 0);		// create better function for this
+	set_actions_next_pipe(&actions);
+	return (run_with_pipes(actions, list, fd[PIPE_READ]));
 }
 
-pid_t	get_return_value_last_child(void)
+pid_t	get_return_value_last_child(pid_t last_pid)
 {
-	pid_t	last_return_value;
-
-	last_return_value = save_pid(0, 0);
-	return (last_return_value);
+	int32_t	return_wait;
+	waitpid(last_pid, &return_wait, 0);
+	return (WIFEXITED (return_wait));
 }
 
 int32_t	executer(action_t *actions, env_vars_t *list)
 {
+	int32_t	return_value;
+
 	if (get_pipe_count(actions))
 	{
 		if (save_pid(-1, get_pipe_count(actions) + 1) == -1)
 			return (-1);
-		if (run_with_pipes(actions, list, STDIN_FILENO) == -1)
+		return_value = run_with_pipes(actions, list, STDIN_FILENO);
+		if (return_value == -1)
 			return (-1);
 		dup2(STDERR_FILENO, STDIN_FILENO);
+		if (return_value == -1)
+		{
+			get_return_value_last_child(save_pid(0, 0));
+			return (-1);
+		}
+		return (get_return_value_last_child(save_pid(0, 0)));
 		// printf("Pipes detected! currently not supported\n");// return_value = run with forks
 	}
 	else
-	{
-		return (run_no_pipes(actions, list));
-	}
-	return (get_return_value_last_child());
+		return_value = run_no_pipes(actions, list);
+	return (return_value);
 }

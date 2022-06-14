@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/13 17:29:49 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/14 14:31:01 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ action_t	*parser(char *input, env_vars_t *envp)
 		// printf("made a node\n");
 	}
 	lst ->next = NULL;
-	if (join_split_cmds(ret) == false)
-		return (action_node_fail(ret));
+	// if (join_split_cmds(ret) == false)
+	// 	return (action_node_fail(ret));
 	return (ret);
 }
 

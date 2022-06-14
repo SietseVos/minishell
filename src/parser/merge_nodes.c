@@ -35,7 +35,8 @@ bool	merge_nodes(action_t *dst, action_t **src, action_t **prevnextptr)
 	fragdst = dst->arg;
 	fragsrc = (*src)->arg;
 	dst->arg = join_chararrs(fragdst, fragsrc);
-	
+	(void)prevnextptr;
+
 	free_double_array((*src)->arg);
 	free(*src);
 	printf("merging nodes\n");
