@@ -10,7 +10,6 @@ int32_t	count_strings(char **arr)
 		count++;
 		arr++;
 	}
-	printf("string count: %d\n", count);
 	return (count);
 }
 
@@ -36,7 +35,6 @@ bool	dup_strs_to_chararr(char **ret, char **arr1, char **arr2)
 		i++;
 		j++;
 	}
-	printf("dup strs function returning\n");
 	ret[i] = NULL;
 	return (true);
 }
@@ -70,10 +68,7 @@ bool	merge_nodes(action_t *dst, action_t *src, action_t **prevnextptr)
 		return (NULL);
 	*prevnextptr = src->next;
 	free_double_array(fragdst);
-	printf("freed old dst\n");
 	free_double_array(fragsrc);
-	printf("freed src argument\n");
 	free(src);
-	printf("freed src node\n");
 	return (true);
 }

@@ -13,7 +13,6 @@ int32_t	count_cmdfrags(action_t *lst)
 		}
 		lst = lst->next;
 	}
-	printf("command fragemnts: %d\n", ret);
 	return (ret);
 }
 
