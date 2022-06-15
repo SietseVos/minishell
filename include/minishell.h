@@ -49,7 +49,11 @@ typedef struct heredoc_s
 	struct env_vars_s	*next;
 }	heredoc_t;
 
-
+typedef struct child_pids_s
+{
+	pid_t				pid;
+	struct child_pids_s	*next;
+}	child_pids_t;
 
 typedef struct env_vars_s
 {
