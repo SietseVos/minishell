@@ -45,7 +45,7 @@ int32_t	strlen_til_space(char *str, env_vars_t *envp)
 
 	i = 0;
 	strlen = 0;
-	while (str[i] != ' ' && str[i] != '\0' && str[i] != '\t')
+	while (str[i] != ' ' && str[i] != '\0' && str[i] != '\t' && str[i] != '"' && str[i] != '\'')
 	{
 		if (str[i] == '$')
 			i += interpvar_strlen(str + i, ' ', &strlen, envp);
@@ -55,7 +55,7 @@ int32_t	strlen_til_space(char *str, env_vars_t *envp)
 			i++;
 		}
 	}
-	return (strlen);  
+	return (strlen);
 }
 
 int32_t	strlen_til_quote(char *str, char c, env_vars_t *envp)
@@ -83,16 +83,16 @@ void	read_input_str(char *str, int *strlen, env_vars_t *envp)
 	int32_t	strlentmp;
 
 	strlentmp = 0;
-	if (*str == '"')
+	while (*str != '\0' && *str != ' ')
 	{
-		strlentmp += strlen_til_quote(str + 1, '"', envp);
-		return ;
+		if (*str == '"' || *str == '\'')
+		{
+			strlentmp += strlen_til_quote(str + 1, *str, envp);
+			str += strlentmp + check_str_end(str, strlentmp, 2);
+		}
+		else
+			strlentmp += strlen_til_space(str, envp);
+		printf("strlentmp: %d\n", strlentmp);
+		*strlen += strlentmp;
 	}
-	else if (*str == '\'')
-	{
-		strlentmp += strlen_til_quote(str + 1, '\'', envp);
-		return ;
-	}
-	else
-		strlentmp += strlen_til_space(str, envp);
 }

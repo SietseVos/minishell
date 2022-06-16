@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/10 18:17:46 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/16 16:46:13 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,40 @@ int32_t	len_to_next_arg(char *str, char delim)
 	return (ret + endskip);
 }
 
+// int32_t	place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp)
+// {
+// 	if (*src == '\'')
+// 	{
+// 		ft_strlcpy(dst, src + 1, strlen);
+// 		return (len_to_next_arg(src + 1, '\'') + 1);
+// 	}
+// 	if (*src == '"')
+// 	{
+// 		strcpy_interpvar(dst, src + 1, strlen, envp);
+// 		return (len_to_next_arg(src + 1, '"') + 1);
+// 	}
+// 	strcpy_interpvar(dst, src, strlen, envp);
+// 	return (len_to_next_arg(src, ' '));
+// }
+
 int32_t	place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp)
 {
-	if (*src == '\'')
+	int32_t	strlentmp;
+
+	strlentmp = 0;
+	while (*str != '\0' && *str != ' ')
 	{
-		ft_strlcpy(dst, src + 1, strlen);
-		return (len_to_next_arg(src + 1, '\'') + 1);
+		if (*str == '"' || *str == '\'')
+		{
+			strlentmp += copy_til_quote(dst, src, strlen, envp);
+			str += strlentmp + check_str_end(str, strlentmp, 2);
+		}
+		else
+			strlentmp += strlen_til_space(str, envp);
+		printf("strlentmp: %d\n", strlentmp);
+		*strlen += strlentmp;
 	}
-	if (*src == '"')
-	{
-		strcpy_interpvar(dst, src + 1, strlen, envp);
-		return (len_to_next_arg(src + 1, '"') + 1);
-	}
-	strcpy_interpvar(dst, src, strlen, envp);
-	return (len_to_next_arg(src, ' '));
+	dst[i] = '\0';
 }
 
 int32_t	skipstring(char *str, char quote)

@@ -41,7 +41,7 @@ action_t	*found_redirect(char *input, int32_t *i, int32_t type, env_vars_t *envp
 	node = create_filenode(strlen, type);
 	if (node == NULL)
 		return (nullerr("redirect node malloc fail"));
-	*i += place_str_in_node(*node ->arg, input + *i, strlen + 1, envp);
+	*i += place_str_in_node(*node ->arg, input + *i, strlen, envp);
 	return (node);
 }
 
@@ -50,7 +50,7 @@ action_t	*parse_file(char *input, int32_t *i, env_vars_t *envp)
 	action_t	*node;
 
 	node = NULL;
-	if (check_str_end(input, *i, 2) >= 0)
+	if (check_str_end(input, *i, 2) != 2)
 		return (nullerr("no string after redirect"));
 	else if (input[*i] == '<' && input[*i + 1] == ' ')
 		node = found_redirect(input, i, INFILE, envp);

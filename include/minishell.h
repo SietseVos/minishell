@@ -34,6 +34,13 @@ enum type
 	TOSTDOUT,			// command
 };
 
+enum string_type
+{
+	SPACE,
+	DUPQUOTE,
+	SINGLEQUOTE,
+};
+
 int32_t	g_exit_status;
 
 typedef struct action_s
@@ -135,8 +142,8 @@ bool			check_syntax_error(char *str);
 
 /* ------------------------------	parser	------------------------------ */
 
-void			strlen_til_space(char *str, int32_t *strlen, env_vars_t *envp);
-void			strlen_til_quote(char *str, int32_t *strlen, char c, env_vars_t *envp);
+int32_t			strlen_til_space(char *str, env_vars_t *envp);
+int32_t			strlen_til_quote(char *str, char c, env_vars_t *envp);
 int32_t			envvarlen(char *str, char end);
 int32_t			is_operator(char c);
 int32_t			check_str_end(char *str, int32_t i, int32_t n);
