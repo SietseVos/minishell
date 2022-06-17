@@ -12,7 +12,7 @@ action_t	*parse_pipe(char *input, int32_t *i)
 	ret->type = PIPE;
 	ret->arg = NULL;
 	*i += 1;
-	while (input[*i] != '\0' && input[*i] == ' ')
+	while (input[*i] != '\0' && is_whitespace(input[*i]))
 		*i += 1;
 	// printf("entered pipe function\n");
 	return (ret);

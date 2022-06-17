@@ -141,12 +141,12 @@ bool			check_syntax_error(char *str);
 
 /* ------------------------------	parser	------------------------------ */
 
-void			strlen_til_space(char *str, int32_t *strlen, env_vars_t *envp);
-void			strlen_til_quote(char *str, int32_t *strlen, char c, env_vars_t *envp);
+int32_t			strlen_til_space(char *str, env_vars_t *envp);
+int32_t			strlen_til_quote(char *str, char c, env_vars_t *envp);
 int32_t			envvarlen(char *str, char end);
 int32_t			is_operator(char c);
 int32_t			check_str_end(char *str, int32_t i, int32_t n);
-int32_t			place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp);
+void			place_str_in_node(char *dst, char *src, int32_t *i, env_vars_t *envp);
 int32_t			place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i);
 action_t		*parse_file(char *input, int32_t *i, env_vars_t *envp);
 action_t		*parse_cmd(char *input, int32_t *i, env_vars_t *envp);
@@ -156,7 +156,7 @@ action_t		*parser(char *input, env_vars_t *envp);
 action_t		*parse_pipe(char *input, int32_t *i);
 bool			join_split_cmds(action_t *lst);
 bool			merge_nodes(action_t *dst, action_t *src, action_t **prevnextptr);
-
+bool			is_whitespace(char c);
 
 void	print_actions(action_t *inlst);
 

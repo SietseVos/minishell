@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/10 18:17:46 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/17 13:32:06 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,82 @@ int32_t	len_to_next_arg(char *str, char delim)
 	return (ret + endskip);
 }
 
-int32_t	place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp)
+// int32_t	place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp)
+// {
+// 	if (*src == '\'')
+// 	{
+// 		ft_strlcpy(dst, src + 1, strlen);
+// 		return (len_to_next_arg(src + 1, '\'') + 1);
+// 	}
+// 	if (*src == '"')
+// 	{
+// 		strcpy_interpvar(dst, src + 1, strlen, envp);
+// 		return (len_to_next_arg(src + 1, '"') + 1);
+// 	}
+// 	strcpy_interpvar(dst, src, strlen, envp);
+// 	return (len_to_next_arg(src, ' '));
+// }
+
+int32_t	copy_til_quote(char *dst, char *src, int32_t *i, env_vars_t *envp)
 {
-	if (*src == '\'')
+	char	c;
+	int32_t	j; 
+
+	c = src[*i];
+	*i += 1;
+	while (src[*i] != '\0' && src[*i] != c)
 	{
-		ft_strlcpy(dst, src + 1, strlen);
-		return (len_to_next_arg(src + 1, '\'') + 1);
+		if (src[*i] == '$' && c == '"')
+			*i += place_envvar(dst + j, src + *i, envp, &j);
+		else
+		{
+			dst[j] = src[*i];
+			*i += 1;
+			j++;
+		}
 	}
-	if (*src == '"')
+	*i += check_str_end(src + *i, 0, 1);
+	return (j);
+}
+
+int32_t	copy_til_space(char *dst, char *src, int32_t *i, env_vars_t *envp)
+{
+	int32_t	j; 
+
+	j = 0;
+	while (src[*i] != '\0' && is_whitespace(src[*i]) == false)
 	{
-		strcpy_interpvar(dst, src + 1, strlen, envp);
-		return (len_to_next_arg(src + 1, '"') + 1);
+		printf("in copy til space, reading: %c\n", src[*i]);
+		if (src[*i] == '$')
+			*i += place_envvar(dst + j, src + *i, envp, &j);
+		else
+		{
+			dst[j] = src[*i];
+			*i += 1;
+			j++;
+		}
 	}
-	strcpy_interpvar(dst, src, strlen, envp);
-	return (len_to_next_arg(src, ' '));
+	return (j);
+}
+
+void	place_str_in_node(char *dst, char *src, int32_t *i, env_vars_t *envp)
+{
+	int	j;
+
+	j = 0;
+	while (src[*i] != '\0' && is_whitespace(src[*i]) == false)
+	{
+		if (src[*i] == '"' || src[*i] == '\'')
+		{
+			j += copy_til_quote(dst + j, src, i, envp);
+			// str += strlentmp + check_str_end(str, strlentmp, 2);
+		}
+		else
+			j += copy_til_space(dst + j, src, i, envp);
+	}
+	dst[j] = '\0';
+	while (is_whitespace(src[*i]) == true)
+		*i += 1;
 }
 
 int32_t	skipstring(char *str, char quote)
