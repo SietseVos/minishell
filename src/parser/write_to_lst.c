@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/16 16:46:13 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/17 13:32:06 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,24 +125,66 @@ int32_t	len_to_next_arg(char *str, char delim)
 // 	return (len_to_next_arg(src, ' '));
 // }
 
-int32_t	place_str_in_node(char *dst, char *src, int32_t strlen, env_vars_t *envp)
+int32_t	copy_til_quote(char *dst, char *src, int32_t *i, env_vars_t *envp)
 {
-	int32_t	strlentmp;
+	char	c;
+	int32_t	j; 
 
-	strlentmp = 0;
-	while (*str != '\0' && *str != ' ')
+	c = src[*i];
+	*i += 1;
+	while (src[*i] != '\0' && src[*i] != c)
 	{
-		if (*str == '"' || *str == '\'')
+		if (src[*i] == '$' && c == '"')
+			*i += place_envvar(dst + j, src + *i, envp, &j);
+		else
 		{
-			strlentmp += copy_til_quote(dst, src, strlen, envp);
-			str += strlentmp + check_str_end(str, strlentmp, 2);
+			dst[j] = src[*i];
+			*i += 1;
+			j++;
+		}
+	}
+	*i += check_str_end(src + *i, 0, 1);
+	return (j);
+}
+
+int32_t	copy_til_space(char *dst, char *src, int32_t *i, env_vars_t *envp)
+{
+	int32_t	j; 
+
+	j = 0;
+	while (src[*i] != '\0' && is_whitespace(src[*i]) == false)
+	{
+		printf("in copy til space, reading: %c\n", src[*i]);
+		if (src[*i] == '$')
+			*i += place_envvar(dst + j, src + *i, envp, &j);
+		else
+		{
+			dst[j] = src[*i];
+			*i += 1;
+			j++;
+		}
+	}
+	return (j);
+}
+
+void	place_str_in_node(char *dst, char *src, int32_t *i, env_vars_t *envp)
+{
+	int	j;
+
+	j = 0;
+	while (src[*i] != '\0' && is_whitespace(src[*i]) == false)
+	{
+		if (src[*i] == '"' || src[*i] == '\'')
+		{
+			j += copy_til_quote(dst + j, src, i, envp);
+			// str += strlentmp + check_str_end(str, strlentmp, 2);
 		}
 		else
-			strlentmp += strlen_til_space(str, envp);
-		printf("strlentmp: %d\n", strlentmp);
-		*strlen += strlentmp;
+			j += copy_til_space(dst + j, src, i, envp);
 	}
-	dst[i] = '\0';
+	dst[j] = '\0';
+	while (is_whitespace(src[*i]) == true)
+		*i += 1;
 }
 
 int32_t	skipstring(char *str, char quote)

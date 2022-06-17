@@ -41,7 +41,7 @@ action_t	*found_redirect(char *input, int32_t *i, int32_t type, env_vars_t *envp
 	node = create_filenode(strlen, type);
 	if (node == NULL)
 		return (nullerr("redirect node malloc fail"));
-	*i += place_str_in_node(*node ->arg, input + *i, strlen, envp);
+	place_str_in_node(*node ->arg, input, i, envp);
 	return (node);
 }
 

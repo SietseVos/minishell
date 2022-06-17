@@ -123,14 +123,16 @@ action_t	*parse_cmd(char *input, int32_t *i, env_vars_t *envp)
 		return (nullerr("failed to create cmd node"));
 	while (cmdarrlen > j)
 	{
+		printf("j: %d\n", j);
 		strlen = 0;
 		read_input_str(input + *i, &strlen, envp);
 		node ->arg[j] = malloc(sizeof(char) * strlen + 1);
 		if (node ->arg[j] == NULL)
 			return (arg_malloc_fail(node, j));
-		*i += place_str_in_node(node ->arg[j], input + *i, strlen, envp);
+		place_str_in_node(node ->arg[j], input, i, envp);
 		j++;
 	}
 	node ->type = determine_cmdtype(input + *i, &node ->arg[j], i);
+	printf("created node\n");
 	return (node);
 }

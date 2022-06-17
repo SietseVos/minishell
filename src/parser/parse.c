@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/14 14:31:01 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/17 11:42:13 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ action_t	*parser(char *input, env_vars_t *envp)
 	ret = lst;
 	while (input[i])
 	{
+		printf("input: -%c-\n", input[i]);
 		lst ->next = determine_kind(input, &i, envp);
 		if (lst ->next == NULL)
 			return (action_node_fail(ret));

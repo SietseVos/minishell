@@ -35,3 +35,10 @@ int32_t	envvarlen(char *str, char end)
 	(void) end;
 	return (ret);
 }
+
+bool	is_whitespace(char c)
+{
+	if (c == ' ' || c == '\n' || c == '\t')
+		return (true);
+	return (false);
+}
