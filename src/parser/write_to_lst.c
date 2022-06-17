@@ -6,7 +6,11 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/06/17 19:14:19 by rvan-mee      ########   odam.nl         */
+=======
+/*   Updated: 2022/06/17 16:54:09 by svos          ########   odam.nl         */
+>>>>>>> 95104ddd117677fada08d169a9d54e723bac0848
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,18 +136,22 @@ int32_t	copy_til_quote(char *dst, char *src, int32_t *i, env_vars_t *envp)
 
 	c = src[*i];
 	*i += 1;
+	j = 0;
 	while (src[*i] != '\0' && src[*i] != c)
 	{
 		if (src[*i] == '$' && c == '"')
 			*i += place_envvar(dst + j, src + *i, envp, &j);
 		else
 		{
+			printf("copying: -%c- on %p and j: %d\n", src[*i], &dst[j], j);
 			dst[j] = src[*i];
 			*i += 1;
 			j++;
 		}
 	}
-	*i += check_str_end(src + *i, 0, 1);
+	if (src[*i] == c)
+		*i += 1;
+	// *i += check_str_end(src + *i, 0, 1);
 	return (j);
 }
 
@@ -174,6 +182,7 @@ void	place_str_in_node(char *dst, char *src, int32_t *i, env_vars_t *envp)
 	j = 0;
 	while (src[*i] != '\0' && is_whitespace(src[*i]) == false)
 	{
+		printf("Processign string: %s\n", src + *i);
 		if (src[*i] == '"' || src[*i] == '\'')
 		{
 			j += copy_til_quote(dst + j, src, i, envp);
@@ -195,6 +204,10 @@ int32_t	skipstring(char *str, char quote)
 	while (str[i] != quote && str[i] != '\0')
 		i++;
 	if (str[i] == quote)
+	{
+		printf("skipped string with plus 1, returning: %d\n", i + 1);
 		return (i + 1);
+	}
+	printf("skipped string, returning: %d\n", i);
 	return (i);
 }
