@@ -13,9 +13,7 @@ child_pids_t	*get_last_pid_node(void)
 	child_pids_t	*tmp;
 
 	tmp = get_first_pid_node();
-	if (!tmp || !tmp->next)
-		return (NULL);
-	while (tmp->next)
+	while (tmp && tmp->next)
 		tmp = tmp->next;
 	return (tmp);
 }
@@ -41,8 +39,6 @@ void	reset_pid(void)
 	child_pids_t	*next;
 
 	tmp = get_first_pid_node();
-	if (!tmp->next)
-		return ;
 	tmp = tmp->next;
 	while (tmp)
 	{

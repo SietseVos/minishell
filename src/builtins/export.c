@@ -80,6 +80,7 @@ static int32_t	replace_current_in_list(char *input, env_vars_t *env)
 	}
 	free(to_replace->str);
 	to_replace->str = variable;
+	set_env_node_hasvalue(to_replace);
 	return (0);
 }
 
@@ -99,8 +100,11 @@ bool	export(char **args, env_vars_t *env)
 		{
 			if (check_valid_input(args[i]))
 				printf("bash: export: `%s': not a valid identifier\n", args[i]);
-			else if (args[i][0] && args[i][0] == '_' && args[i][1] && args[i][1] == '=') // checks for shell variable, can't be edited by the user
+			else if (args[i][0] && args[i][0] == '_' && (args[i][1] == '=' || args[i][1] == '\0'))
+			{
+				i++;
 				continue ;
+			}
 			else if (is_already_in_list(args[i], env))
 			{
 				if (replace_current_in_list(args[i], env) == -1)

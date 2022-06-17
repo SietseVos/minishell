@@ -16,11 +16,6 @@ int32_t	add_env_node(env_vars_t *env, char *str)
 	env = env->next;
 	env->next = NULL;
 	env->str = str;
-	while (str[i] && str[i] != '=')
-		i++;
-	if (str[i] == '=')
-		env->has_value = true;
-	else
-		env->has_value = false;
+	set_env_node_hasvalue(env);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/17 13:32:06 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/17 19:14:19 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int32_t	copy_til_space(char *dst, char *src, int32_t *i, env_vars_t *envp)
 	j = 0;
 	while (src[*i] != '\0' && is_whitespace(src[*i]) == false)
 	{
-		printf("in copy til space, reading: %c\n", src[*i]);
+		// printf("in copy til space, reading: %c\n", src[*i]);
 		if (src[*i] == '$')
 			*i += place_envvar(dst + j, src + *i, envp, &j);
 		else

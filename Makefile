@@ -15,10 +15,12 @@ ENV =		add_env_node.c								\
 			create_env_vars_list.c						\
 			env_list_to_array.c							\
 			get_variable_node.c							\
-			free_env_list.c								\
+			env_bool_value.c							\
 
 EXECUTER =	executer.c									\
 			save_pid.c									\
+			execute_path.c								\
+			execute_command.c							\
 			# run_command.c								\
 			# make_executable.c							\
 
@@ -38,6 +40,7 @@ PARSER =	parse_cmd.c									\
 
 REDIRECTS =	infile.c									\
 			outfile.c									\
+			redirect.c									\
 
 SIGNALS =	signals.c									\
 
@@ -59,7 +62,7 @@ SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 BREW_DIR		= $(shell brew --prefix)
 LIBREADLINE		= $(BREW_DIR)/opt/readline/lib
 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g
+FLAGS = -Wall -Werror -Wextra
 #		-fsanitize=address -g
 
 INCLUDE_DIRS = -I src/libft -I include -I $(BREW_DIR)/opt/readline/include 

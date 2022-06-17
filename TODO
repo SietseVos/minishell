@@ -1,9 +1,9 @@
-	*	make executables run through relative / absolute path
 	*	get tabs working
 	*	heredocs
 	*	check only whitespace input
+	*	assigining value inside export
 	*
 	*	fix signals inside child
-	*	fix redirect echo
+	*	file not existing before pipe then using after pipe (cat < NOFILE | cat > test.out)
 	*
 	*	echo -nnnnnnnn "this is a test!" > test.out ---- SEGFAULT --- #0 0x10a902508 in get_cmdarrlen parse_cmd.c:12

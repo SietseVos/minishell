@@ -90,10 +90,11 @@ typedef struct env_vars_s
 int32_t			add_env_node(env_vars_t *env, char *str);
 bool			create_env_vars_list(char **envp, env_vars_t **env_head);
 char			**free_array_till_index(char **array, int32_t index);
-void			free_env_list(env_vars_t *list);
 char			**env_list_to_array(env_vars_t *env_list);
 int32_t			env_list_size(env_vars_t *env_list);
 env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
+void			set_env_list_bool_value(env_vars_t *env);
+void			set_env_node_hasvalue(env_vars_t *env);
 
 /* ----------------------------------------------------------------------- */
 
@@ -107,6 +108,8 @@ int32_t			save_pid(pid_t new_pid);
 child_pids_t	*get_last_pid_node(void);
 child_pids_t	*get_first_pid_node(void);
 void			set_exit_status_and_wait(void);
+char			*get_executable_path(char **arguments, env_vars_t *list);
+int32_t			execute_command(char **arguments, env_vars_t *list);
 
 int32_t			pipe_command(action_t *acts, int32_t fdread, char **envp);
 char			*get_executable(char *cmd, char **envp);
@@ -119,10 +122,12 @@ bool			executer_setup(action_t *acts, env_vars_t *envp);
 
 //*************************************************************************//
 
-/* -----------------------------	files	------------------------------ */
+/* _----------------------------	redirects	-------------------------- */
 
 int32_t			get_infile_fd(action_t	*action);
 int32_t			get_outfile_fd(action_t	*action);
+int32_t			set_redirections(action_t *actions, int32_t *in_fd, int32_t *out_fd);
+void			reset_redirections(int32_t in_fd, int32_t out_fd);
 
 /* ----------------------------------------------------------------------- */
 
@@ -180,6 +185,9 @@ void			print_actions(action_t *inlst);
 void			printenvp(env_vars_t *print);
 void			printchararr(char **toprint);
 void			free_double_array(char **array);
+void			pop_action_node(action_t **node);
+void			free_action_list(action_t *node);
+void			free_env_list(env_vars_t *list);
 
 /* ----------------------------------------------------------------------- */
 

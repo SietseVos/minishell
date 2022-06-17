@@ -98,7 +98,7 @@ void	read_input_str(char *str, int *strlen, env_vars_t *envp)
 			strlentmp += strlen_til_space(str, envp);
 			str += strlentmp;
 		}
-		printf("strlentmp: %d\n", strlentmp);
+		// printf("strlentmp: %d\n", strlentmp);
 		*strlen += strlentmp;
 	}
 }

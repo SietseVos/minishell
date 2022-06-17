@@ -35,7 +35,7 @@ action_t	*found_redirect(char *input, int32_t *i, int32_t type, env_vars_t *envp
 		*i += 1;
 	*i += 1;
 	read_input_str(input + *i, &strlen, envp);
-	printf("strlen of arg in filenode: %d\n", strlen);
+	// printf("strlen of arg in filenode: %d\n", strlen);
 	if (input[*i] == '\0' || is_operator(input[*i]) == true)
 		return (nullerr("no string after space of redirect"));
 	node = create_filenode(strlen, type);

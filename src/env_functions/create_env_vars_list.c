@@ -93,24 +93,6 @@ static env_vars_t *new_env_node(int32_t strlen)
 	return (new);
 }
 
-static void	set_env_value_bool(env_vars_t *env)
-{
-	int32_t	i;
-
-	while (env)
-	{
-		i = 0;
-		env->has_value = false;
-		while (env->str[i])
-		{
-			if (env->str[i] == '=')
-				env->has_value = true;
-			i++;
-		}
-		env = env->next;
-	}
-}
-
 bool	create_env_vars_list(char **envp, env_vars_t **env_head)
 {
 	env_vars_t	*tmp;
@@ -139,7 +121,7 @@ bool	create_env_vars_list(char **envp, env_vars_t **env_head)
 			tmp = tmp->next;
 		}
 		str_copy(envp[i], tmp->str);
-		set_env_value_bool(*env_head);
+		set_env_list_bool_value(*env_head);
 		i++;
 	}
 	remove_exess_from_list(env_head);				// remove _= and set OLDPWD="" to OLDPWD
