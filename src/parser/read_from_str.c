@@ -85,20 +85,26 @@ void	read_input_str(char *str, int *strlen, env_vars_t *envp)
 
 	while (*str != '\0' && *str != ' ')
 	{
+		printf("current string: -%s-\n", str);
 		strlentmp = 0;
 		if (*str == '"' || *str == '\'')
 		{
 			strlentmp += strlen_til_quote(str + 1, *str, envp);
-			printf("str before check str end: -%c-\n", *str);
-			str += strlentmp + check_str_end(str + 1, strlentmp, 2);
-			printf("str after check str end: -%c-\n", *str);
+			// printf("str before check str end: -%c-\n", *str);
+			// printf("end of string: %s\n", str + strlentmp + 1);
+			if (*(str + strlentmp + 1) == '"')
+				str += strlentmp + 2;
+			else
+				str += strlentmp + 1;
+			// str += strlentmp + check_str_end(str + 1, strlentmp, 2);
+			// printf("str after check str end: -%c-\n", *str);
 		}
 		else
 		{
 			strlentmp += strlen_til_space(str, envp);
 			str += strlentmp;
 		}
-		printf("strlentmp: %d\n", strlentmp);
+		// printf("strlentmp: %d\n", strlentmp);
 		*strlen += strlentmp;
 	}
 }

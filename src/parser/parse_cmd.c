@@ -7,23 +7,25 @@ int32_t	get_cmdarrlen(char *str)
 
 	i = 0;
 	ret = 0;
-	while (is_operator(str[i]) == false && str[i] != '\0')
+	printf("entered get_cmdarrlen func\n");
+	while (str[i] != '\0' && is_operator(str[i]) == false)
 	{
 		while (str[i] != '\0')
 		{
-			if (str[i] == ' ')
+			if (is_whitespace(str[i]) == true)
 			{
-				while (str[i] == ' ')
+				while (is_whitespace(str[i]) == true)
 					i++;
 				break;
 			}
 			else if (str[i] == '"' || str[i] == '\'')
-				i += skipstring(str, str[i]);
+				i += skipstring(str + i, str[i]);
 			else
 				i++;
 		}
 		ret++;
 	}
+	printf("returning: %d\n", ret);
 	return (ret);
 }
 
@@ -129,6 +131,7 @@ action_t	*parse_cmd(char *input, int32_t *i, env_vars_t *envp)
 		node ->arg[j] = malloc(sizeof(char) * strlen + 1);
 		if (node ->arg[j] == NULL)
 			return (arg_malloc_fail(node, j));
+		// printf("malloced for %d bytes and cmdarrlen: %d\n", strlen + 1, cmdarrlen);
 		place_str_in_node(node ->arg[j], input, i, envp);
 		j++;
 	}
