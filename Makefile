@@ -18,11 +18,9 @@ ENV =		add_env_node.c								\
 			free_env_list.c								\
 
 EXECUTER =	executer.c									\
-			run_command.c								\
-			make_executable.c							\
-
-FILES =		infile.c									\
-			outfile.c									\
+			save_pid.c									\
+			# run_command.c								\
+			# make_executable.c							\
 
 LEXER =		lexer.c										\
 			in_string.c									\
@@ -38,6 +36,9 @@ PARSER =	parse_cmd.c									\
 			parse_list.c								\
 			merge_nodes.c								\
 
+REDIRECTS =	infile.c									\
+			outfile.c									\
+
 SIGNALS =	signals.c									\
 
 UTILS =		errors.c									\
@@ -47,9 +48,9 @@ UTILS =		errors.c									\
 SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 		$(addprefix src/env_functions/, $(ENV))			\
 		$(addprefix src/executer/, $(EXECUTER))			\
-		$(addprefix src/files/, $(FILES))				\
 		$(addprefix src/lexer/, $(LEXER))				\
 		$(addprefix src/parser/, $(PARSER))				\
+		$(addprefix src/redirects/, $(REDIRECTS))		\
 		$(addprefix src/signals/, $(SIGNALS))			\
 		$(addprefix src/utils/, $(UTILS))				\
 		src/main.c

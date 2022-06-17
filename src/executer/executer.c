@@ -204,57 +204,6 @@ void	set_actions_next_pipe(action_t **actions)
 	*actions = tmp;
 }
 
-child_pids_t	*get_first_pid_node(void)
-{
-	static child_pids_t	first;
-
-	return (&first);
-}
-
-child_pids_t	*get_last_pid_node(void)
-{
-	child_pids_t	*tmp;
-
-	tmp = get_first_pid_node();
-	while (tmp && tmp->next)
-		tmp = tmp->next;
-	return (tmp);
-}
-
-int32_t	save_pid(pid_t new_pid)
-{
-	child_pids_t	*new;
-	child_pids_t	*last;
-
-	new = malloc(sizeof(child_pids_t));
-	if (!new)
-		return (-1);
-	new->pid = new_pid;
-	new->next = NULL;
-	last = get_last_pid_node();
-	last->next = new;
-	return (0);
-}
-
-void	reset_pid(void)
-{
-	child_pids_t	*tmp;
-	child_pids_t	*next;
-
-	tmp = get_first_pid_node();
-	if (!tmp->next)
-		return ;
-	tmp = tmp->next;
-	while (tmp)
-	{
-		next = tmp->next;
-		free(tmp);
-		tmp = next;
-	}
-	tmp =  get_first_pid_node();
-	tmp->next = NULL;
-}
-
 int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
 {
 	int32_t	return_value;
@@ -368,51 +317,18 @@ int32_t	run_with_pipes(action_t *actions, env_vars_t *list, int32_t fd_in)
 	return (run_with_pipes(actions, list, pipe_fds[PIPE_READ]));
 }
 
-void	set_exit_status_and_wait(void)
-{
-	child_pids_t	*node;
-	child_pids_t	*last_child;
-	int32_t			return_wait;
-
-	node = get_first_pid_node();
-	last_child = get_last_pid_node();
-	waitpid(last_child->pid, &return_wait, 0);
-	while (node && node->next)
-	{
-		wait(NULL);
-		node = node->next;
-	}
-	reset_pid();
-	g_exit_status = WIFEXITED (return_wait);
-}
-
 int32_t	executer(action_t *actions, env_vars_t *list)
 {
 	int32_t	return_value;
 
 	if (contains_pipes(actions))
 	{
-		// printf("Pipes detected!\n");
 		return_value = run_with_pipes(actions, list, STDIN_FILENO);
-		if (return_value == -1)
-		{
-			reset_pid();
-			return (-1);
-		}
 		dup2(STDERR_FILENO, STDIN_FILENO);
-		if (return_value == -1)
-		{
-			set_exit_status_and_wait();
-			return (-1);
-		}
-		set_exit_status_and_wait();
-		return (g_exit_status);
+		reset_pid();
 	}
 	else
-	{
-		// printf("no pipes!\n");
 		return_value = run_no_pipes(actions, list);
-		set_exit_status_and_wait();
-	}
+	set_exit_status_and_wait();
 	return (return_value);
 }

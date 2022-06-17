@@ -102,6 +102,12 @@ env_vars_t		*get_variable_node(env_vars_t *list, char *variable);
 /* ---------------------------	executer	------------------------------ */
 
 int32_t			executer(action_t *actions, env_vars_t *list);
+void			reset_pid(void);
+int32_t			save_pid(pid_t new_pid);
+child_pids_t	*get_last_pid_node(void);
+child_pids_t	*get_first_pid_node(void);
+void			set_exit_status_and_wait(void);
+
 int32_t			pipe_command(action_t *acts, int32_t fdread, char **envp);
 char			*get_executable(char *cmd, char **envp);
 int				pplen(char **pp);

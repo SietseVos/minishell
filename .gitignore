@@ -1,6 +1,6 @@
 test.c
 *.out*
-*out*
+*outfile
 *.o
 /objs
 minishell
