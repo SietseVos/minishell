@@ -2,10 +2,8 @@
 
 action_t	*parse_pipe(char *input, int32_t *i)
 {
-	int			j;
 	action_t	*ret;
 
-	j = 0;
 	ret = malloc(sizeof(action_t));
 	if (ret == NULL)
 		return (nullerr("failed to malloc pipe node"));

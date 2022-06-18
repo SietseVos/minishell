@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-int32_t	execute_command(char **arguments, env_vars_t *list)
+int32_t	execute_command(char **arguments, env_vars_t *list) // check for buildins
 {
 	char	*execute_path;
 	char	**env_array;

@@ -1,5 +1,6 @@
 
 #include "minishell.h"
+#include <sys/wait.h>
 
 child_pids_t	*get_first_pid_node(void)
 {

@@ -21,6 +21,9 @@ EXECUTER =	executer.c									\
 			save_pid.c									\
 			execute_path.c								\
 			execute_command.c							\
+			execute_utils.c								\
+			child.c										\
+			run_builtins.c									\
 			# run_command.c								\
 			# make_executable.c							\
 

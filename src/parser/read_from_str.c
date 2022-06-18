@@ -85,7 +85,7 @@ void	read_input_str(char *str, int *strlen, env_vars_t *envp)
 
 	while (*str != '\0' && *str != ' ')
 	{
-		printf("current string: -%s-\n", str);
+		// printf("current string: -%s-\n", str);
 		strlentmp = 0;
 		if (*str == '"' || *str == '\'')
 		{

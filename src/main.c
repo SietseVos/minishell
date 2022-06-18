@@ -5,16 +5,13 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	action_t	*actions;
 	env_vars_t	*env;
 	char		*input;
-	// char		input1[] = "exit";
 
 	g_exit_status = 0;
 	init_signals();
 	using_history();
 	create_env_vars_list(envp, &env);
-	int32_t test = 0;
-	while (test < 50)
+	while (1)
 	{
-		test++;
 		input = readline("\033[1;31m😈 Minihell 😈 >\033[0m ");
 		if (!input)
 			exit(g_exit_status); // free env vars & history first
@@ -25,7 +22,6 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		}
 		add_history(input);
 		input = lexer(input);
-		// printf("lexer output:\n-%s-\n", input);
 		if (!input)
 			continue ;
 		actions = parser(input, env);
@@ -36,7 +32,6 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		}
 		free(input);
 		// print_actions(actions);
-		// executer_setup(actions, env);
 		executer(actions, env);
 		// if (ft_strncmp(actions ->arg[0], "exit", 4) == 0)
 		// 	return (0);

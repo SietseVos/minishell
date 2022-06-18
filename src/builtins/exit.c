@@ -48,7 +48,7 @@ static bool	check_for_wrong_argument(char *str)
 	return (false);
 }
 
-void	exit_shell(char **argument, bool print) // should print to stderr??
+void	exit_shell(char **argument, bool print)
 {
 	int64_t	arg;
 

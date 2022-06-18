@@ -3,9 +3,6 @@
 
 int32_t	add_env_node(env_vars_t *env, char *str)
 {
-	int32_t	i;
-
-	i = 0;
 	while (env->next)
 	{
 		env = env->next;

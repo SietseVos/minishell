@@ -62,6 +62,12 @@ typedef struct env_vars_s
 	struct env_vars_s	*next;
 }	env_vars_t;
 
+typedef	struct info_s
+{
+	action_t	*action;
+	env_vars_t	*list;
+}	info_t;
+
 /* ---------------------------	builtins	------------------------------ */
 
 	int32_t		cd(char **argument, env_vars_t *env);
@@ -110,7 +116,15 @@ child_pids_t	*get_first_pid_node(void);
 void			set_exit_status_and_wait(void);
 char			*get_executable_path(char **arguments, env_vars_t *list);
 int32_t			execute_command(char **arguments, env_vars_t *list);
+bool			actions_only_builtins(action_t *actions);
+bool			contains_pipes(action_t *actions);
+void			set_actions_next_pipe(action_t **actions);
+void			pop_nodes_till_command(action_t *actions);
+void			run_child(info_t *info, int32_t *fd, int32_t fd_in, bool contains_pipes);
+bool			run_if_builtin_child(info_t *info);
+int32_t			run_builtin_no_pipe(action_t *actions, env_vars_t *list);
 
+//				old executer
 int32_t			pipe_command(action_t *acts, int32_t fdread, char **envp);
 char			*get_executable(char *cmd, char **envp);
 int				pplen(char **pp);

@@ -6,11 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/06/17 19:14:19 by rvan-mee      ########   odam.nl         */
-=======
-/*   Updated: 2022/06/17 16:54:09 by svos          ########   odam.nl         */
->>>>>>> 95104ddd117677fada08d169a9d54e723bac0848
+/*   Updated: 2022/06/18 14:15:36 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +178,7 @@ void	place_str_in_node(char *dst, char *src, int32_t *i, env_vars_t *envp)
 	j = 0;
 	while (src[*i] != '\0' && is_whitespace(src[*i]) == false)
 	{
-		printf("Processign string: %s\n", src + *i);
+		// printf("Processign string: %s\n", src + *i);
 		if (src[*i] == '"' || src[*i] == '\'')
 		{
 			j += copy_til_quote(dst + j, src, i, envp);

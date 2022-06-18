@@ -7,7 +7,7 @@ int32_t	get_cmdarrlen(char *str)
 
 	i = 0;
 	ret = 0;
-	printf("entered get_cmdarrlen func\n");
+	// printf("entered get_cmdarrlen func\n");
 	while (str[i] != '\0' && is_operator(str[i]) == false)
 	{
 		while (str[i] != '\0')
@@ -25,7 +25,7 @@ int32_t	get_cmdarrlen(char *str)
 		}
 		ret++;
 	}
-	printf("returning: %d\n", ret);
+	// printf("returning: %d\n", ret);
 	return (ret);
 }
 
@@ -52,9 +52,9 @@ int32_t	look_for_other_types(char *str)
 
 int32_t	determine_cmdtype(char *input, char **last_str, int32_t *i)
 {
-	int	j;
+	// int	j;
 
-	j = 0;
+	// j = 0;
 	*last_str = NULL;
 	// if (*input == '|')
 	// {
