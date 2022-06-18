@@ -68,12 +68,11 @@ void	exit_shell(char **argument, bool print)
 		exit_shell_error(argument[0]);
 	if (strings_in_array(argument) > 1)
 	{
-		printf("bash: exit: too many arguments\n");
+		write(STDERR_FILENO, "bash: exit: too many arguments\n", 32);
 		g_exit_status = 1;
 		return ;
 	}
 	arg = ft_atoll(argument[0]);
-	free_array_till_index(argument, strings_in_array(argument));
 	if (print)
 		write(STDERR_FILENO, "exit\n", 6);
 	exit((int8_t)arg);

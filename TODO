@@ -3,11 +3,10 @@
 	*	check only whitespace input
 	*	assigining value inside export
 	*
-	*	exit with number ---- malloc: *** error for object 0x7ffe51600078: pointer being freed was not allocated
 	*	fix signals inside child
 	*	file not existing before pipe then using after pipe (cat < NOFILE | cat > test.out)
 	*	expansion of non existent variable loops
-	*	echo -nnnnnnnn "this is a test!" > test.out ---- SEGFAULT --- #0 0x10a902508 in get_cmdarrlen parse_cmd.c:12
+	*
 
 	check for no command inside:	(still opens redirects)
 		pwd | <Makefile >test.out |ls

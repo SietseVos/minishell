@@ -25,9 +25,10 @@ void	echo(char **args)
 	int32_t		i;
 
 	i = 0;
+	newline = true;
 	if (!*args)
 	{
-		printf("\n");
+		write(1, "\n", 1);
 		return ;
 	}
 	if (is_n_flag(args[0]))
@@ -36,15 +37,13 @@ void	echo(char **args)
 		while (is_n_flag(args[i]))
 			i++;
 	}
-	else
-		newline = true;
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		write(1, args[i], ft_strlen(args[i]));
 		i++;
 		if (args[i])
-			printf(" ");
+			write(1, " ", 1);
 	}
 	if (newline)
-		printf("\n");
+		write(1, "\n", 1);
 }

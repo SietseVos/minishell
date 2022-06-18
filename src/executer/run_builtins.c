@@ -37,10 +37,7 @@ int32_t	run_builtin_no_pipe(action_t *actions, env_vars_t *list)
 	else if (ft_strncmp(actions->arg[0], "env", 4) == 0)
 		env(list);
 	else if (ft_strncmp(actions->arg[0], "exit", 5) == 0)
-	{
-		free_env_list(list);
 		exit_shell(&actions->arg[1], true);
-	}
 	else if (ft_strncmp(actions->arg[0], "export", 7) == 0)
 		return_value_b = export(&actions->arg[1], list);
 	else if (ft_strncmp(actions->arg[0], "pwd", 4) == 0)

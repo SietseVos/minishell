@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/18 14:15:36 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/18 19:39:48 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int32_t	copy_til_quote(char *dst, char *src, int32_t *i, env_vars_t *envp)
 			*i += place_envvar(dst + j, src + *i, envp, &j);
 		else
 		{
-			printf("copying: -%c- on %p and j: %d\n", src[*i], &dst[j], j);
+			// printf("copying: -%c- on %p and j: %d\n", src[*i], &dst[j], j);
 			dst[j] = src[*i];
 			*i += 1;
 			j++;
@@ -201,9 +201,9 @@ int32_t	skipstring(char *str, char quote)
 		i++;
 	if (str[i] == quote)
 	{
-		printf("skipped string with plus 1, returning: %d\n", i + 1);
+		// printf("skipped string with plus 1, returning: %d\n", i + 1);
 		return (i + 1);
 	}
-	printf("skipped string, returning: %d\n", i);
+	// printf("skipped string, returning: %d\n", i);
 	return (i);
 }

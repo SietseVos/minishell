@@ -8,10 +8,11 @@ static int32_t	dup_correct_fd(int32_t (file_function)(action_t *), action_t *act
 	fd = file_function(actions);
 	if (fd == -2)
 		return (-2);
-	else if (fd == -1)	// if open fails or no premissions
+	else if (fd == -1)
 		return (-1);
 	close(direction);
-	dup2(fd, direction);
+	if (dup2(fd, direction) == -1)
+		return (-1);
 	return (fd);
 }
 

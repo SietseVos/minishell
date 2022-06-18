@@ -67,7 +67,7 @@ int32_t	strlen_til_quote(char *str, char c, env_vars_t *envp)
 	strlen = 0;
 	while (str[i] != c && str[i] != '\0')
 	{
-		printf("reading: %c\n", str[i]);
+		// printf("reading: %c\n", str[i]);
 		if (c == '"' && str[i] == '$')
 			i += interpvar_strlen(str + i, c, &strlen, envp);
 		else

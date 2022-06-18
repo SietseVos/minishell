@@ -1,16 +1,41 @@
 
 #include "minishell.h"
 
-int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
+static int32_t	run_executable_no_pipe(action_t	*actions, env_vars_t *list)
 {
 	int32_t	return_execute;
 	int32_t	fork_fd;
-	int32_t in_fd;
-	int32_t out_fd;
+
+	while (actions && actions->type != TOSTDOUT)
+		pop_action_node(&actions);
+	if (!actions)
+		return (1);
+	fork_fd = fork();
+	if (fork_fd == -1)
+		return (-1);
+	if (fork_fd == 0)
+	{
+		return_execute = execute_command(actions->arg, list);
+		if (return_execute == -1)
+			exit (1);
+		else if (return_execute == 0)
+		{
+			printf("bash: %s: command not found\n", actions->arg[0]);
+			exit (1);
+		}
+		exit (g_exit_status);
+	}
+	save_pid(fork_fd);
+	return (0);
+}
+
+int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
+{
+	int32_t	in_fd;
+	int32_t	out_fd;
 
 	in_fd = -1;
 	out_fd = -1;
-	fork_fd = -1;
 	if (set_redirections(actions, &in_fd, &out_fd) == -1)
 		return (-1);
 	if (actions_only_builtins(actions))
@@ -18,33 +43,9 @@ int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
 		if (run_builtin_no_pipe(actions, list) == -1)
 			return (-1);
 	}
-	else
-	{
-		while (actions && actions->type != TOSTDOUT)
-			actions = actions->next;
-		if (!actions)
-			return (-1);
-		fork_fd = fork();
-		if (fork_fd == -1)
-			return (-1);
-		if (fork_fd == 0)
-		{
-			return_execute = execute_command(actions->arg, list);
-			if (return_execute == -1)
-				exit (-1);
-			else if (return_execute == 0)
-			{
-				printf("bash: %s: command not found\n", actions->arg[0]);
-				exit (1);
-			}
-			exit (g_exit_status);
-		}
-		save_pid(fork_fd);
-	}
+	else if (run_executable_no_pipe(actions, list) == -1)
+		return (-1);
 	reset_redirections(in_fd, out_fd);
-	if (fork_fd > -1)
-		if (save_pid(fork_fd) == -1)
-			return (-1);
 	return (0);
 }
 
