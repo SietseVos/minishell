@@ -44,19 +44,24 @@ static void	skip_till_special_char(char *str, int32_t *i)
 
 static bool	check_for_error(char *str, int32_t *i)
 {
-	if (*i == 0 && str[*i] == '|')
-	{
-		write_syntax_error(str, i);
-		return (true);
-	}
-	if (str[*i] == '>' || str[*i] == '<' || str[*i] == '|')
+	if (str[*i] == '>' || str[*i] == '<')
 	{
 		*i += 1;
-		if (str[*i] == str[*i - 1] && str[*i] != '|')
+		if (str[*i] == str[*i - 1])
 			*i += 1;
 		skip_whitespace(str, i);
-		if (str[*i] == '>' || str[*i] == '<'
-			|| str[*i] == '|' || str[*i] == '\0')
+		if (str[*i] == '>' || str[*i] == '<' || \
+			str[*i] == '|' || str[*i] == '\0')
+		{
+			write_syntax_error(str, i);
+			return (true);
+		}
+	}
+	if (str[*i] == '|')
+	{
+		*i += 1;
+		skip_whitespace(str, i);
+		if (str[*i] == '|' || str[*i] == '\0')
 		{
 			write_syntax_error(str, i);
 			return (true);
@@ -70,6 +75,12 @@ bool	check_syntax_error(char *str)
 	int32_t	i;
 
 	i = 0;
+	skip_whitespace(str, &i);
+	if (str[i] == '|')
+	{
+		write_syntax_error(str, &i);
+		return (true);
+	}
 	while (str[i])
 	{
 		skip_till_special_char(str, &i);

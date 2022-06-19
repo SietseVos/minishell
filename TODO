@@ -8,21 +8,12 @@
 	*	echo "'"$USER"'"
 	*	export ok="k k"
 
-void func(char *string[]);
+Use for writing to stderr??
+{
+	void func(char *string[]);
 
-func((char *[]){"functon failed: ", test, "lkj"});
-
-
-
-
-LEXER FIXING:::
-check for no command inside:	(still opens redirects)
-	pwd | <Makefile >test.out |ls
-fix lexer: pwd | <Makefile cat | ls
-should work; current output "bash: syntax error near unexpected token `<'".
-
-
-
+	func((char *[]){"functon failed: ", test, "lkj"});
+}
 
 export hi="ls"
 $hi

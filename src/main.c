@@ -12,7 +12,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	create_env_vars_list(envp, &env);
 	while (1)
 	{
-		input = readline("\033[1;31m😈 Minihell 😈 >\033[0m ");
+		input = readline("\033[1;31m😈 Minihell 😈 ▸\033[0m ");
 		if (!input)
 			exit(g_exit_status); // free env vars & history first
 		else if (input[0] == '\0')
