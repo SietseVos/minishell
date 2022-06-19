@@ -8,8 +8,9 @@ static bool	command_found(const char *path)
 		if (access(path, X_OK) == 0)
 			return (true);
 		else
-			printf("bash: %s: Premission denied\n", path);
-		return (false);
+			return_with_error_message("bash: ", path, \
+						": Premission denied\n", false);
+		return (true);
 	}
 	return (false);
 }
@@ -83,6 +84,6 @@ char	*get_executable_path(char **arguments, env_vars_t *list)
 			return (cmd_path);
 		free(cmd_path);
 	}
-	printf("bash: %s: command not found\n", arguments[0]);
+	write_error_with_strings("bash: ", arguments[0], ": command not found\n");
 	return (NULL);
 }

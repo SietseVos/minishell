@@ -4,19 +4,24 @@
 int32_t	chdir_error(char *str)
 {
 	g_exit_status = 1;
-	printf("bash: cd: %s: No such file or directory\n", str);
+	write_error_with_strings("bash: cd: ", str, ": No such file or directory\n");
 	return (1);
 }
 
 /*
-	*	This function copies the string inside pwd_node, adds "OLD" in front and then places
+	*	This function copies the string inside pwd_node,
+	*	adds "OLD" in front and then places
 	*	it inside of oldpwd_node. 
-	*	@param *oldpwd_node Pointer to the node where the string has the be placed.
-	*	@param *pwd_node Pointer to the node containing the string that has to be copied.
-	*	@param *has_been_null Pointer to a boolian that will be changed indicating it has not been set to null.
+	*	@param *oldpwd_node Pointer to the node where
+	*	the string has the be placed.
+	*	@param *pwd_node Pointer to the node containing
+	*	the string that has to be copied.
+	*	@param *has_been_null Pointer to a boolian that
+	*	will be changed indicating it has not been set to null.
 	*	@return [-1] If memory allocation fails else [0].
 */
-int32_t	move_pwd_to_oldpwd(env_vars_t *oldpwd_node, env_vars_t *pwd_node, bool *has_been_null)
+int32_t	move_pwd_to_oldpwd(env_vars_t *oldpwd_node, \
+		env_vars_t *pwd_node, bool *has_been_null)
 {
 	int32_t	oldpwd_size;
 

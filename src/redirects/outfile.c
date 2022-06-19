@@ -16,7 +16,8 @@ static int32_t	check_premissions(char *path)
 {
 	if (access(path, R_OK) == -1)
 	{
-		printf("bash: %s: Premission denied\n", path);
+		write_error_with_strings("bash: ", path, \
+		": Premission denied\n");
 		return (false);
 	}
 	return (true);

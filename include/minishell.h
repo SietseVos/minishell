@@ -80,7 +80,7 @@ typedef	struct info_s
 	void		pwd(void);
 	void		env(env_vars_t *list);
 	int32_t		strings_in_array(char **str);
-	bool		export(char **args, env_vars_t *env);
+	int32_t		export(char **args, env_vars_t *env);
 	void		bubble_sort_array(char **env_strings, int32_t lst_size);
 	int32_t		add_quotes_after_equal(char **strings);
 	bool		is_already_in_list(char	*input, env_vars_t *env);
@@ -202,6 +202,14 @@ void			free_double_array(char **array);
 void			pop_action_node(action_t **node);
 void			free_action_list(action_t *node);
 void			free_env_list(env_vars_t *list);
+void			write_error_with_chars(char *str1, char char1, char char2, char *str2);
+void			write_error_with_strings(char *str1, char *str2, char *str3);
+int32_t			return_with_error_message(char *str1, const char *str2, char *str3, \
+				int32_t return_value);
+int32_t			close_fd_return_error(char *error_message, int32_t fd, \
+				int32_t return_value);
+void			exit_with_error_message(char *str1, char *str2, char *str3, \
+				int32_t exit_value);
 
 /* ----------------------------------------------------------------------- */
 

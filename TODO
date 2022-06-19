@@ -1,15 +1,36 @@
-	*	get tabs working
 	*	heredocs
-	*	check only whitespace input
-	*	assigining value inside export
-	*
+	*	exit value check every function
 	*	fix signals inside child
-	*	file not existing before pipe then using after pipe (cat < NOFILE | cat > test.out)
-	*	expansion of non existent variable loops
 	*
+	*	check only whitespace input
+	*	get tabs working
+	*	expansion of non existent variable loops
+	*	echo "'"$USER"'"
+	*	export ok="k k"
 
-	check for no command inside:	(still opens redirects)
-		pwd | <Makefile >test.out |ls
+void func(char *string[]);
 
-	fix lexer: pwd | <Makefile cat | ls
-	should work; current output "bash: syntax error near unexpected token `<'".
+func((char *[]){"functon failed: ", test, "lkj"});
+
+
+
+
+LEXER FIXING:::
+check for no command inside:	(still opens redirects)
+	pwd | <Makefile >test.out |ls
+fix lexer: pwd | <Makefile cat | ls
+should work; current output "bash: syntax error near unexpected token `<'".
+
+
+
+
+export hi="ls"
+$hi
+in Arguments:
+-"ls"-
+should be -ls-
+
+echo "'"ls"'"
+-echo-
+-'ls"'"-
+'ls"'"

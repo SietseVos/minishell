@@ -50,6 +50,7 @@ SIGNALS =	signals.c									\
 UTILS =		errors.c									\
 			printing.c									\
 			freeing.c									\
+			return.c									\
 
 SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 		$(addprefix src/env_functions/, $(ENV))			\

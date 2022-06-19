@@ -14,11 +14,14 @@ static void	write_syntax_error(char *str, int32_t *i)
 		j++;
 	}
 	if (char_count > 1)
-		printf("bash: syntax error near unexpected token `%c%c'\n", str[*i], str[*i]);
+		write_error_with_chars("bash: syntax error near unexpected token `", \
+		str[*i], str[*i], "'\n");
 	else if (char_count == 1)
-		printf("bash: syntax error near unexpected token `%c'\n", str[*i]);
+		write_error_with_chars("bash: syntax error near unexpected token `", \
+		str[*i], 0, "'\n");
 	else if (char_count == 0)
-		printf("bash: syntax error near unexpected token `newline'\n");
+		write(STDERR_FILENO, \
+		"bash: syntax error near unexpected token `newline'\n", 52);
 	g_exit_status = 258;
 }
 
@@ -52,7 +55,8 @@ static bool	check_for_error(char *str, int32_t *i)
 		if (str[*i] == str[*i - 1] && str[*i] != '|')
 			*i += 1;
 		skip_whitespace(str, i);
-		if (str[*i] == '>' || str[*i] == '<' || str[*i] == '|' || str[*i] == '\0')
+		if (str[*i] == '>' || str[*i] == '<'
+			|| str[*i] == '|' || str[*i] == '\0')
 		{
 			write_syntax_error(str, i);
 			return (true);

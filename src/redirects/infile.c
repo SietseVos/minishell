@@ -10,13 +10,15 @@ static bool	access_error(action_t *action)
 			if (access(action->arg[0], F_OK) == -1)
 			{
 				g_exit_status = 1;
-				printf("bash: %s: No such file or directory", action->arg[0]);
+				write_error_with_strings("bash: ", action->arg[0], \
+				": No such file or directory\n");
 				return (true);
 			}
 			else if (access(action->arg[0], R_OK) == -1)
 			{
 				g_exit_status = 1;
-				printf("bash: %s: Premission denied\n", action->arg[0]);
+				write_error_with_strings("bash: ", action->arg[0], \
+				": Premission denied\n");
 				return (true);
 			}
 		}

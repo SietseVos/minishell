@@ -31,7 +31,7 @@ static int32_t	change_pwd_path(env_vars_t *env)
 	env_vars_t	*path;
 	char		*new_pwd;
 	char		*pwd;
-	
+
 	path = get_variable_node(env, "PWD");
 	if (!path)
 		return (1);
@@ -69,15 +69,13 @@ static int32_t	change_old_pwd_path(env_vars_t *env, bool *has_been_null)
 		if (create_empty_oldpwd(oldpwd_node, has_been_null) == -1)
 			return (-1);
 	}
-	// if (pwd_node)
-	// 	free(pwd_node->str);
 	return (0);
 }
 
 static int32_t	first_cd_call(bool *start_of_program, env_vars_t *env)
 {
 	env_vars_t	*oldpwd_node;
-	char 		*old_pwd;
+	char		*old_pwd;
 
 	oldpwd_node = get_variable_node(env, "OLDPWD");
 	if (*start_of_program == false)
@@ -110,7 +108,7 @@ int32_t	cd(char **argument, env_vars_t *env)
 {
 	static bool	has_been_null = false;
 	static bool	start_of_program = true;
-	env_vars_t *home_path;
+	env_vars_t	*home_path;
 
 	if (!*argument || argument[0][0] == '\0')
 	{
@@ -118,10 +116,10 @@ int32_t	cd(char **argument, env_vars_t *env)
 		if (!home_path || home_path->has_value == false)
 		{
 			g_exit_status = 1;
-			printf("bash: cd: HOME not set\n");
+			write(STDERR_FILENO, "bash: cd: HOME not set\n", 24);
 			return (0);
 		}
-		else if (home_path->str[5] == '\0')			// unset HOME then export HOME=
+		else if (home_path->str[5] == '\0')
 			return (0);
 		else if (chdir(&home_path->str[5]) != 0)
 			return (chdir_error(&home_path->str[5]));
@@ -131,10 +129,7 @@ int32_t	cd(char **argument, env_vars_t *env)
 	if (first_cd_call(&start_of_program, env) == -1
 		|| change_old_pwd_path(env, &has_been_null) == -1
 		|| change_pwd_path(env) == -1)
-		return (-1);	
+		return (-1);
 	g_exit_status = 0;
 	return (0);
 }
-// OLDPWD is the string of PWD before changing it, after calling cd the first time after unsetting PWD,
-// OLDPWD will have an empty string, otherwise it will be filled with the last dir. 
-// this proccess resets if PWD gets added with export again.

@@ -19,17 +19,15 @@ static int32_t	run_executable_no_pipe(action_t	*actions, env_vars_t *list)
 		if (return_execute == -1)
 			exit (1);
 		else if (return_execute == 0)
-		{
-			printf("bash: %s: command not found\n", actions->arg[0]);
-			exit (1);
-		}
+			exit_with_error_message("bash: ", actions->arg[0], \
+									": command not found\n", 1);
 		exit (g_exit_status);
 	}
 	save_pid(fork_fd);
 	return (0);
 }
 
-int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
+static int32_t	run_no_pipes(action_t *actions, env_vars_t *list)
 {
 	int32_t	in_fd;
 	int32_t	out_fd;
@@ -64,10 +62,15 @@ static int32_t	run_with_pipes(info_t *info, int32_t fd_in)
 	pid_t		fork_pid;
 
 	if (has_pipes && pipe(pipe_fds) == -1)
-		return (-1);
+		return (close_fd_return_error(\
+		"bash: pipe: Resource temporarily unavailable\n", fd_in, -1));
 	fork_pid = fork();
 	if (has_pipes && fork_pid == -1)
-		close_fds_and_return(pipe_fds, fd_in);
+	{
+		write(STDERR_FILENO, \
+		"bash: fork: Resource temporarily unavailable\n", 46);
+		return (close_fds_and_return(pipe_fds, fd_in));
+	}
 	else if (fork_pid == 0)
 		run_child(info, pipe_fds, fd_in, has_pipes);
 	if (fd_in > 0)

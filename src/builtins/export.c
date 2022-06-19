@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-static int32_t	print_export(env_vars_t *env)
+static bool	print_export(env_vars_t *env)
 {
 	char	**env_strings;
 	int32_t	i;
@@ -15,7 +15,7 @@ static int32_t	print_export(env_vars_t *env)
 		return (-1);
 	while (env_strings[i])
 	{
-		printf("declare - x %s\n", env_strings[i]);
+		printf("declare -x %s\n", env_strings[i]);
 		free(env_strings[i]);
 		i++;
 	}
@@ -23,22 +23,30 @@ static int32_t	print_export(env_vars_t *env)
 	return (0);
 }
 
-static bool	check_valid_input(char	*input)
+static int32_t	check_valid_input(char	*input)
 {
 	int32_t	i;
 
 	i = 0;
 	if ((input[0] >= '0' && input[0] <= '9') || input[0] == '=')
-		return (true);
+	{
+		write_error_with_strings("bash: export: `", input, \
+								"': not a valid identifier\n");
+		return (-1);
+	}
 	while (input[i])
 	{
 		if (input[i] == '=')
 			break ;
 		else if (input[i] == '-')
-			return (true);
+		{
+			write_error_with_strings("bash: export: `", input, \
+									"': not a valid identifier\n");
+			return (-1);
+		}
 		i++;
 	}
-	return (false);
+	return (0);
 }
 
 static int32_t	add_to_list(char *input, env_vars_t *env)
@@ -66,7 +74,7 @@ static int32_t	replace_current_in_list(char *input, env_vars_t *env)
 	i = 0;
 	variable = ft_calloc(ft_strlen(input) + 1, sizeof(char));
 	if (!variable)
-		return (-1);
+		return (false);
 	while (input[i] && input[i] != '=')
 	{
 		variable[i] = input[i];
@@ -81,44 +89,36 @@ static int32_t	replace_current_in_list(char *input, env_vars_t *env)
 	free(to_replace->str);
 	to_replace->str = variable;
 	set_env_node_hasvalue(to_replace);
-	return (0);
+	return (true);
 }
 
-bool	export(char **args, env_vars_t *env)
+int32_t	export(char **args, env_vars_t *env)
 {
 	int32_t	i;
 
 	i = 0;
 	if (!*args)
+		return (print_export(env));
+	while (args[i])
 	{
-		if (print_export(env) == -1)
-			return (false);
-	}
-	else
-	{
-		while (args[i])
+		if (check_valid_input(args[i]) == -1 || \
+			(args[i][0] && args[i][0] == '_' && \
+			(args[i][1] == '=' || args[i][1] == '\0')))
 		{
-			if (check_valid_input(args[i]))
-				printf("bash: export: `%s': not a valid identifier\n", args[i]);
-			else if (args[i][0] && args[i][0] == '_' && (args[i][1] == '=' || args[i][1] == '\0'))
-			{
-				i++;
-				continue ;
-			}
-			else if (is_already_in_list(args[i], env))
-			{
-				if (replace_current_in_list(args[i], env) == -1)
-					return (false);
-			}
-			else
-			{
-				if (add_to_list(args[i], env) == -1)
-					return (false);
-			}
 			i++;
+			continue ;
 		}
+		else if (is_already_in_list(args[i], env))
+		{
+			if (replace_current_in_list(args[i], env) == -1)
+				return (-1);
+		}
+		else
+			if (add_to_list(args[i], env) == -1)
+				return (-1);
+		i++;
 	}
-	return (true);
+	return (0);
 }
 
 // dont allow _= variable, should be shell maintained only and cant? be changed.

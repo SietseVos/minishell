@@ -37,10 +37,8 @@ static bool	check_unset_error(char *str)
 	while (str[i])
 	{
 		if (str[i] == '=')
-		{
-			printf("bash: unset: `%s': not a valid identifier\n", str);
-			return (true);
-		}
+			return (return_with_error_message("bash: unset: `", str, \
+								"': not a valid identifier\n", true));
 		i++;
 	}
 	return (false);
@@ -50,7 +48,7 @@ void	unset(char **arg, env_vars_t **list)
 {
 	int32_t	error;
 	int32_t	i;
-	
+
 	i = 0;
 	error = 0;
 	while (arg[i])
