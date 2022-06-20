@@ -36,16 +36,16 @@ void	pop_action_node(action_t **node)
 {
 	action_t	*next;
 
-	if (!*node)
+	if (!node || !*node)
 		return ;
-	next = (*node)->next;
 	free_double_array((*node)->arg);
+	next = (*node)->next;
 	free((*node));
 	*node = next;
 }
 
-void	free_action_list(action_t *node)
+void	free_action_list(action_t **node)
 {
-	while (node)
-		pop_action_node(&node);
+	while (node && *node)
+		pop_action_node(node);
 }

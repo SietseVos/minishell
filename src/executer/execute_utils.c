@@ -1,22 +1,18 @@
 
 #include "minishell.h"
 
-void	pop_nodes_till_command(action_t *actions)
+void	pop_nodes_till_command(action_t **actions)
 {
-	while (actions && actions->type != TOSTDOUT)
-		pop_action_node(&actions);
+	while (actions && (*actions) && (*actions)->type != TOSTDOUT)
+		pop_action_node(actions);
 }
 
 void	set_actions_next_pipe(action_t **actions) // free actions??
 {
-	action_t	*tmp;
-
-	tmp = *actions;
-	while (tmp && tmp->type != PIPE)
-		tmp = tmp->next;
-	if (tmp && tmp->type == PIPE)
-		tmp = tmp->next;
-	*actions = tmp;
+	while (actions && *actions &&(*actions)->type != PIPE)
+		pop_action_node(actions);
+	if (actions && *actions &&(*actions)->type == PIPE)
+		pop_action_node(actions);
 }
 
 bool	contains_pipes(action_t *actions)

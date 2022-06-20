@@ -72,12 +72,12 @@ static int32_t	change_old_pwd_path(env_vars_t *env, bool *has_been_null)
 	return (0);
 }
 
-static int32_t	first_cd_call(bool *start_of_program, env_vars_t *env)
+static int32_t	first_cd_call(bool *start_of_program, env_vars_t **env)
 {
 	env_vars_t	*oldpwd_node;
 	char		*old_pwd;
 
-	oldpwd_node = get_variable_node(env, "OLDPWD");
+	oldpwd_node = get_variable_node(*env, "OLDPWD");
 	if (*start_of_program == false)
 		return (0);
 	*start_of_program = false;
@@ -104,7 +104,7 @@ static int32_t	first_cd_call(bool *start_of_program, env_vars_t *env)
 	return (0);
 }
 
-int32_t	cd(char **argument, env_vars_t *env)
+int32_t	cd(char **argument, env_vars_t **env)
 {
 	static bool	has_been_null = false;
 	static bool	start_of_program = true;
@@ -112,7 +112,7 @@ int32_t	cd(char **argument, env_vars_t *env)
 
 	if (!*argument || argument[0][0] == '\0')
 	{
-		home_path = get_variable_node(env, "HOME");
+		home_path = get_variable_node(*env, "HOME");
 		if (!home_path || home_path->has_value == false)
 		{
 			g_exit_status = 1;
@@ -127,8 +127,8 @@ int32_t	cd(char **argument, env_vars_t *env)
 	else if (chdir(argument[0]) != 0)
 		return (chdir_error(argument[0]));
 	if (first_cd_call(&start_of_program, env) == -1
-		|| change_old_pwd_path(env, &has_been_null) == -1
-		|| change_pwd_path(env) == -1)
+		|| change_old_pwd_path(*env, &has_been_null) == -1
+		|| change_pwd_path(*env) == -1)
 		return (-1);
 	g_exit_status = 0;
 	return (0);

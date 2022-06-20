@@ -49,7 +49,7 @@ static int32_t	check_valid_input(char	*input)
 	return (0);
 }
 
-static int32_t	add_to_list(char *input, env_vars_t *env)
+static int32_t	add_to_list(char *input, env_vars_t **env)
 {
 	char	*new_node;
 
@@ -92,13 +92,13 @@ static int32_t	replace_current_in_list(char *input, env_vars_t *env)
 	return (true);
 }
 
-int32_t	export(char **args, env_vars_t *env)
+int32_t	export(char **args, env_vars_t **env)
 {
 	int32_t	i;
 
 	i = 0;
 	if (!*args)
-		return (print_export(env));
+		return (print_export(*env));
 	while (args[i])
 	{
 		if (check_valid_input(args[i]) == -1 || \
@@ -108,9 +108,9 @@ int32_t	export(char **args, env_vars_t *env)
 			i++;
 			continue ;
 		}
-		else if (is_already_in_list(args[i], env))
+		else if (is_already_in_list(args[i], *env))
 		{
-			if (replace_current_in_list(args[i], env) == -1)
+			if (replace_current_in_list(args[i], *env) == -1)
 				return (-1);
 		}
 		else

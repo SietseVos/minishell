@@ -15,6 +15,9 @@ Use for writing to stderr??
 	func((char *[]){"functon failed: ", test, "lkj"});
 }
 
+bash-3.2$ echo test > $TEST
+bash: $TEST: ambiguous redirect
+
 export hi="ls"
 $hi
 in Arguments:

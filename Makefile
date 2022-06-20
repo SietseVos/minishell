@@ -44,6 +44,8 @@ PARSER =	parse_cmd.c									\
 REDIRECTS =	infile.c									\
 			outfile.c									\
 			redirect.c									\
+			create_heredoc_file.c						\
+			heredoc.c									\
 
 SIGNALS =	signals.c									\
 
@@ -94,6 +96,7 @@ $(OBJ_DIR):
 
 clean:
 	make clean -C src/libft
+	rm -rf /tmp/.tmp_heredoc*
 	rm -rf $(OBJ_DIR)
 
 fclean: clean

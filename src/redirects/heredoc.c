@@ -1,94 +1,81 @@
 
 #include "minishell.h"
 
-static heredoc_t	*new_heredoc_node(char	*str)
+static int32_t	ft_strcmp(char *str1, char *str2)
 {
-	heredoc_t	*new;
+	int32_t	i;
 
-	new = malloc(sizeof(heredoc_t));
-	if (!new)
-		return (NULL);
-	new->str = str;
-	new->next = NULL;
-	return (new);
-}
-
-static int32_t	add_heredoc_node(heredoc_t **heredoc, char *str)
-{
-	heredoc_t	*node;
-	
-	if (!*heredoc)
+	i = 0;
+	while (str1[i] && str2[i])
 	{
-		*heredoc = new_heredoc_node(str);
-		if (!*heredoc)
+		if (str1[i] != str2[i])
 			return (-1);
-		return (0);
+		i++;
 	}
-	node = *heredoc;
-	while (node)
-		node = node->next;
-	node->next = new_heredoc_node(str);
-	if (!node->next)
+	if (str1[i] != str2[i])
 		return (-1);
 	return (0);
 }
 
-static int32_t	free_heredoc_list(heredoc_t *hdoc)
+static int32_t	close_free_and_return(int32_t fd, char *str1, char *str2, int32_t return_v)
 {
-	heredoc_t	*tmp;
-	heredoc_t	*next;
-
-	tmp = hdoc;
-	while (tmp)
-	{
-		if (tmp->str)
-			free(tmp->str);
-		next = tmp->next;
-		free(tmp);
-		tmp = next;
-	}
-	return (-1);
+	if (str1)
+		free(str1);
+	if (str2)
+		free(str2);
+	return (return_v);
 }
 
-static int32_t	write_to_file(int32_t fd, heredoc_t *hdoc)
+static int32_t	run_heredoc(const char *heredoc_path, char *delimiter)
 {
-	heredoc_t	*tmp;
+	int32_t	fd;
+	char	*input;
 
-	tmp = hdoc;
-	while (tmp)
-	{
-		if (write(fd, tmp->str, strlen(tmp->str)) == -1)
-			return (free_heredoc_list(hdoc));
-		tmp = tmp->next;
-	}
-	if (write(fd, '\0', 1) == -1);
-		return (free_heredoc_list(hdoc));
-	free_heredoc_list(hdoc);
-	return (0);
-}
-
-static int32_t	heredoc(char *stop)
-{
-	int32_t		fd;
-	char		*input;
-	heredoc_t	*heredoc;
-
+	// ctrl c signal should work
+	fd = open(heredoc_path, O_WRONLY | O_TRUNC);
+	if (fd == -1)
+		return (-1);
 	while (1)
 	{
 		input = readline("> ");
-		if (strncmp(input, stop, ft_strlen(stop) + 1) == 0)
-			break ;
-		if (add_heredoc_node(&heredoc, input) == -1)
-			return (free_heredoc_list(heredoc));
+		if (!input)
+			return(close_free_and_return(fd, delimiter, NULL, 0));
+		// expand variables
+		if (input[0] == '\0' || ft_strcmp(delimiter, input) == 0)
+			return (close_free_and_return(fd, delimiter, input, 0));
+		else if (write(fd, input, ft_strlen(input)) == -1 || write(fd, "\n", 1) == -1)
+			return (close_free_and_return(fd, delimiter, input, -1));
+		free(input);
 	}
-	free(input);
-	// set env vars into strings
-	if (parse_heredoc_input == -1)
-		return (free_heredoc_list(heredoc));
-	// create temp file
-	if (create_tmp_heredoc_file == -1)
-		return (free_heredoc_list(heredoc));
-	if (write_to_file(fd, heredoc) == -1)
-		return (-1);
-	return (fd);
-}	// remove file after calling
+	close(fd);
+	return (0);
+}
+
+void	remove_heredoc_files(action_t *actions)
+{
+	while (actions)
+	{
+		if (actions->type == HDOC)
+			unlink(actions->arg[0]);
+		actions = actions->next;
+	}
+}
+
+int32_t	heredoc(action_t *actions)
+{
+	char	*delimiter;
+
+	while (actions)
+	{
+		if (actions->type == HDOC)
+		{
+			delimiter = ft_strdup(actions->arg[0]);
+			if (!delimiter || create_heredoc_file(actions) == -1)
+				return (-1);
+			if (run_heredoc(actions->arg[0], delimiter) == -1)
+				return (-1);
+		}
+		actions = actions->next;
+	}
+	return (0);
+}

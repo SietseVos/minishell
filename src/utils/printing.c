@@ -27,6 +27,8 @@ void	printchararr(char **toprint)
 
 void	print_actions(action_t *inlst)
 {
+	if (!inlst)
+		printf("\033[1;32mList is empty!\033[31m\n");
 	while (inlst)
 	{
 		printf("\033[1;36m===== node =====\033[31m\n");

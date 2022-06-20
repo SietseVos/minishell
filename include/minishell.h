@@ -43,12 +43,6 @@ typedef struct action_s
 	struct action_s *next;
 }	action_t;
 
-typedef struct heredoc_s
-{
-	char				*str;
-	struct env_vars_s	*next;
-}	heredoc_t;
-
 typedef struct child_pids_s
 {
 	pid_t				pid;
@@ -64,13 +58,13 @@ typedef struct env_vars_s
 
 typedef	struct info_s
 {
-	action_t	*action;
-	env_vars_t	*list;
+	action_t	**action;
+	env_vars_t	**list;
 }	info_t;
 
 /* ---------------------------	builtins	------------------------------ */
 
-	int32_t		cd(char **argument, env_vars_t *env);
+	int32_t		cd(char **argument, env_vars_t **env);
 	int32_t		chdir_error(char *str);
 	char		*create_new_cd_str(char *var, char *pwd);
 	int32_t		set_oldpwd(env_vars_t *oldpwd_node);
@@ -80,7 +74,7 @@ typedef	struct info_s
 	void		pwd(void);
 	void		env(env_vars_t *list);
 	int32_t		strings_in_array(char **str);
-	int32_t		export(char **args, env_vars_t *env);
+	int32_t		export(char **args, env_vars_t **env);
 	void		bubble_sort_array(char **env_strings, int32_t lst_size);
 	int32_t		add_quotes_after_equal(char **strings);
 	bool		is_already_in_list(char	*input, env_vars_t *env);
@@ -93,7 +87,7 @@ typedef	struct info_s
 
 /* --------------------------	env_functions	-------------------------- */
 
-int32_t			add_env_node(env_vars_t *env, char *str);
+int32_t			add_env_node(env_vars_t **env, char *str);
 bool			create_env_vars_list(char **envp, env_vars_t **env_head);
 char			**free_array_till_index(char **array, int32_t index);
 char			**env_list_to_array(env_vars_t *env_list);
@@ -108,7 +102,7 @@ void			set_env_node_hasvalue(env_vars_t *env);
 
 /* ---------------------------	executer	------------------------------ */
 
-int32_t			executer(action_t *actions, env_vars_t *list);
+int32_t			executer(action_t **actions, env_vars_t **list);
 void			reset_pid(void);
 int32_t			save_pid(pid_t new_pid);
 child_pids_t	*get_last_pid_node(void);
@@ -119,10 +113,10 @@ int32_t			execute_command(char **arguments, env_vars_t *list);
 bool			actions_only_builtins(action_t *actions);
 bool			contains_pipes(action_t *actions);
 void			set_actions_next_pipe(action_t **actions);
-void			pop_nodes_till_command(action_t *actions);
-void			run_child(info_t *info, int32_t *fd, int32_t fd_in, bool contains_pipes);
-bool			run_if_builtin_child(info_t *info);
-int32_t			run_builtin_no_pipe(action_t *actions, env_vars_t *list);
+void			pop_nodes_till_command(action_t **actions);
+void			run_child(info_t info, int32_t *fd, int32_t fd_in, bool contains_pipes);
+bool			run_if_builtin_child(info_t info);
+int32_t			run_builtin_no_pipe(action_t **actions, env_vars_t **list);
 
 //				old executer
 int32_t			pipe_command(action_t *acts, int32_t fdread, char **envp);
@@ -142,6 +136,9 @@ int32_t			get_infile_fd(action_t	*action);
 int32_t			get_outfile_fd(action_t	*action);
 int32_t			set_redirections(action_t *actions, int32_t *in_fd, int32_t *out_fd);
 void			reset_redirections(int32_t in_fd, int32_t out_fd);
+int32_t			create_heredoc_file(action_t *heredoc_node);
+int32_t			heredoc(action_t *actions);
+void			remove_heredoc_files(action_t *actions);
 
 /* ----------------------------------------------------------------------- */
 
@@ -200,7 +197,7 @@ void			printenvp(env_vars_t *print);
 void			printchararr(char **toprint);
 void			free_double_array(char **array);
 void			pop_action_node(action_t **node);
-void			free_action_list(action_t *node);
+void			free_action_list(action_t **node);
 void			free_env_list(env_vars_t *list);
 void			write_error_with_chars(char *str1, char char1, char char2, char *str2);
 void			write_error_with_strings(char *str1, char *str2, char *str3);
