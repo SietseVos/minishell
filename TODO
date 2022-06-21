@@ -1,4 +1,3 @@
-	*	heredocs
 	*	exit value check every function
 	*	fix signals inside child
 	*

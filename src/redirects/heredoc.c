@@ -17,7 +17,8 @@ static int32_t	ft_strcmp(char *str1, char *str2)
 	return (0);
 }
 
-static int32_t	close_free_and_return(int32_t fd, char *str1, char *str2, int32_t return_v)
+static int32_t	close_free_and_return(int32_t fd, char *str1, \
+								char *str2, int32_t return_v)
 {
 	if (fd > 0)
 		close(fd);
@@ -28,28 +29,33 @@ static int32_t	close_free_and_return(int32_t fd, char *str1, char *str2, int32_t
 	return (return_v);
 }
 
+// ctrl c signal should work
 static int32_t	run_heredoc(const char *heredoc_path, char *delimiter)
 {
 	int32_t	fd;
-	char	*input;
+	char	*in;
 
-	// ctrl c signal should work
 	fd = open(heredoc_path, O_WRONLY | O_TRUNC);
 	if (fd == -1)
 		return (-1);
 	while (1)
 	{
-		input = readline("> ");
-		if (!input)
-			return(close_free_and_return(fd, delimiter, NULL, 0));
+		in = readline("> ");
+		if (!in)
+			return (close_free_and_return(fd, delimiter, NULL, 0));
+		else if (in[0] == '\0')
+		{
+			if (write(fd, "\n", 1) == -1)
+				return (close_free_and_return(fd, delimiter, in, -1));
+			continue ;
+		}
 		// expand variables
-		if (input[0] == '\0' || ft_strcmp(delimiter, input) == 0)
-			return (close_free_and_return(fd, delimiter, input, 0));
-		else if (write(fd, input, ft_strlen(input)) == -1 || write(fd, "\n", 1) == -1)
-			return (close_free_and_return(fd, delimiter, input, -1));
-		free(input);
+		if (ft_strcmp(delimiter, in) == 0)
+			return (close_free_and_return(fd, delimiter, in, 0));
+		else if (write(fd, in, ft_strlen(in)) == -1 || write(fd, "\n", 1) == -1)
+			return (close_free_and_return(fd, delimiter, in, -1));
+		free(in);
 	}
-	close(fd);
 	return (0);
 }
 
