@@ -36,15 +36,15 @@ int32_t	create_heredoc_file(action_t *heredoc_node)
 	char	*pointer_address;
 	char	*path;
 
-	path = ft_calloc(32, sizeof(char));
+	path = ft_calloc(33, sizeof(char));
 	if (!path)
 		return (-1);
 	pointer_address = get_hex_value((unsigned long)heredoc_node->arg[0]);
 	if (!pointer_address)
 		return (-1);
-	ft_bzero(path, 32);
-	ft_strlcat(path, "tmp_heredoc0x", 32);
-	ft_strlcat(path, pointer_address, 32);
+	ft_bzero(path, 33);
+	ft_strlcat(path, "/tmp/.tmp_heredoc0x", 33);
+	ft_strlcat(path, pointer_address, 33);
 	free(pointer_address);
 	set_heredoc_path_in_node(heredoc_node, path);
 	fd = open(path, O_RDWR | O_CREAT, 0666);

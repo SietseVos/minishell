@@ -14,7 +14,6 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	create_env_vars_list(envp, &env);
 	while (1)
 	{
-		remove_heredoc_files(actions);		// move to redirect inside executer
 		free_action_list(&actions);
 		input = readline("\033[1;31m😈 Minihell 😈 ▸\033[0m ");
 		if (!input)
@@ -35,11 +34,11 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 			continue ;
 		}
 		free(input);
-		// print_actions(actions);
+		print_actions(actions);
 		if (heredoc(actions) == -1 || executer(&actions, &env) == -1)
 			continue ;
 		// print_actions(actions);
-		system("leaks minishell");
+		// system("leaks minishell");
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?
 	(void)	argc;

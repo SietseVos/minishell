@@ -19,6 +19,8 @@ static int32_t	ft_strcmp(char *str1, char *str2)
 
 static int32_t	close_free_and_return(int32_t fd, char *str1, char *str2, int32_t return_v)
 {
+	if (fd > 0)
+		close(fd);
 	if (str1)
 		free(str1);
 	if (str2)
@@ -49,16 +51,6 @@ static int32_t	run_heredoc(const char *heredoc_path, char *delimiter)
 	}
 	close(fd);
 	return (0);
-}
-
-void	remove_heredoc_files(action_t *actions)
-{
-	while (actions)
-	{
-		if (actions->type == HDOC)
-			unlink(actions->arg[0]);
-		actions = actions->next;
-	}
 }
 
 int32_t	heredoc(action_t *actions)

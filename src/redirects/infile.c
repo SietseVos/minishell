@@ -5,7 +5,7 @@ static bool	access_error(action_t *action)
 {
 	while (action && action->type != PIPE)
 	{
-		if (action->type == INFILE)
+		if (action->type == INFILE || action->type == HDOC)
 		{
 			if (access(action->arg[0], F_OK) == -1)
 			{
@@ -36,7 +36,7 @@ int32_t	get_infile_fd(action_t	*action)
 		return (-1);
 	while (action && action->type != PIPE)
 	{
-		if (action->type == INFILE)
+		if (action->type == INFILE || action->type == HDOC)
 		{
 			if (fd != -2)
 				close(fd);

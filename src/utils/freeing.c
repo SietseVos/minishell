@@ -38,6 +38,8 @@ void	pop_action_node(action_t **node)
 
 	if (!node || !*node)
 		return ;
+	if ((*node)->type == HDOC)
+		unlink((*node)->arg[0]);
 	free_double_array((*node)->arg);
 	next = (*node)->next;
 	free((*node));

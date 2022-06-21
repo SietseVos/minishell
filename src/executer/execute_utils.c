@@ -7,7 +7,7 @@ void	pop_nodes_till_command(action_t **actions)
 		pop_action_node(actions);
 }
 
-void	set_actions_next_pipe(action_t **actions) // free actions??
+void	set_actions_next_pipe(action_t **actions)
 {
 	while (actions && *actions &&(*actions)->type != PIPE)
 		pop_action_node(actions);
