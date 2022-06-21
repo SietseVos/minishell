@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   cd_utils.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/21 20:22:54 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/21 20:41:46 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -61,5 +72,20 @@ int32_t	create_empty_oldpwd(env_vars_t *oldpwd_node, bool *has_been_null)
 	*has_been_null = true;
 	if (!oldpwd_node->str)
 		return (-1);
+	return (0);
+}
+
+int32_t	create_new_oldpwd_node(env_vars_t **env)
+{
+	char	*old_pwd;
+
+	old_pwd = ft_strdup("OLDPWD=");
+	if (!old_pwd)
+		return (-1);
+	if (add_env_node(env, old_pwd) == -1)
+	{
+		free(old_pwd);
+		return (-1);
+	}
 	return (0);
 }

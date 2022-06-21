@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   heredoc.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/21 22:01:34 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/21 22:02:15 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -29,12 +40,12 @@ static int32_t	close_free_and_return(int32_t fd, char *str1, \
 	return (return_v);
 }
 
-// ctrl c signal should work
 static int32_t	run_heredoc(const char *heredoc_path, char *delimiter)
 {
 	int32_t	fd;
 	char	*in;
 
+	// ctrl c signal should work
 	fd = open(heredoc_path, O_WRONLY | O_TRUNC);
 	if (fd == -1)
 		return (-1);

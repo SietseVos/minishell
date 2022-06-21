@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   in_string.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/21 21:57:43 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/21 21:58:37 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-static int32_t	reset_and_return(int32_t *double_quote, int32_t *single_quote, bool return_v)
+static int32_t	reset_and_return(int32_t *double_quote, \
+					int32_t *single_quote, bool return_v)
 {
 	if (double_quote)
 		*double_quote = 0;
@@ -10,13 +22,13 @@ static int32_t	reset_and_return(int32_t *double_quote, int32_t *single_quote, bo
 	return (return_v);
 }
 
-bool in_string(char c, bool reset)
+bool	in_string(char c, bool reset)
 {
 	static int32_t	double_quote = 0;
 	static int32_t	single_quote = 0;
 
 	if (reset)
-		return(reset_and_return(&double_quote, &single_quote, false));
+		return (reset_and_return(&double_quote, &single_quote, false));
 	if (c != '\'' && c != '"' && !double_quote && !single_quote)
 		return (false);
 	if (c == '\'' && !double_quote)

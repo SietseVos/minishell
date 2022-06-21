@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   export_utils.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/21 20:21:44 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/21 20:22:16 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -38,7 +49,8 @@ void	bubble_sort_array(char **env_strings, int32_t lst_size)
 	}
 }
 
-static void	set_quotes_in_string(char **string, int32_t str, char *tmp, bool *past_equals)
+static void	set_quotes_in_string(char **string, int32_t str, \
+								char *tmp, bool *past_equals)
 {
 	int32_t	i;
 	int32_t	j;

@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   more_errors.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/21 20:21:09 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/21 20:21:16 by rvan-mee      ########   odam.nl         */
+/*   Created: 2022/06/21 20:44:35 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/21 20:44:38 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd(void)
+int32_t	cd_home_path_not_set(void)
 {
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	if (pwd)
-	{
-		printf("%s\n", pwd);
-		free(pwd);
-	}
-	g_exit_status = 0;
+	g_exit_status = 1;
+	write(STDERR_FILENO, "bash: cd: HOME not set\n", 24);
+	return (0);
 }

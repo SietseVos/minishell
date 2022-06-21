@@ -12,6 +12,7 @@ BUILTINS =	cd.c										\
 			unset.c										\
 
 ENV =		add_env_node.c								\
+			create_env_vars_list_utils.c				\
 			create_env_vars_list.c						\
 			env_list_to_array.c							\
 			get_variable_node.c							\
@@ -51,6 +52,7 @@ UTILS =		errors.c									\
 			printing.c									\
 			freeing.c									\
 			return.c									\
+			more_errors.c								\
 
 SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 		$(addprefix src/env_functions/, $(ENV))			\
@@ -66,7 +68,7 @@ SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 BREW_DIR		= $(shell brew --prefix)
 LIBREADLINE		= $(BREW_DIR)/opt/readline/lib
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -fsanitize=address -g
 #		-fsanitize=address -g
 
 INCLUDE_DIRS = -I src/libft -I include -I $(BREW_DIR)/opt/readline/include 

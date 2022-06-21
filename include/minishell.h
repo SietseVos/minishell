@@ -72,6 +72,7 @@ typedef	struct info_s
 /* ---------------------------	builtins	------------------------------ */
 
 	int32_t		cd(char **argument, env_vars_t **env);
+	int32_t		create_new_oldpwd_node(env_vars_t **env);
 	int32_t		chdir_error(char *str);
 	char		*create_new_cd_str(char *var, char *pwd);
 	int32_t		set_oldpwd(env_vars_t *oldpwd_node);
@@ -96,6 +97,7 @@ typedef	struct info_s
 
 int32_t			add_env_node(env_vars_t **env, char *str);
 bool			create_env_vars_list(char **envp, env_vars_t **env_head);
+bool			clean_env_vars_list(env_vars_t **env_head);
 char			**free_array_till_index(char **array, int32_t index);
 char			**env_list_to_array(env_vars_t *env_list);
 int32_t			env_list_size(env_vars_t *env_list);
@@ -197,6 +199,7 @@ void			init_signals(void);
 
 /* ------------------------------	utils	------------------------------ */
 
+int32_t			cd_home_path_not_set(void);
 bool			boolerr(char *errmsg);
 void			*nullerr(char *errmsg);
 void			print_actions(action_t *inlst);
@@ -206,6 +209,7 @@ void			free_double_array(char **array);
 void			pop_action_node(action_t **node);
 void			free_action_list(action_t **node);
 void			free_env_list(env_vars_t *list);
+bool			free_env_list_return_false(env_vars_t *env);
 void			write_error_with_chars(char *str1, char char1, char char2, char *str2);
 void			write_error_with_strings(char *str1, char *str2, char *str3);
 int32_t			return_with_error_message(char *str1, const char *str2, char *str3, \

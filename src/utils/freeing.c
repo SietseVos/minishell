@@ -1,5 +1,22 @@
 #include "minishell.h"
 
+bool	free_env_list_return_false(env_vars_t *env)
+{
+	env_vars_t	*tmp;
+	env_vars_t	*next;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (tmp->str)
+			free(tmp->str);
+		next = tmp->next;
+		free(tmp);
+		tmp = next;
+	}
+	return (false);
+}
+
 void	free_double_array(char **array)
 {
 	int32_t	i;

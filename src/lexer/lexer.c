@@ -1,19 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   lexer.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/21 21:59:56 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/21 22:00:01 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
-#include <stdio.h>
 
-static bool missing_space(char *str, int32_t i)
+static bool	missing_space(char *str, int32_t i)
 {
-	if (i != 0 && str[i] && str[i - 1] != ' '						// check if space should be in front
+	if (i != 0 && str[i] && str[i - 1] != ' '
 		&& ((str[i] == '<' && str[i - 1] != '<')
-		|| (str[i] == '>' && str[i - 1] != '>')
-		|| (str[i] == '|')))
+			|| (str[i] == '>' && str[i - 1] != '>')
+			|| (str[i] == '|')))
 		return (true);
-	if (i != 0 && str[i] && str[i] != ' ' && 		// check if space should be after
-		((str[i - 1] == '>' && str[i] != '>')
-		|| (str[i - 1] == '<' && str[i] != '<')
-		|| (str[i - 1] == '|')))
+	if (i != 0 && str[i] && str[i] != ' '
+		&& ((str[i - 1] == '>' && str[i] != '>')
+			|| (str[i - 1] == '<' && str[i] != '<')
+			|| (str[i - 1] == '|')))
 		return (true);
 	return (false);
 }
@@ -62,7 +71,6 @@ char	*lexer(char	*input)
 	int32_t	spaces;
 	char	*output;
 
-	// check for syntax error (multiple >>>> in a row)
 	if (check_syntax_error(input))
 		return (NULL);
 	spaces = get_missing_space_count(input);

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   cd.c                                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/21 20:41:21 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/21 20:41:24 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -75,7 +86,6 @@ static int32_t	change_old_pwd_path(env_vars_t *env, bool *has_been_null)
 static int32_t	first_cd_call(bool *start_of_program, env_vars_t **env)
 {
 	env_vars_t	*oldpwd_node;
-	char		*old_pwd;
 
 	oldpwd_node = get_variable_node(*env, "OLDPWD");
 	if (*start_of_program == false)
@@ -92,14 +102,8 @@ static int32_t	first_cd_call(bool *start_of_program, env_vars_t **env)
 	}
 	else
 	{
-		old_pwd = ft_strdup("OLDPWD=");
-		if (!old_pwd)
+		if (create_new_oldpwd_node(env) == -1)
 			return (-1);
-		if (add_env_node(env, old_pwd) == -1)
-		{
-			free(old_pwd);
-			return (-1);
-		}
 	}
 	return (0);
 }
@@ -114,11 +118,7 @@ int32_t	cd(char **argument, env_vars_t **env)
 	{
 		home_path = get_variable_node(*env, "HOME");
 		if (!home_path || home_path->has_value == false)
-		{
-			g_exit_status = 1;
-			write(STDERR_FILENO, "bash: cd: HOME not set\n", 24);
-			return (0);
-		}
+			return (cd_home_path_not_set());
 		else if (home_path->str[5] == '\0')
 			return (0);
 		else if (chdir(&home_path->str[5]) != 0)

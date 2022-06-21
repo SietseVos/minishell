@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   env_list_to_array.c                                :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/21 21:50:26 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/21 21:50:45 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	str_copy(char *take, char *place)
 {
-	int32_t i;
+	int32_t	i;
 
 	i = 0;
 	while (take[i])

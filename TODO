@@ -1,5 +1,7 @@
 	*	exit value check every function
 	*	fix signals inside child
+	*	pressing tab when using cd shows all files not directories
+	*	check for leaks inside increment shell level? can't find em
 	*
 	*	check only whitespace input
 	*	get tabs working

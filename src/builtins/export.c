@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   export.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/21 20:21:32 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/21 20:21:33 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -120,5 +131,3 @@ int32_t	export(char **args, env_vars_t **env)
 	}
 	return (0);
 }
-
-// dont allow _= variable, should be shell maintained only and cant? be changed.
