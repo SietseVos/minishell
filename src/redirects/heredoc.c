@@ -53,7 +53,26 @@ static int32_t	run_heredoc(const char *heredoc_path, char *delimiter)
 	return (0);
 }
 
-int32_t	heredoc(action_t *actions)
+void	remove_heredoc_files(heredoc_t **files)
+{
+	heredoc_t	*next;
+
+	if (!files || !*files)
+		return ;
+	while (*files)
+	{
+		next = (*files)->next;
+		if ((*files)->path)
+		{
+			unlink((*files)->path);
+			free((*files)->path);
+		}
+		free(*files);
+		*files = next;
+	}
+}
+
+int32_t	heredoc(action_t *actions, heredoc_t **file_paths)
 {
 	char	*delimiter;
 
@@ -62,7 +81,7 @@ int32_t	heredoc(action_t *actions)
 		if (actions->type == HDOC)
 		{
 			delimiter = ft_strdup(actions->arg[0]);
-			if (!delimiter || create_heredoc_file(actions) == -1)
+			if (!delimiter || create_heredoc_file(actions, file_paths) == -1)
 				return (-1);
 			if (run_heredoc(actions->arg[0], delimiter) == -1)
 				return (-1);

@@ -1,48 +1,62 @@
 #include "minishell.h"
 
-int32_t	main(int32_t argc, char **argv, char **envp)
+static bool	init_vars_main(char **envp, env_vars_t **env, int argc, char **argv)
 {
-	action_t	*actions;
-	env_vars_t	*env;
-	char		*input;
-
 	g_exit_status = 0;
-	env = NULL;
-	actions = NULL;
+	(void)	argc;
+	(void)	argv;
 	init_signals();
 	using_history();
-	create_env_vars_list(envp, &env);
+	return (create_env_vars_list(envp, env));
+}
+
+static char	*readline_func(char *input)
+{
 	while (1)
 	{
-		free_action_list(&actions);
+		if (input)
+			free(input);
 		input = readline("\033[1;31m😈 Minihell 😈 ▸\033[0m ");
 		if (!input)
-			exit(g_exit_status); // free env vars & history first
-		else if (input[0] == '\0')
+			exit(g_exit_status); // free env vars & history first?
+		else if (input[0] != '\0')
 		{
-			free(input);
-			continue ;
+			add_history(input);
+			return (input);
 		}
-		add_history(input);
+	}
+}
+
+int32_t	main(int32_t argc, char **argv, char **envp)
+{
+	heredoc_t	*hdoc_files;
+	action_t	*actions;
+	char		*input;
+	env_vars_t	*env;
+
+	env = NULL;
+	input = NULL;
+	actions = NULL;
+	hdoc_files = NULL;
+	if (init_vars_main(envp, &env, argc, argv) == false)
+		return (1);
+	while (1)
+	{
+		remove_heredoc_files(&hdoc_files);
+		free_action_list(&actions);
+		input = readline_func(input);
 		input = lexer(input);
 		if (!input)
 			continue ;
 		actions = parser(input, env);
 		if (!actions)
-		{
-			free(input);
 			continue ;
-		}
-		free(input);
-		print_actions(actions);
-		if (heredoc(actions) == -1 || executer(&actions, &env) == -1)
+		if (heredoc(actions, &hdoc_files) == -1 || executer(&actions, &env) == -1)
 			continue ;
 		// print_actions(actions);
 		// system("leaks minishell");
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?
-	(void)	argc;
-	(void)	argv;
 	return (0);
 }
 

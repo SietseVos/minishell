@@ -23,9 +23,7 @@ EXECUTER =	executer.c									\
 			execute_command.c							\
 			execute_utils.c								\
 			child.c										\
-			run_builtins.c									\
-			# run_command.c								\
-			# make_executable.c							\
+			run_builtins.c								\
 
 LEXER =		lexer.c										\
 			in_string.c									\

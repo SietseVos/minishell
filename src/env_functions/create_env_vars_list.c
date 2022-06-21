@@ -125,7 +125,7 @@ bool	create_env_vars_list(char **envp, env_vars_t **env_head)
 		i++;
 	}
 	remove_exess_from_list(env_head);				// remove _= and set OLDPWD="" to OLDPWD
-	if (increment_shell_level(*env_head) == -1)		// maybe put this inside of main
+	if (increment_shell_level(*env_head) == -1)		// free env list			// maybe put this inside of main
 		return (false);
 	return (true);		
 }

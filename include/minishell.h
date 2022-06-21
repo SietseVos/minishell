@@ -56,6 +56,13 @@ typedef struct env_vars_s
 	struct env_vars_s	*next;
 }	env_vars_t;
 
+typedef struct heredoc_s
+{
+	char				*path;
+	struct heredoc_s	*next;
+}	heredoc_t;
+
+
 typedef	struct info_s
 {
 	action_t	**action;
@@ -136,9 +143,9 @@ int32_t			get_infile_fd(action_t	*action);
 int32_t			get_outfile_fd(action_t	*action);
 int32_t			set_redirections(action_t *actions, int32_t *in_fd, int32_t *out_fd);
 void			reset_redirections(int32_t in_fd, int32_t out_fd);
-int32_t			create_heredoc_file(action_t *heredoc_node);
-int32_t			heredoc(action_t *actions);
-void			remove_heredoc_files(action_t *actions);
+int32_t			create_heredoc_file(action_t *heredoc_node, heredoc_t **file_paths);
+int32_t			heredoc(action_t *actions, heredoc_t **file_paths);
+void			remove_heredoc_files(heredoc_t **files);
 
 /* ----------------------------------------------------------------------- */
 

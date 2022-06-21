@@ -28,9 +28,34 @@ static void	set_heredoc_path_in_node(action_t *heredoc_node, char *path)
 	heredoc_node->arg[0] = path;
 }
 
-int	errorno;
+static int32_t	add_to_heredoc_paths(heredoc_t **filepaths, char *new_path)
+{
+	heredoc_t	*new;
+	heredoc_t	*tmp;
 
-int32_t	create_heredoc_file(action_t *heredoc_node)
+	new = malloc(sizeof(heredoc_t) * 1);
+	if (!new)
+		return (-1);
+	new->next = NULL;
+	new->path = ft_strdup(new_path);
+	if (!new->path)
+	{
+		free(new);
+		return (-1);
+	}
+	tmp = *filepaths;
+	if (!tmp)
+	{
+		*filepaths = new;
+		return (0);
+	}
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	return (0);
+}
+
+int32_t	create_heredoc_file(action_t *heredoc_node, heredoc_t **file_paths)
 {
 	int32_t	fd;
 	char	*pointer_address;
@@ -49,10 +74,12 @@ int32_t	create_heredoc_file(action_t *heredoc_node)
 	set_heredoc_path_in_node(heredoc_node, path);
 	fd = open(path, O_RDWR | O_CREAT, 0666);
 	if (fd == -1)
+		return (-1);
+	close(fd);
+	if (add_to_heredoc_paths(file_paths, path) == -1)
 	{
-		printf("creation of heredoc %s failed errorno %d\n", path, errorno);
+		unlink(path);
 		return (-1);
 	}
-	close(fd);
 	return (0);
 }
