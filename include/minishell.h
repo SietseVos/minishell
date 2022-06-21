@@ -127,14 +127,6 @@ void			run_child(info_t info, int32_t *fd, int32_t fd_in, bool contains_pipes);
 bool			run_if_builtin_child(info_t info);
 int32_t			run_builtin_no_pipe(action_t **actions, env_vars_t **list);
 
-//				old executer
-int32_t			pipe_command(action_t *acts, int32_t fdread, char **envp);
-char			*get_executable(char *cmd, char **envp);
-int				pplen(char **pp);
-void			free_pp(char **pp, int size);
-void			pipe_to_file(char **cmd, int32_t fdread, int32_t fdwrite, char **envp);
-bool			executer_setup(action_t *acts, env_vars_t *envp);
-
 /* ----------------------------------------------------------------------- */
 
 //*************************************************************************//
