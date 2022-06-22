@@ -24,12 +24,6 @@ int32_t	envvarlen(char *str, char end)
 	ret = 1;
 	if (str[ret] == '?')
 		return (2);
-	// if (end == ' ')
-	// {
-	// 	while (str[ret] != ' ' && str[ret] != '\t' && str[ret] != ' ' && str[ret] != '\0' && str[ret] != '$' && str[ret] != '=' && str[ret] != '?')
-	// 		ret++;
-	// }
-	// else
 	while (ft_isalnum(str[ret]) == 1)
 		ret++;
 	(void) end;
@@ -41,4 +35,16 @@ bool	is_whitespace(char c)
 	if (c == ' ' || c == '\n' || c == '\t')
 		return (true);
 	return (false);
+}
+
+int32_t	skipstring(char *str, char quote)
+{
+	int	i;
+
+	i = 1;
+	while (str[i] != quote && str[i] != '\0')
+		i++;
+	if (str[i] == quote)
+		return (i + 1);
+	return (i);
 }

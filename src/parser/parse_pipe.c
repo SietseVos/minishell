@@ -12,6 +12,5 @@ action_t	*parse_pipe(char *input, int32_t *i)
 	*i += 1;
 	while (input[*i] != '\0' && is_whitespace(input[*i]))
 		*i += 1;
-	// printf("entered pipe function\n");
 	return (ret);
 }

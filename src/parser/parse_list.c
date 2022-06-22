@@ -8,9 +8,7 @@ int32_t	count_cmdfrags(action_t *lst)
 	while (lst != NULL && lst ->type != PIPE)
 	{
 		if (lst ->type == TOSTDOUT)
-		{
 			ret++;
-		}
 		lst = lst->next;
 	}
 	return (ret);
@@ -18,22 +16,22 @@ int32_t	count_cmdfrags(action_t *lst)
 
 void	move_to_next_pipe(action_t **lst)
 {
-	while (*lst != NULL &&(*lst)->type != PIPE)
+	while (*lst != NULL && (*lst)->type != PIPE)
 		*lst = (*lst)->next;
 	if (*lst != NULL)
 		*lst = (*lst)->next;
 }
 
+// fdsf < in tewe < jfewifew fjeiowfjew			 causes seqfault
 bool	merge_cmdfrags(action_t *lst, int32_t cmdfrags)
 {
 	action_t	*cmdnode;
 	action_t	**prevnextptr;
 
 	cmdnode = lst;
-	while (cmdnode->type != TOSTDOUT && cmdnode->type != PIPE && cmdnode != NULL)
-	{
+	while (cmdnode->type != TOSTDOUT
+		&& cmdnode->type != PIPE && cmdnode != NULL)
 		cmdnode = cmdnode->next;
-	}
 	lst = cmdnode ->next;
 	prevnextptr = &cmdnode->next;
 	while (cmdfrags > 1 && lst != NULL)

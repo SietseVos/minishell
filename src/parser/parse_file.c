@@ -25,7 +25,8 @@ action_t	*create_filenode(int32_t strlen, int32_t type)
 	return (node);
 }
 
-action_t	*found_redirect(char *input, int32_t *i, int32_t type, env_vars_t *envp)
+action_t	*found_redirect(char *input, int32_t *i,
+				int32_t type, env_vars_t *envp)
 {
 	action_t	*node;
 	int32_t		strlen;
@@ -33,9 +34,9 @@ action_t	*found_redirect(char *input, int32_t *i, int32_t type, env_vars_t *envp
 	strlen = 0;
 	while (input[*i] != ' ')
 		*i += 1;
-	*i += 1;
+	while (is_whitespace(input[*i]) == true)
+		*i += 1;
 	read_input_str(input + *i, &strlen, envp);
-	// printf("strlen of arg in filenode: %d\n", strlen);
 	if (input[*i] == '\0' || is_operator(input[*i]) == true)
 		return (nullerr("no string after space of redirect"));
 	node = create_filenode(strlen, type);

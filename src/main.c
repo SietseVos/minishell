@@ -51,9 +51,9 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		actions = parser(input, env);
 		if (!actions)
 			continue ;
-		if (heredoc(actions, &hdoc_files) == -1 || executer(&actions, &env) == -1)
-			continue ;
-		// print_actions(actions);
+		// if (heredoc(actions, &hdoc_files) == -1 || executer(&actions, &env) == -1)
+		// 	continue ;
+		print_actions(actions);
 		// system("leaks minishell");
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?

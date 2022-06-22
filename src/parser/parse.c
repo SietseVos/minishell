@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/17 19:18:31 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/22 17:17:05 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 action_t	*determine_kind(char *input, int32_t *i, env_vars_t *envp)
 {
-	// printf("pointer pointing to: -%c-\n", input[*i]);
 	if (input[*i] == '|')
 		return (parse_pipe(input, i));
 	if (input[*i] == '<' || input[*i] == '>')
@@ -52,49 +51,27 @@ action_t	*action_node_fail(action_t *tofree)
 
 action_t	*parser(char *input, env_vars_t *envp)
 {
-	int32_t			i;
+	int32_t		i;
 	action_t	*ret;
 	action_t	*lst;
 
 	i = 0;
-	// string"newstring"anotherstring		This doesn't work
 	lst = determine_kind(input, &i, envp);
 	if (lst == NULL)
 		return (nullerr("failed to make first node"));
 	ret = lst;
 	while (input[i])
 	{
-		// printf("input: -%c-\n", input[i]);
 		lst ->next = determine_kind(input, &i, envp);
 		if (lst ->next == NULL)
 			return (action_node_fail(ret));
 		lst = lst ->next;
-		// printf("made a node\n");
 	}
 	lst ->next = NULL;
-	// if (join_split_cmds(ret) == false)
-	// 	return (action_node_fail(ret));
+	printf("actions before merge\n");
+	print_actions(ret);
+	printf("\n\n");
+	if (join_split_cmds(ret) == false)
+		return (nullerr("failed to join splitted commands"));
 	return (ret);
 }
-
-// int32_t	main(int32_t argc, char **argv, char **envp)
-// {
-// 	char		*test;
-// 	env_vars_t	*envlist;
-// 	action_t	*inlst;
-
-// 	create_env_vars_list(envp, &envlist);
-// 	g_exit_status = 17890;
-// 	// printenvp(envlist);
-// 	test = strdup("< f fj | jfkdls $? nvn eiowior");
-// 	inlst = parser(test, envlist);
-// 	if (inlst == NULL)
-// 	{
-// 		printf("parsing error\n");
-// 		return (0);
-// 	}
-// 	print_actions(inlst);
-// 	return (0);
-// }
-
-// gcc parse.c read_from_str.c write_to_lst.c parse_utils_small.c parse_cmd.c parse_file.c ../env_functions/create_env_vars_list.c ../env_functions/free_env_list.c ../env_functions/get_variable_node.c ../libft/ft_strlcpy.c ../libft/ft_strlen.c ../libft/ft_strdup.c ../libft/ft_strncmp.c -I ../../include/ -I ../libft ../libft/libft.a -fsanitize=address -g

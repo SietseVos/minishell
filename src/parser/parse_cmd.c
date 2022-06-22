@@ -7,7 +7,6 @@ int32_t	get_cmdarrlen(char *str)
 
 	i = 0;
 	ret = 0;
-	// printf("entered get_cmdarrlen func\n");
 	while (str[i] != '\0' && is_operator(str[i]) == false)
 	{
 		while (str[i] != '\0')
@@ -16,7 +15,7 @@ int32_t	get_cmdarrlen(char *str)
 			{
 				while (is_whitespace(str[i]) == true)
 					i++;
-				break;
+				break ;
 			}
 			else if (str[i] == '"' || str[i] == '\'')
 				i += skipstring(str + i, str[i]);
@@ -25,7 +24,6 @@ int32_t	get_cmdarrlen(char *str)
 		}
 		ret++;
 	}
-	// printf("returning: %d\n", ret);
 	return (ret);
 }
 
@@ -47,37 +45,6 @@ int32_t	look_for_other_types(char *str)
 		if (str[i] == '\'' || str[i] == '"')
 			i += skipstring(str + i + 1, str[i]);
 	}
-	return (TOSTDOUT);
-}
-
-int32_t	determine_cmdtype(char *input, char **last_str, int32_t *i)
-{
-	// int	j;
-
-	// j = 0;
-	*last_str = NULL;
-	// if (*input == '|')
-	// {
-	// 	j++;
-	// 	*i += 1;
-	// 	while (input[j] != '\0' && input[j] == ' ')
-	// 	{
-	// 		j++;
-	// 		*i += 1;
-	// 	}
-	// 	return (TOSTDOUT);
-	// }
-	// if (*input == '<')
-	// 	return (look_for_other_types(input));
-	// printf("passed\n");
-	// if (*input == '>')
-	// {
-	// 	if (*input + 1 == '>')
-	// 		return (APPEND);
-	// 	return (TRUNC);
-	// }
-	(void) i;
-	(void) input;
 	return (TOSTDOUT);
 }
 
@@ -125,17 +92,15 @@ action_t	*parse_cmd(char *input, int32_t *i, env_vars_t *envp)
 		return (nullerr("failed to create cmd node"));
 	while (cmdarrlen > j)
 	{
-		// printf("j: %d\n", j);
 		strlen = 0;
 		read_input_str(input + *i, &strlen, envp);
 		node ->arg[j] = malloc(sizeof(char) * strlen + 1);
 		if (node ->arg[j] == NULL)
 			return (arg_malloc_fail(node, j));
-		// printf("malloced for %d bytes and cmdarrlen: %d\n", strlen + 1, cmdarrlen);
 		place_str_in_node(node ->arg[j], input, i, envp);
 		j++;
 	}
-	node ->type = determine_cmdtype(input + *i, &node ->arg[j], i);
-	// printf("created node\n");
+	node ->type = TOSTDOUT;
+	node ->arg[j] = NULL;
 	return (node);
 }
