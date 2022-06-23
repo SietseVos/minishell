@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   executer.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/23 15:51:59 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/23 15:52:01 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -6,6 +17,7 @@ static int32_t	run_executable_no_pipe(action_t	**actions, env_vars_t *list)
 	int32_t	return_execute;
 	int32_t	fork_fd;
 
+	signal(SIGINT, sig_c_outside_fork);
 	while ((*actions) && (*actions)->type != TOSTDOUT)
 		pop_action_node(actions);
 	if (!actions)
@@ -15,6 +27,7 @@ static int32_t	run_executable_no_pipe(action_t	**actions, env_vars_t *list)
 		return (-1);
 	if (fork_fd == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		return_execute = execute_command((*actions)->arg, list);
 		if (return_execute == -1)
 			exit (1);
@@ -61,14 +74,13 @@ static int32_t	run_with_pipes(info_t info, int32_t fd_in)
 	int32_t		pipe_fds[2];
 	pid_t		fork_pid;
 
+	signal(SIGINT, sig_c_outside_fork);
 	if (has_pipes && pipe(pipe_fds) == -1)
-		return (close_fd_return_error(\
-		"bash: pipe: Resource temporarily unavailable\n", fd_in, -1));
+		return (close_fd_return_error(PIPE_ERROR, fd_in, -1));
 	fork_pid = fork();
 	if (has_pipes && fork_pid == -1)
 	{
-		write(STDERR_FILENO, \
-		"bash: fork: Resource temporarily unavailable\n", 46);
+		write(STDERR_FILENO, FORK_ERROR, 46);
 		return (close_fds_and_return(pipe_fds, fd_in));
 	}
 	else if (fork_pid == 0)

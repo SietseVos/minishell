@@ -2,10 +2,9 @@
 
 static bool	init_vars_main(char **envp, env_vars_t **env, int argc, char **argv)
 {
-	g_exit_status = 0;
 	(void)	argc;
 	(void)	argv;
-	init_signals();
+	g_exit_status = 0;
 	using_history();
 	return (create_env_vars_list(envp, env));
 }
@@ -42,6 +41,8 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
+		printf("Current exit status: %d\n", g_exit_status);
+		init_signals();
 		remove_heredoc_files(&hdoc_files);
 		free_action_list(&actions);
 		input = readline_func(input);
@@ -51,10 +52,11 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		actions = parser(input, env);
 		if (!actions)
 			continue ;
-		// if (heredoc(actions, &hdoc_files) == -1 || executer(&actions, &env) == -1)
-		// 	continue ;
-		print_actions(actions);
+		if (heredoc(actions, &hdoc_files) == -1 || executer(&actions, &env) == -1)
+			continue ;
+		// print_actions(actions);
 		// system("leaks minishell");
+		// printf("global exit status: %d\n", g_exit_status);
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?
 	return (0);

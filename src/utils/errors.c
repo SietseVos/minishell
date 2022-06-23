@@ -57,12 +57,14 @@ void	write_error_with_strings(char *str1, char *str2, char *str3)
 
 void	*nullerr(char *errmsg)
 {
-	printf("%s :(\n",errmsg);
+	write(STDERR_FILENO, errmsg, ft_strlen(errmsg));
+	write(STDERR_FILENO, "\n", 1);
 	return (NULL);
 }
 
 bool	boolerr(char *errmsg)
 {
-	printf("%s :(\n",errmsg);
+	write(STDERR_FILENO, errmsg, ft_strlen(errmsg));
+	write(STDERR_FILENO, "\n", 1);
 	return (false);
 }

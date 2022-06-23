@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/22 17:17:05 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/23 12:05:01 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ action_t	*parser(char *input, env_vars_t *envp)
 		lst = lst ->next;
 	}
 	lst ->next = NULL;
-	printf("actions before merge\n");
-	print_actions(ret);
-	printf("\n\n");
+	// printf("actions before merge\n");
+	// print_actions(ret);
+	// printf("\n\n");
 	if (join_split_cmds(ret) == false)
 		return (nullerr("failed to join splitted commands"));
 	return (ret);

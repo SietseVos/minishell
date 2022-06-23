@@ -20,6 +20,11 @@
 #define	PIPE_READ	0
 #define PIPE_WRITE	1
 
+#define PIPE_ERROR "bash: pipe: Resource temporarily unavailable\n"
+#define FORK_ERROR "bash: fork: Resource temporarily unavailable\n"
+#define	EXPORT_ERROR "bash: export: `"
+#define IDENIFIER_ERROR "': not a valid identifier\n"
+
 // legacy code
 #define ruben int8_t 	// this was orginally used as a solution to a complitaced problem ruben (cat), ruben (the best) and int32_t encouncered during their adventures in minihell
 #define sietse int32_t	// sietse also wanted to feel special so we made him a data type aswell :)
@@ -184,6 +189,7 @@ void	print_actions(action_t *inlst);
 /* ------------------------------	signals	------------------------------ */
 
 void			init_signals(void);
+void			sig_c_outside_fork(int32_t sig);
 
 /* ----------------------------------------------------------------------- */
 

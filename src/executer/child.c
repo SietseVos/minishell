@@ -13,6 +13,7 @@ void	run_child(info_t info, int32_t *fd, int32_t fd_in, bool contains_pipes)
 	int32_t infile_fd;
 	int32_t outfile_fd;
 
+	signal(SIGINT, SIG_DFL);
 	dup2(fd_in, STDIN_FILENO);
 	if (contains_pipes)
 	{

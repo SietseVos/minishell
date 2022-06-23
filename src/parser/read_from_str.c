@@ -22,7 +22,7 @@ int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
 {
 	int32_t	varlen;
 
-	printf("interpeting variable strlen\n");
+	// printf("interpeting variable strlen\n");
 	varlen = envvarlen(str, c);
 	if (varlen == 2 && str[1] == '?')
 		return (exit_status_numblen(strlen, varlen));
