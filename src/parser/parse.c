@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/22 17:17:05 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/23 13:23:34 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,3 +75,6 @@ action_t	*parser(char *input, env_vars_t *envp)
 		return (nullerr("failed to join splitted commands"));
 	return (ret);
 }
+
+// fix this: ls			-la
+// add new node type for incorrect env variable as redirect

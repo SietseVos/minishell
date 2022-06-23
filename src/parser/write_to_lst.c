@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/22 16:12:05 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/23 18:21:08 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ int32_t	place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i)
 		interp_exit_status(dst, i);
 		return (varlen);
 	}
+	// if (varlen == 1)
+	// {
+	// 	if (c == ' ' && is_whitespace(str[1]))
+	// 		*strlen += 1;
+	// 	else if (c == '"' || c == '\'')
+	// 		*strlen += 1;
+	// 	return (varlen);
+	// }
 	while (envp)
 	{
 		if (ft_strncmp(envp ->str, src + 1, varlen - 1) == 0

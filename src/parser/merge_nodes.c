@@ -56,19 +56,23 @@ char	**join_chararrs(char **arr1, char **arr2)
 	return (ret);
 }
 
-bool	merge_nodes(action_t *dst, action_t *src, action_t **prevnextptr)
+bool	merge_nodes(action_t *dst, action_t **src, action_t **prevnextptr)
 {
 	char	**fragdst;
 	char	**fragsrc;
+	action_t	*freeme;
 
+	printf("merge src: -%s- with dst: -%s-\n", (*src)->arg[0], dst->arg[0]);
 	fragdst = dst->arg;
-	fragsrc = src->arg;
+	fragsrc = (*src)->arg;
+	freeme = *src;
 	dst->arg = join_chararrs(fragdst, fragsrc);
 	if (dst->arg == NULL)
 		return (NULL);
-	*prevnextptr = src->next;
+	*prevnextptr = (*src)->next;
+	*src = (*src)->next;
 	free_double_array(fragdst);
 	free_double_array(fragsrc);
-	free(src);
+	free(freeme);
 	return (true);
 }
