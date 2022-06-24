@@ -22,8 +22,9 @@
 
 #define PIPE_ERROR "bash: pipe: Resource temporarily unavailable\n"
 #define FORK_ERROR "bash: fork: Resource temporarily unavailable\n"
+#define	UNSET_ERROR "bash: unset: `"
 #define	EXPORT_ERROR "bash: export: `"
-#define IDENIFIER_ERROR "': not a valid identifier\n"
+#define IDENT_ERROR "': not a valid identifier\n"
 
 // legacy code
 #define ruben int8_t 	// this was orginally used as a solution to a complitaced problem ruben (cat), ruben (the best) and int32_t encouncered during their adventures in minihell

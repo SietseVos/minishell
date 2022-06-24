@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:32 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/24 14:49:30 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/24 15:04:34 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int32_t	check_valid_input(char	*inp)
 	i = 0;
 	if (inp[0] == '\0' || (inp[0] >= '0' && inp[0] <= '9') || inp[0] == '=')
 	{
-		write_error_with_strings(EXPORT_ERROR, inp, IDENIFIER_ERROR);
+		write_error_with_strings(EXPORT_ERROR, inp, IDENT_ERROR);
 		if (g_exit_status == 0)
 			g_exit_status = 1;
 		return (-1);
@@ -52,7 +52,7 @@ static int32_t	check_valid_input(char	*inp)
 			break ;
 		else if (inp[i] == '-' || inp[i] == ' ')
 		{
-			write_error_with_strings(EXPORT_ERROR, inp, IDENIFIER_ERROR);
+			write_error_with_strings(EXPORT_ERROR, inp, IDENT_ERROR);
 			if (g_exit_status == 0)
 				g_exit_status = 2;
 			return (-1);
