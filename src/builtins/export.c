@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:32 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/23 18:49:01 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/24 14:49:30 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,25 @@ static bool	print_export(env_vars_t *env)
 	return (0);
 }
 
-static int32_t	check_valid_input(char	*input)
+static int32_t	check_valid_input(char	*inp)
 {
 	int32_t	i;
 
 	i = 0;
-	if ((input[0] >= '0' && input[0] <= '9') || input[0] == '=')
+	if (inp[0] == '\0' || (inp[0] >= '0' && inp[0] <= '9') || inp[0] == '=')
 	{
-		write_error_with_strings(EXPORT_ERROR, input, IDENIFIER_ERROR);
+		write_error_with_strings(EXPORT_ERROR, inp, IDENIFIER_ERROR);
 		if (g_exit_status == 0)
 			g_exit_status = 1;
 		return (-1);
 	}
-	while (input[i])
+	while (inp[i])
 	{
-		if (input[i] == '=')
+		if (inp[i] == '=')
 			break ;
-		else if (input[i] == '-')
+		else if (inp[i] == '-' || inp[i] == ' ')
 		{
-			write_error_with_strings(EXPORT_ERROR, input, IDENIFIER_ERROR);
+			write_error_with_strings(EXPORT_ERROR, inp, IDENIFIER_ERROR);
 			if (g_exit_status == 0)
 				g_exit_status = 2;
 			return (-1);
