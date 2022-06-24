@@ -55,12 +55,12 @@ int32_t	strlen_til_space(char *str, env_vars_t *envp, int32_t *strlen)
 	while (is_whitespace(str[i]) == false && str[i] != '"'
 		&& str[i] != '\'' && str[i] != '\0')
 	{
-		printf("strlen_til_space is at: %c\n", str[i]);
+		// printf("strlen_til_space is at: %c\n", str[i]);
 		if (str[i] == '$')
 		{
-			printf("i before increment: %c\n", str[i]);
+			// printf("i before increment: %c\n", str[i]);
 			i += interpvar_strlen(str + i, ' ', strlen, envp);
-			printf("i after increment: %c\n", str[i]);
+			// printf("i after increment: %c\n", str[i]);
 		}
 		else
 		{

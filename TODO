@@ -1,10 +1,6 @@
-	*	exit value check every function
-	*	fix signals inside child
-	*	ctrl d inside heredoc wont output on newline << test it
-	*	check for leaks inside increment shell level? can't find em
+	*	ctrl c inside heredoc wont run
+	*	check for leaks inside increment shell level? cant find em
 	*
-	*	get tabs working
-	*	expansion of non existent variable loops
 	*	echo "'"$USER"'"
 	*	export ok="k k"
 
@@ -17,6 +13,9 @@ Use for writing to stderr??
 
 bash-3.2$ echo test > $TEST
 bash: $TEST: ambiguous redirect
+
+bash-3.2$ << "$TEST" cat
+does not expand in heredoc
 
 export hi="ls"
 $hi

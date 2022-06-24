@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:20:58 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/21 20:21:00 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/24 15:57:42 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,16 @@ static bool	check_unset_error(char *str)
 	int32_t	i;
 
 	i = 0;
+	if (str[0] == '\0')
+		return (return_with_error_message(UNSET_ERROR, str, IDENT_ERROR, 1));
 	while (str[i])
 	{
-		if (str[i] == '=')
-			return (return_with_error_message("bash: unset: `", str, \
-								"': not a valid identifier\n", true));
+		if (str[i] == '=' || str[i] == ' ' || str[i] == '-')
+		{
+			g_exit_status = 1;
+			return (return_with_error_message(UNSET_ERROR, str, \
+								IDENT_ERROR, true));
+		}
 		i++;
 	}
 	return (false);
@@ -62,6 +67,7 @@ void	unset(char **arg, env_vars_t **list)
 
 	i = 0;
 	error = 0;
+	g_exit_status = 0;
 	while (arg[i])
 	{
 		if (check_unset_error(arg[i]))
@@ -70,8 +76,4 @@ void	unset(char **arg, env_vars_t **list)
 			remove_from_list(arg[i], list);
 		i++;
 	}
-	if (error)
-		g_exit_status = 1;
-	else
-		g_exit_status = 0;
 }

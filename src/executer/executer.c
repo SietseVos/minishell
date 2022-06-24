@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/23 15:51:59 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/23 15:52:01 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/24 16:17:36 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int32_t	executer(action_t **actions, env_vars_t **list)
 
 	info.action = actions;
 	info.list = list;
+	signal(SIGINT, handle_sig_executer);
+	signal(SIGQUIT, handle_sig_executer);
 	if (contains_pipes((*info.action)))
 	{
 		return_value = run_with_pipes(info, STDIN_FILENO);
