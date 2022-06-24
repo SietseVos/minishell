@@ -190,6 +190,7 @@ void	print_actions(action_t *inlst);
 /* ------------------------------	signals	------------------------------ */
 
 void			init_signals(void);
+void			handle_sig_executer(int32_t sig);
 void			sig_c_outside_fork(int32_t sig);
 
 /* ----------------------------------------------------------------------- */

@@ -68,5 +68,6 @@ void	set_exit_status_and_wait(void)
 		node = node->next;
 	}
 	reset_pid();
-	g_exit_status = WEXITSTATUS (return_wait);
+	if (!WIFSIGNALED (return_wait))
+		g_exit_status = WEXITSTATUS (return_wait);
 }
