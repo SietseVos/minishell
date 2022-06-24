@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/23 19:04:28 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/24 16:26:42 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,4 @@ action_t	*parser(char *input, env_vars_t *envp)
 	return (ret);
 }
 
-// fix this: ls			-la
 // add new node type for incorrect env variable as redirect

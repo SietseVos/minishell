@@ -37,6 +37,9 @@ enum type
 	TRUNC,				// open file trunc mode
 	PIPE,				// empty node with pipe
 	TOSTDOUT,			// command
+	HDOCSPACE,			// heredoc with space
+	HDOCQUOTE,			// heredoc with quote
+	AMBIGU				// beware of this dangerous monster
 };
 
 int32_t	g_exit_status;

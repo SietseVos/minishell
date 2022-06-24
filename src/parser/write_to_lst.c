@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/23 18:21:08 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/24 15:58:48 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,22 @@ void	interp_exit_status(char *dst, int32_t *i)
 	}
 }
 
-int32_t	place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i)
+int32_t	place_envvar_quote(char *dst, char *src, env_vars_t *envp, int32_t *j)
 {
 	int32_t	varlen;
 
 	varlen = envvarlen(src, '"');
 	if (varlen == 2 && src[1] == '?')
 	{
-		interp_exit_status(dst, i);
+		interp_exit_status(dst, j);
 		return (varlen);
 	}
-	// if (varlen == 1)
-	// {
-	// 	if (c == ' ' && is_whitespace(str[1]))
-	// 		*strlen += 1;
-	// 	else if (c == '"' || c == '\'')
-	// 		*strlen += 1;
-	// 	return (varlen);
-	// }
+	if (varlen == 1)
+	{
+		*dst = '$';
+		*j += 1;
+		return (varlen);
+	}
 	while (envp)
 	{
 		if (ft_strncmp(envp ->str, src + 1, varlen - 1) == 0
@@ -66,7 +64,41 @@ int32_t	place_envvar(char *dst, char *src, env_vars_t *envp, int32_t *i)
 		{
 			ft_strlcpy(dst, envp ->str + varlen,
 				ft_strlen(envp ->str + varlen) + 1);
-			*i += ft_strlen(envp ->str + varlen);
+			*j += ft_strlen(envp ->str + varlen);
+			return (varlen);
+		}
+		envp = envp ->next;
+	}
+	return (varlen);
+}
+
+int32_t	place_envvar_space(char *dst, char *src, env_vars_t *envp, int32_t *j)
+{
+	int32_t	varlen;
+
+	varlen = envvarlen(src, '"');
+	if (varlen == 2 && src[1] == '?')
+	{
+		interp_exit_status(dst, j);
+		return (varlen);
+	}
+	if (varlen == 1)
+	{
+		if (is_whitespace(src[1]) == true || src[1] == '\0')
+		{
+			*dst = '$';
+			*j += 1;
+		}
+		return (varlen);
+	}
+	while (envp)
+	{
+		if (ft_strncmp(envp ->str, src + 1, varlen - 1) == 0
+			&& envp ->str[varlen - 1] == '=')
+		{
+			ft_strlcpy(dst, envp ->str + varlen,
+				ft_strlen(envp ->str + varlen) + 1);
+			*j += ft_strlen(envp ->str + varlen);
 			return (varlen);
 		}
 		envp = envp ->next;
@@ -85,7 +117,7 @@ int32_t	copy_til_quote(char *dst, char *src, int32_t *i, env_vars_t *envp)
 	while (src[*i] != '\0' && src[*i] != c)
 	{
 		if (src[*i] == '$' && c == '"')
-			*i += place_envvar(dst + j, src + *i, envp, &j);
+			*i += place_envvar_quote(dst + j, src + *i, envp, &j);
 		else
 		{
 			dst[j] = src[*i];
@@ -107,7 +139,7 @@ int32_t	copy_til_space(char *dst, char *src, int32_t *i, env_vars_t *envp)
 		&& src[*i] != '"' && src[*i] != '\'')
 	{
 		if (src[*i] == '$')
-			*i += place_envvar(dst + j, src + *i, envp, &j);
+			*i += place_envvar_space(dst + j, src + *i, envp, &j);
 		else
 		{
 			dst[j] = src[*i];
@@ -130,7 +162,9 @@ void	place_str_in_node(char *dst, char *src, int32_t *i, env_vars_t *envp)
 		else
 			j += copy_til_space(dst + j, src, i, envp);
 	}
+	printf("Look mom, I'm on a terminal!!!\n");
 	dst[j] = '\0';
+	printf("passed\n");
 	while (is_whitespace(src[*i]) == true)
 		*i += 1;
 }

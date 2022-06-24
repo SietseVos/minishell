@@ -26,14 +26,14 @@ int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
 	varlen = envvarlen(str, c);
 	if (varlen == 2 && str[1] == '?')
 		return (exit_status_numblen(strlen, varlen));
-	// if (varlen == 1)
-	// {
-	// 	if (c == ' ' && is_whitespace(str[1]))
-	// 		*strlen += 1;
-	// 	else if (c == '"' || c == '\'')
-	// 		*strlen += 1;
-	// 	return (varlen);
-	// }
+	if (varlen == 1)
+	{
+		if (c == ' ' && (is_whitespace(str[1]) == true || str[1] == '\0'))
+			*strlen += 1;
+		else if (c == '"' || c == '\'')
+			*strlen += 1;
+		return (varlen);
+	}
 	while (envp)
 	{
 		if (ft_strncmp(envp ->str, str + 1, varlen - 1) == 0
@@ -92,7 +92,7 @@ int32_t	strlen_til_quote(char *str, char c, env_vars_t *envp, int32_t *strlen)
 
 void	read_input_str(char *str, int *strlen, env_vars_t *envp)
 {
-	while (*str != '\0' && *str != ' ')
+	while (*str != '\0' && is_whitespace(*str) == false)
 	{
 		if (*str == '"' || *str == '\'')
 		{
@@ -104,5 +104,6 @@ void	read_input_str(char *str, int *strlen, env_vars_t *envp)
 		}
 		else
 			str += strlen_til_space(str, envp, strlen);
+		printf("stringlength: %d\n", *strlen);
 	}
 }
