@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/24 15:58:48 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/24 18:27:32 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,9 @@ void	place_str_in_node(char *dst, char *src, int32_t *i, env_vars_t *envp)
 		else
 			j += copy_til_space(dst + j, src, i, envp);
 	}
-	printf("Look mom, I'm on a terminal!!!\n");
+	// printf("Look mom, I'm on a terminal!!!\n");
 	dst[j] = '\0';
-	printf("passed\n");
+	// printf("passed\n");
 	while (is_whitespace(src[*i]) == true)
 		*i += 1;
 }

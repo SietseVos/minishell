@@ -6,12 +6,18 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:20:58 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/24 15:57:42 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/25 18:33:17 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+	*	Function to remove a given argument from the environment variable list.
+	*	@param arg Pointer to the string containing the argument 
+	*	that has to be removed.
+	*	@return N/A
+*/
 static void	remove_from_list(char *arg, env_vars_t **list)
 {
 	env_vars_t	*pre;
@@ -40,6 +46,11 @@ static void	remove_from_list(char *arg, env_vars_t **list)
 	}
 }
 
+/*
+	*	Function to check if the given inut is correct.
+	*	@param str Pointer to the string that needs to be checked.
+	*	@return - [false] input correct - [true] Input incorrect -
+*/
 static bool	check_unset_error(char *str)
 {
 	int32_t	i;
@@ -60,6 +71,13 @@ static bool	check_unset_error(char *str)
 	return (false);
 }
 
+/*
+	*	Builtin function to unset and remove values insid
+	*	the environment variable list.
+	*	@param arg Double char array containing all the arguments for unset. 
+	*	@param list Pointer to the head of the environment variable list.
+	*	@return N/A
+*/
 void	unset(char **arg, env_vars_t **list)
 {
 	int32_t	error;
@@ -70,9 +88,7 @@ void	unset(char **arg, env_vars_t **list)
 	g_exit_status = 0;
 	while (arg[i])
 	{
-		if (check_unset_error(arg[i]))
-			error = 1;
-		else
+		if (!check_unset_error(arg[i]))
 			remove_from_list(arg[i], list);
 		i++;
 	}
