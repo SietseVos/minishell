@@ -17,6 +17,9 @@ bash: $TEST: ambiguous redirect
 bash-3.2$ << "$TEST" cat
 does not expand in heredoc
 
+<< test --- segfault
+<< test cat --- cat leaks
+
 export hi="ls"
 $hi
 in Arguments:

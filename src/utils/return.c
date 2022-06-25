@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:02:44 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/21 22:02:49 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/25 14:43:24 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exit_with_error_message(char *str1, char *str2, char *str3, \
 	strlen = ft_strlen(str1) + ft_strlen(str2) + ft_strlen(str3) + 1;
 	error_message = ft_calloc(strlen, sizeof(char));
 	if (!error_message)
-		exit (1);
+		exit (exit_value);
 	ft_strlcat(error_message, str1, strlen);
 	ft_strlcat(error_message, str2, strlen);
 	ft_strlcat(error_message, str3, strlen);

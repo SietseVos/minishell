@@ -104,6 +104,6 @@ void	read_input_str(char *str, int *strlen, env_vars_t *envp)
 		}
 		else
 			str += strlen_til_space(str, envp, strlen);
-		printf("stringlength: %d\n", *strlen);
+		// printf("stringlength: %d\n", *strlen);
 	}
 }
