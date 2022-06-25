@@ -34,8 +34,8 @@ void	print_actions(action_t *inlst)
 		printf("\033[1;36m===== node =====\033[31m\n");
 		if (inlst ->type == INFILE)
 			printf("Type: Infile\n");
-		// else if (inlst ->type == APPEND)
-		// 	printf("Type: Outfile\n");
+		else if (inlst ->type == AMBIGU)
+			printf("Type: Ambiguous\n");
 		else if (inlst ->type == APPEND)
 			printf("Type: Append\n");
 		else if (inlst ->type == HDOC)
@@ -46,10 +46,10 @@ void	print_actions(action_t *inlst)
 			printf("Type: Pipe \n");
 		else if (inlst ->type == TOSTDOUT)
 			printf("Type: std out\n");
-		// else if (inlst ->type == 7)
-		// 	printf("Type: noinput\n");
-		// else if (inlst ->type == 8)
-		// 	printf("Type: inpipe\n");
+		else if (inlst ->type == HDOCSPACE)
+			printf("Type: Heredoc space\n");
+		else if (inlst ->type == HDOCQUOTE)
+			printf("Type: Heredoc quote\n");
 		printchararr(inlst ->arg);
 		inlst = inlst ->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/24 16:26:42 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/25 18:24:20 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ action_t	*parser(char *input, env_vars_t *envp)
 	action_t	*lst;
 
 	i = 0;
+	while (is_whitespace(input[i]) == true)
+		i++;
 	lst = determine_kind(input, &i, envp);
 	if (lst == NULL)
 		return (nullerr("failed to make first node"));
@@ -77,3 +79,4 @@ action_t	*parser(char *input, env_vars_t *envp)
 }
 
 // add new node type for incorrect env variable as redirect
+// test this: < ""

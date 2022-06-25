@@ -61,6 +61,7 @@ action_t	*create_cmdnode(int32_t arrlen)
 		free(node);
 		return (nullerr("node arg malloc failure"));
 	}
+	node->next = NULL;
 	return (node);
 }
 
