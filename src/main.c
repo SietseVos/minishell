@@ -41,8 +41,8 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
-		printf("Current exit status: %d\n", g_exit_status);
-		init_signals();
+		// printf("Current exit status: %d\n", g_exit_status);
+		// init_signals();
 		remove_heredoc_files(&hdoc_files);
 		free_action_list(&actions);
 		input = readline_func(input);

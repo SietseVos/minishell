@@ -39,6 +39,9 @@ PARSER =	parse_cmd.c									\
 			parse_pipe.c								\
 			parse_list.c								\
 			merge_nodes.c								\
+			parse_hdoc.c								\
+			parse_ambigu.c								\
+			placing_envvar.c							\
 
 REDIRECTS =	infile.c									\
 			outfile.c									\

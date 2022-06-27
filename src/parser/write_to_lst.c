@@ -6,107 +6,14 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/24 18:27:32 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 14:26:11 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	interp_exit_status(char *dst, int32_t *i)
-{
-	int32_t	j;
-	int32_t	cpy;
-
-	j = 0;
-	cpy = g_exit_status;
-	if (cpy == 0)
-	{
-		dst[j] = '0';
-		*i += 1;
-		return ;
-	}
-	while (cpy > 0)
-	{
-		cpy = cpy / 10;
-		j++;
-	}
-	cpy = g_exit_status;
-	j--;
-	while (cpy > 0)
-	{
-		dst[j] = cpy % 10 + '0';
-		cpy = cpy / 10;
-		j--;
-		*i += 1;
-	}
-}
-
-int32_t	place_envvar_quote(char *dst, char *src, env_vars_t *envp, int32_t *j)
-{
-	int32_t	varlen;
-
-	varlen = envvarlen(src, '"');
-	if (varlen == 2 && src[1] == '?')
-	{
-		interp_exit_status(dst, j);
-		return (varlen);
-	}
-	if (varlen == 1)
-	{
-		*dst = '$';
-		*j += 1;
-		return (varlen);
-	}
-	while (envp)
-	{
-		if (ft_strncmp(envp ->str, src + 1, varlen - 1) == 0
-			&& envp ->str[varlen - 1] == '=')
-		{
-			ft_strlcpy(dst, envp ->str + varlen,
-				ft_strlen(envp ->str + varlen) + 1);
-			*j += ft_strlen(envp ->str + varlen);
-			return (varlen);
-		}
-		envp = envp ->next;
-	}
-	return (varlen);
-}
-
-int32_t	place_envvar_space(char *dst, char *src, env_vars_t *envp, int32_t *j)
-{
-	int32_t	varlen;
-
-	varlen = envvarlen(src, '"');
-	if (varlen == 2 && src[1] == '?')
-	{
-		interp_exit_status(dst, j);
-		return (varlen);
-	}
-	if (varlen == 1)
-	{
-		if (is_whitespace(src[1]) == true || src[1] == '\0')
-		{
-			*dst = '$';
-			*j += 1;
-		}
-		return (varlen);
-	}
-	while (envp)
-	{
-		if (ft_strncmp(envp ->str, src + 1, varlen - 1) == 0
-			&& envp ->str[varlen - 1] == '=')
-		{
-			ft_strlcpy(dst, envp ->str + varlen,
-				ft_strlen(envp ->str + varlen) + 1);
-			*j += ft_strlen(envp ->str + varlen);
-			return (varlen);
-		}
-		envp = envp ->next;
-	}
-	return (varlen);
-}
-
-int32_t	copy_til_quote(char *dst, char *src, int32_t *i, env_vars_t *envp)
+static int32_t	copy_til_quote(char *dst, char *src,
+					int32_t *i, env_vars_t *envp)
 {
 	char	c;
 	int32_t	j;
@@ -130,7 +37,8 @@ int32_t	copy_til_quote(char *dst, char *src, int32_t *i, env_vars_t *envp)
 	return (j);
 }
 
-int32_t	copy_til_space(char *dst, char *src, int32_t *i, env_vars_t *envp)
+static int32_t	copy_til_space(char *dst, char *src,
+					int32_t *i, env_vars_t *envp)
 {
 	int32_t	j;
 
@@ -162,9 +70,7 @@ void	place_str_in_node(char *dst, char *src, int32_t *i, env_vars_t *envp)
 		else
 			j += copy_til_space(dst + j, src, i, envp);
 	}
-	// printf("Look mom, I'm on a terminal!!!\n");
 	dst[j] = '\0';
-	// printf("passed\n");
 	while (is_whitespace(src[*i]) == true)
 		*i += 1;
 }

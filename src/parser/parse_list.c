@@ -30,16 +30,11 @@ bool	merge_cmdfrags(action_t *lst, int32_t cmdfrags)
 	cmdnode = lst;
 	while (cmdnode->next != NULL && cmdnode->type != TOSTDOUT
 		&& cmdnode->type != PIPE)
-	{
 		cmdnode = cmdnode->next;
-	}
 	lst = cmdnode ->next;
 	prevnextptr = &cmdnode->next;
 	while (cmdfrags > 1 && lst != NULL)
 	{
-		// printf("lst is pointing to: %s\n", lst->arg[0]);
-		// printf("current actions:\n");
-		// print_actions(cmdnode);
 		if (lst->type == TOSTDOUT)
 		{
 			if (merge_nodes(cmdnode, &lst, prevnextptr) == false)

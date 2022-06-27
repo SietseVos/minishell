@@ -58,11 +58,10 @@ char	**join_chararrs(char **arr1, char **arr2)
 
 bool	merge_nodes(action_t *dst, action_t **src, action_t **prevnextptr)
 {
-	char	**fragdst;
-	char	**fragsrc;
+	char		**fragdst;
+	char		**fragsrc;
 	action_t	*freeme;
 
-	printf("merge src: -%s- with dst: -%s-\n", (*src)->arg[0], dst->arg[0]);
 	fragdst = dst->arg;
 	fragsrc = (*src)->arg;
 	freeme = *src;
