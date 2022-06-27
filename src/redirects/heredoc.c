@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:34 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 13:53:58 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 17:18:43 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int32_t	ft_strcmp(char *str1, char *str2)
 	return (0);
 }
 
-static int32_t	close_free_and_return(int32_t fd, char *str1, \
+int32_t	close_free_and_return(int32_t fd, char *str1, \
 								char *str2, int32_t return_v)
 {
 	if (fd > 0)
@@ -40,29 +40,29 @@ static int32_t	close_free_and_return(int32_t fd, char *str1, \
 	return (return_v);
 }
 
-static int32_t	run_heredoc(const char *heredoc_path, char *delimiter)
+static int32_t	run_heredoc(const char *heredoc_path, \
+						char *delimiter, int32_t type, env_vars_t *env)
 {
 	int32_t	fd;
+	int32_t	read_return;
 	char	*in;
 
 	// ctrl c signal should work
+	signal(SIGKILL, SIG_DFL);
+	in = NULL;
 	fd = open(heredoc_path, O_WRONLY | O_TRUNC);
 	if (fd == -1)
 		return (-1);
 	while (1)
 	{
-		in = readline("> ");
-		if (!in)
-			return (close_free_and_return(fd, delimiter, NULL, 0));
-		else if (in[0] == '\0')
-		{
-			if (write(fd, "\n", 1) == -1)
-				return (close_free_and_return(fd, delimiter, in, -1));
-			continue ;
-		}
-		// expand variables
+		read_return = read_heredoc_input(fd, delimiter, &in);
+		// printf("input : %s delimiter: %s\n", in, delimiter);
+		if (read_return != 1)
+			return (read_return);
 		if (ft_strcmp(delimiter, in) == 0)
 			return (close_free_and_return(fd, delimiter, in, 0));
+		if (expand_heredoc(in, type, env) == -1)
+			return (close_free_and_return(fd, delimiter, in, -1));
 		else if (write(fd, in, ft_strlen(in)) == -1 || write(fd, "\n", 1) == -1)
 			return (close_free_and_return(fd, delimiter, in, -1));
 		free(in);
@@ -89,18 +89,24 @@ void	remove_heredoc_files(heredoc_t **files)
 	}
 }
 
-int32_t	heredoc(action_t *actions, heredoc_t **file_paths)
+int32_t	heredoc(action_t *actions, heredoc_t **file_paths, env_vars_t *env)
 {
 	char	*delimiter;
 
 	while (actions)
 	{
-		if (actions->type == HDOC)
+		if (actions->type == HDOCSPACE || actions->type == HDOCQUOTE)
 		{
 			delimiter = ft_strdup(actions->arg[0]);
-			if (!delimiter || create_heredoc_file(actions, file_paths) == -1)
+			if (!delimiter)
 				return (-1);
-			if (run_heredoc(actions->arg[0], delimiter) == -1)
+			if (create_heredoc_file(actions, file_paths) == -1)
+			{
+				free(delimiter);
+				return (-1);
+			}
+			if (run_heredoc(actions->arg[0], delimiter, \
+							actions->type, env) == -1)
 				return (-1);
 		}
 		actions = actions->next;

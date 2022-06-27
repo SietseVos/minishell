@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:39 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/21 22:01:40 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 14:22:43 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int32_t	get_infile_fd(action_t	*action)
 		return (-1);
 	while (action && action->type != PIPE)
 	{
-		if (action->type == INFILE || action->type == HDOC)
+		if (action->type == INFILE || action->type == HDOCSPACE
+			|| action->type == HDOCQUOTE)
 		{
 			if (fd != -2)
 				close(fd);
