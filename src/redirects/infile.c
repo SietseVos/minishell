@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:39 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 14:22:43 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 20:03:10 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ int32_t	get_infile_fd(action_t	*action)
 		return (-1);
 	while (action && action->type != PIPE)
 	{
+		if (action->type == AMBIGU)
+		{
+			g_exit_status = 1;
+			return (return_with_error_message("minishell: ", \
+								action->arg[0], AMBIGU_ERROR, -1));
+		}
 		if (action->type == INFILE || action->type == HDOCSPACE
 			|| action->type == HDOCQUOTE)
 		{

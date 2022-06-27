@@ -1,8 +1,7 @@
 	*	ctrl c inside heredoc wont run
 	*	check for leaks inside increment shell level? cant find em
 	*
-	*	echo "'"$USER"'"
-	*	export ok="k k"
+	*	protect returnvalue of close & dup 2.
 
 Use for writing to stderr??
 {
@@ -10,15 +9,6 @@ Use for writing to stderr??
 
 	func((char *[]){"functon failed: ", test, "lkj"});
 }
-
-bash-3.2$ echo test > $TEST
-bash: $TEST: ambiguous redirect
-
-bash-3.2$ << "$TEST" cat
-does not expand in heredoc
-
-<< test --- segfault
-<< test cat --- cat leaks
 
 export hi="ls"
 $hi

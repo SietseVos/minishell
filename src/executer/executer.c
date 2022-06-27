@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/23 15:51:59 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/24 16:17:36 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 19:48:09 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ int32_t	executer(action_t **actions, env_vars_t **list)
 	if (contains_pipes((*info.action)))
 	{
 		return_value = run_with_pipes(info, STDIN_FILENO);
-		dup2(STDERR_FILENO, STDIN_FILENO);
+		if (dup2(STDERR_FILENO, STDIN_FILENO) == -1)
+			exit_with_error_message("dup2 failed\n", NULL, NULL, 1);
 	}
 	else
 		return_value = run_no_pipes(actions, list);

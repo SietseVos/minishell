@@ -17,7 +17,7 @@ static char	*readline_func(char *input)
 			free(input);
 		input = readline("\033[1;31m😈 Minihell 😈 ▸\033[0m ");
 		if (!input)
-			exit(g_exit_status); // free env vars & history first?
+			exit(g_exit_status);
 		else if (input[0] != '\0')
 		{
 			add_history(input);
@@ -42,7 +42,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	while (1)
 	{
 		// printf("Current exit status: %d\n", g_exit_status);
-		// init_signals();
+		init_signals();
 		remove_heredoc_files(&hdoc_files);
 		free_action_list(&actions);
 		input = readline_func(input);

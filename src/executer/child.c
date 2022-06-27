@@ -32,11 +32,13 @@ void	run_child(info_t info, int32_t *fd, int32_t fd_in, bool contains_pipes)
 	int32_t outfile_fd;
 
 	signal(SIGINT, SIG_DFL);
-	dup2(fd_in, STDIN_FILENO);
+	if (dup2(fd_in, STDIN_FILENO) == -1)
+		exit_with_error_message("dup2 failed\n", NULL, NULL, 1);
 	if (contains_pipes)
 	{
 		close(fd[PIPE_READ]);
-		dup2(fd[PIPE_WRITE], STDOUT_FILENO);
+		if (dup2(fd[PIPE_WRITE], STDOUT_FILENO) == -1)
+			exit_with_error_message("dup2 failed\n", NULL, NULL, 1);
 	}
 	if (set_redirections((*info.action), &infile_fd, &outfile_fd) == -1)
 		exit (1);

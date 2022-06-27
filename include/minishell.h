@@ -25,6 +25,7 @@
 #define	UNSET_ERROR "bash: unset: `"
 #define	EXPORT_ERROR "bash: export: `"
 #define IDENT_ERROR "': not a valid identifier\n"
+#define AMBIGU_ERROR ": ambiguous redirect\n"
 
 // legacy code
 #define ruben int8_t 	// this was orginally used as a solution to a complitaced problem ruben (cat), ruben (the best) and int32_t encouncered during their adventures in minihell
@@ -38,9 +39,9 @@ enum type
 	TRUNC,				// open file trunc mode
 	PIPE,				// empty node with pipe
 	TOSTDOUT,			// command
-	HDOCSPACE,			// heredoc with space
+	HDOCSPACE,			// heredoc without quote
 	HDOCQUOTE,			// heredoc with quote
-	AMBIGU				// beware of this dangerous monster
+	AMBIGU				// beware of this dangerous monster D:
 };
 
 int32_t	g_exit_status;
