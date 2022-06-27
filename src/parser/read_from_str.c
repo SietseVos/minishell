@@ -22,7 +22,6 @@ int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
 {
 	int32_t	varlen;
 
-	// printf("interpeting variable strlen\n");
 	varlen = envvarlen(str, c);
 	if (varlen == 2 && str[1] == '?')
 		return (exit_status_numblen(strlen, varlen));
@@ -47,7 +46,7 @@ int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
 	return (varlen);
 }
 
-int32_t	strlen_til_space(char *str, env_vars_t *envp, int32_t *strlen)
+static int32_t	strlen_til_space(char *str, env_vars_t *envp, int32_t *strlen)
 {
 	int32_t	i;
 
@@ -55,13 +54,8 @@ int32_t	strlen_til_space(char *str, env_vars_t *envp, int32_t *strlen)
 	while (is_whitespace(str[i]) == false && str[i] != '"'
 		&& str[i] != '\'' && str[i] != '\0')
 	{
-		// printf("strlen_til_space is at: %c\n", str[i]);
 		if (str[i] == '$')
-		{
-			// printf("i before increment: %c\n", str[i]);
 			i += interpvar_strlen(str + i, ' ', strlen, envp);
-			// printf("i after increment: %c\n", str[i]);
-		}
 		else
 		{
 			*strlen += 1;
@@ -71,14 +65,14 @@ int32_t	strlen_til_space(char *str, env_vars_t *envp, int32_t *strlen)
 	return (i);
 }
 
-int32_t	strlen_til_quote(char *str, char c, env_vars_t *envp, int32_t *strlen)
+static int32_t	strlen_til_quote(char *str, char c,
+					env_vars_t *envp, int32_t *strlen)
 {
 	int32_t	i;
 
 	i = 0;
 	while (str[i] != c && str[i] != '\0')
 	{
-		printf("strlen_til_quote is at: %c\n", str[i]);
 		if (c == '"' && str[i] == '$')
 			i += interpvar_strlen(str + i, c, strlen, envp);
 		else
@@ -104,6 +98,5 @@ void	read_input_str(char *str, int *strlen, env_vars_t *envp)
 		}
 		else
 			str += strlen_til_space(str, envp, strlen);
-		// printf("stringlength: %d\n", *strlen);
 	}
 }

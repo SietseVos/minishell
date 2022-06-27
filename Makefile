@@ -39,6 +39,9 @@ PARSER =	parse_cmd.c									\
 			parse_pipe.c								\
 			parse_list.c								\
 			merge_nodes.c								\
+			parse_hdoc.c								\
+			parse_ambigu.c								\
+			placing_envvar.c							\
 
 REDIRECTS =	infile.c									\
 			outfile.c									\
@@ -68,7 +71,8 @@ SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 BREW_DIR		= $(shell brew --prefix)
 LIBREADLINE		= $(BREW_DIR)/opt/readline/lib
 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g
+FLAGS = -Wall -Werror -Wextra
+# -fsanitize=address -g
 #		-fsanitize=address -g
 
 INCLUDE_DIRS = -I src/libft -I include -I $(BREW_DIR)/opt/readline/include 
