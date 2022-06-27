@@ -56,7 +56,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 				executer(&actions, &env) == -1)
 			continue ;
 		// print_actions(actions);
-		system("leaks minishell");
+		// system("leaks minishell");
 		// printf("global exit status: %d\n", g_exit_status);
 	}
 	clear_history(); // ?? can we use this?? rl_clear_history?

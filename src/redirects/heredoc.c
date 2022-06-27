@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:34 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 17:18:43 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 18:13:58 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static int32_t	run_heredoc(const char *heredoc_path, \
 	char	*in;
 
 	// ctrl c signal should work
-	signal(SIGKILL, SIG_DFL);
 	in = NULL;
 	fd = open(heredoc_path, O_WRONLY | O_TRUNC);
 	if (fd == -1)
@@ -56,12 +55,11 @@ static int32_t	run_heredoc(const char *heredoc_path, \
 	while (1)
 	{
 		read_return = read_heredoc_input(fd, delimiter, &in);
-		// printf("input : %s delimiter: %s\n", in, delimiter);
 		if (read_return != 1)
 			return (read_return);
 		if (ft_strcmp(delimiter, in) == 0)
 			return (close_free_and_return(fd, delimiter, in, 0));
-		if (expand_heredoc(in, type, env) == -1)
+		if (expand_heredoc(&in, type, env) == -1)
 			return (close_free_and_return(fd, delimiter, in, -1));
 		else if (write(fd, in, ft_strlen(in)) == -1 || write(fd, "\n", 1) == -1)
 			return (close_free_and_return(fd, delimiter, in, -1));

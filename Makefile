@@ -72,7 +72,7 @@ SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 BREW_DIR		= $(shell brew --prefix)
 LIBREADLINE		= $(BREW_DIR)/opt/readline/lib
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -fsanitize=address -g
 #		-fsanitize=address -g
 
 INCLUDE_DIRS = -I src/libft -I include -I $(BREW_DIR)/opt/readline/include 

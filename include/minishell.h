@@ -150,7 +150,7 @@ int32_t			create_heredoc_file(action_t *heredoc_node, heredoc_t **file_paths);
 int32_t			heredoc(action_t *actions, heredoc_t **file_paths, env_vars_t *env);
 void			remove_heredoc_files(heredoc_t **files);
 int32_t			read_heredoc_input(int32_t fd, char *delimiter, char **in);
-int32_t			expand_heredoc(char *input, int32_t type, env_vars_t *env);
+int32_t			expand_heredoc(char **input, int32_t type, env_vars_t *env);
 int32_t			close_free_and_return(int32_t fd, char *str1, \
 												char *str2, int32_t return_v);
 
@@ -187,19 +187,16 @@ action_t		*parse_pipe(char *input, int32_t *i);
 bool			join_split_cmds(action_t *lst);
 bool			merge_nodes(action_t *dst, action_t **src, action_t **prevnextptr);
 bool			is_whitespace(char c);
-<<<<<<< HEAD
 int32_t			interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp);
 int32_t			place_envvar_space(char *dst, char *src, env_vars_t *envp, int32_t *j);
 
 void	print_actions(action_t *inlst);
-=======
 action_t		*found_ambigu(char *input, int32_t *i);
 bool			ambigu_redirect(char *input, int32_t i, env_vars_t *envp);
 void			skip_operator_space(char *input, int32_t *i);
 void			print_actions(action_t *inlst);
 int32_t			place_envvar_space(char *dst, char *src, env_vars_t *envp, int32_t *j);
 int32_t			place_envvar_quote(char *dst, char *src, env_vars_t *envp, int32_t *j);
->>>>>>> 05e7b7fe3e7217d730af7a67c9333f12c241fc32
 
 /* ----------------------------------------------------------------------- */
 
