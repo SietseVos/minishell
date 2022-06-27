@@ -6,18 +6,20 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:54 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 14:36:21 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 20:28:18 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	*	Function to write a cd file / directory error
-	*	onto the stderr and set the exit status to 1.
-	*	@param str Pointer to the string containing the
-	*	argument that generated this error.
-	*	@return [1]
+/**
+ * Function to write a cd file / directory error
+ * onto the stderr and set the exit status to 1.
+ * 
+ * @param str Pointer to the string containing the
+ * argument that generated this error.
+ * 
+ * @return [1]
 */
 int32_t	chdir_error(char *str)
 {
@@ -26,17 +28,21 @@ int32_t	chdir_error(char *str)
 	return (1);
 }
 
-/*
-	*	This function copies the string inside pwd_node,
-	*	adds "OLD" in front and then places
-	*	it inside of oldpwd_node. 
-	*	@param *oldpwd_node Pointer to the node where
-	*	the string has the be placed.
-	*	@param *pwd_node Pointer to the node containing
-	*	the string that has to be copied.
-	*	@param *has_been_null Pointer to a boolian that
-	*	will be changed indicating it has not been set to null.
-	*	@return [-1] If memory allocation fails else [0].
+/**
+ * This function copies the string inside pwd_node,
+ * adds "OLD" in front and then places
+ * it inside of oldpwd_node. 
+ * 
+ * @param *oldpwd_node Pointer to the node where
+ * the string has the be placed.
+ * 
+ * @param *pwd_node Pointer to the node containing
+ * the string that has to be copied.
+ * 
+ * @param *has_been_null Pointer to a boolian that
+ * will be changed indicating it has not been set to null.
+ * 
+ * @return [-1] If memory allocation fails else [0].
 */
 int32_t	move_pwd_to_oldpwd(env_vars_t *oldpwd_node, \
 		env_vars_t *pwd_node, bool *has_been_null)
@@ -55,11 +61,13 @@ int32_t	move_pwd_to_oldpwd(env_vars_t *oldpwd_node, \
 	return (0);
 }
 
-/*
-	*	Function to set the OLDPWD value to
-	*	the current working directory (before changing directories).
-	*	@param oldpwd_node Pointer to the OLDPWD node.
-	*	@return - [0] Success - [-1] Malloc fail -
+/**
+ * Function to set the OLDPWD value to
+ * the current working directory (before changing directories).
+ * 
+ * @param oldpwd_node Pointer to the OLDPWD node.
+ * 
+ * @return - [0] Success - [-1] Malloc fail -
 */
 int32_t	set_oldpwd(env_vars_t *oldpwd_node)
 {
@@ -77,13 +85,16 @@ int32_t	set_oldpwd(env_vars_t *oldpwd_node)
 	return (0);
 }
 
-/*
-	*	Function to set the OLDPWD node to contain
-	*	an empty string as value.
-	*	@param oldpwd_node Pointer to the OLDPWD node.
-	*	@param has_been_null Pointer to a static boolian
-	*	keeping track if the OLPWD node has already been null.
-	*	@return - [0] Success - [-1] Malloc fail -
+/**
+ * Function to set the OLDPWD node to contain
+ * an empty string as value.
+ * 
+ * @param oldpwd_node Pointer to the OLDPWD node.
+ * 
+ * @param has_been_null Pointer to a static boolian
+ * keeping track if the OLPWD node has already been null.
+ * 
+ * @return - [0] Success - [-1] Malloc fail -
 */
 int32_t	create_empty_oldpwd(env_vars_t *oldpwd_node, bool *has_been_null)
 {
@@ -96,11 +107,13 @@ int32_t	create_empty_oldpwd(env_vars_t *oldpwd_node, bool *has_been_null)
 	return (0);
 }
 
-/*
-	*	Function to create a new environment variable node
-	*	containing "OLPWD=".
-	*	@param env Pointer to the head of the envrionment variable list.
-	*	@return - [0] Success - [-1] Malloc fail -
+/**
+ * Function to create a new environment variable node
+ * containing "OLPWD=".
+ * 
+ * @param env Pointer to the head of the envrionment variable list.
+ * 
+ * @return - [0] Success - [-1] Malloc fail -
 */
 int32_t	create_new_oldpwd_node(env_vars_t **env)
 {

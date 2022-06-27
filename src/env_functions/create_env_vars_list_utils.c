@@ -6,18 +6,21 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:53:42 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 18:43:43 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 20:19:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	*	Function to copy the content from one string into another.
-	*	THIS FUNCTION IS NOT MEMORY SAFE.
-	*	@param take Pointer to the string where the info is being taken from.
-	*	@param place Pointer to the string where the info is being set to.
-	*	@return N/A
+/**
+ * Function to copy the content from one string into another.
+ * THIS FUNCTION IS NOT MEMORY SAFE.
+ * 
+ * @param take Pointer to the string where the info is being taken from.
+ * 
+ * @param place Pointer to the string where the info is being set to.
+ * 
+ * @return N/A
 */
 static void	str_copy(char *take, char *place)
 {
@@ -32,10 +35,12 @@ static void	str_copy(char *take, char *place)
 	place[i] = '\0';
 }
 
-/*
-	*	Function to remove the value inside the OLDPWD node.
-	*	@param list Pointer to the head of the environment variable list.
-	*	@return N/A
+/**
+ * Function to remove the value inside the OLDPWD node.
+ * 
+ * @param list Pointer to the head of the environment variable list.
+ * 
+ * @return N/A
 */
 static void	remove_old_pwd_value(env_vars_t **list)
 {
@@ -49,10 +54,12 @@ static void	remove_old_pwd_value(env_vars_t **list)
 	}
 }
 
-/*
-	*	Function to increment the shell level value by 1.
-	*	@param list Pointer to the environment variable list.
-	*	@return - [0] Success - [-1] Malloc failed -
+/**
+ * Function to increment the shell level value by 1.
+ * 
+ * @param list Pointer to the environment variable list.
+ * 
+ * @return - [0] Success - [-1] Malloc failed -
 */
 static int32_t	increment_shell_level(env_vars_t *list)
 {
@@ -82,10 +89,12 @@ static int32_t	increment_shell_level(env_vars_t *list)
 	return (0);
 }
 
-/*
-	*	Function to remove the shell maintained variable from the list.
-	*	@param list Pointer to the head of the environment variable list.
-	*	@return N/A
+/**
+ * Function to remove the shell maintained variable from the list.
+ * 
+ * @param list Pointer to the head of the environment variable list.
+ * 
+ * @return N/A
 */
 static void	remove_exess_from_list(env_vars_t **list)
 {
@@ -116,11 +125,13 @@ static void	remove_exess_from_list(env_vars_t **list)
 	}
 }
 
-/*
-	*	Function to cleanup the environment variable list of
-	*	the shell maintained variable and increase the shell level by 1.
-	*	@param env_head Pointer to the head of the environment variable list.
-	*	@return - [true] Success - [false] Malloc failed -
+/**
+ * Function to cleanup the environment variable list of
+ * the shell maintained variable and increase the shell level by 1.
+ * 
+ * @param env_head Pointer to the head of the environment variable list.
+ * 
+ * @return - [true] Success - [false] Malloc failed -
 */
 bool	clean_env_vars_list(env_vars_t **env_head)
 {

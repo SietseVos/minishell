@@ -6,18 +6,21 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:41:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 14:26:13 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 20:31:32 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	*	This function concatinates the given strings into one, newly allocated string.
-	*	It does not free any of the given strings.
-	*	@param var Variable to be in front of the working directory.
-	*	@param pwd Path of working directory.
-	*	@return [NULL] if allocation fails, otherwise the new string.
+/**
+ * This function concatinates the given strings into one, newly allocated string.
+ * It does not free any of the given strings.
+ * 
+ * @param var Variable to be in front of the working directory.
+ * 
+ * @param pwd Path of working directory.
+ * 
+ * @return [NULL] if allocation fails, otherwise the new string.
 */
 char	*create_new_cd_str(char *var, char *pwd)
 {
@@ -37,13 +40,15 @@ char	*create_new_cd_str(char *var, char *pwd)
 	return (new);
 }
 
-/*
-	*	Function to change the contents of the PWD node
-	*	inside the environment variables to the current working
-	*	directory. If PWD node does not exist it will return 1.
-	*	@param env Pointer to the environment variable list.
-	*	@return - [0] Success - [1] PWD node does not exist - 
-	*	[-1] Malloc fail -
+/**
+ * Function to change the contents of the PWD node
+ * inside the environment variables to the current working
+ * directory. If PWD node does not exist it will return 1.
+ * 
+ * @param env Pointer to the environment variable list.
+ * 
+ * @return - [0] Success - [1] PWD node does not exist - 
+ * [-1] Malloc fail -
 */
 static int32_t	change_pwd_path(env_vars_t *env)
 {
@@ -66,18 +71,21 @@ static int32_t	change_pwd_path(env_vars_t *env)
 	return (0);
 }
 
-/*
-	*	This function takes the contents of the PWD
-	*	node and sets it inside the OLDPWD node.
-	*	If PWD does not exist and OLDPWD has not been empty yet
-	*	it sets the OLWPWD node to en empty string.
-	*	If OLDPWD has been empty and PWD does not exist it will
-	*	set it to the last working directory.
-	*	if neither exist it continues regularly.
-	*	@param env Pointer to the environment list containing the nodes.
-	*	@param has_been_null Pointer to a static boolian keeping
-	*	track of the OLDPWD string and if it has been set to NULL yet.
-	*	@return - [0] Success - [-1] Malloc fail -
+/**
+ * This function takes the contents of the PWD
+ * node and sets it inside the OLDPWD node.
+ * If PWD does not exist and OLDPWD has not been empty yet
+ * it sets the OLWPWD node to en empty string.
+ * If OLDPWD has been empty and PWD does not exist it will
+ * set it to the last working directory.
+ * if neither exist it continues regularly.
+ * 
+ * @param env Pointer to the environment list containing the nodes.
+ * 
+ * @param has_been_null Pointer to a static boolian keeping
+ * track of the OLDPWD string and if it has been set to NULL yet.
+ * 
+ * @return - [0] Success - [-1] Malloc fail -
 */
 static int32_t	change_old_pwd_path(env_vars_t *env, bool *has_been_null)
 {
@@ -104,15 +112,18 @@ static int32_t	change_old_pwd_path(env_vars_t *env, bool *has_been_null)
 	return (0);
 }
 
-/*
-	*	If cd has not been called before this function will run.
-	*	It takes the OLDPWD env node (if it exists) or creates one
-	*	and sets its value to true, containing an empty string.
-	*	@param start_of_program Pointer to a static boolian
-	*	that keeps track if it is the first cd call.
-	*	@param env Pointer to the head of the
-	*	environment variable list.
-	*	@return - [0] Success - [-1] Malloc fail -
+/**
+ * If cd has not been called before this function will run.
+ * It takes the OLDPWD env node (if it exists) or creates one
+ * and sets its value to true, containing an empty string.
+ * 
+ * @param start_of_program Pointer to a static boolian
+ * that keeps track if it is the first cd call.
+ * 
+ * @param env Pointer to the head of the
+ * environment variable list.
+ * 
+ * @return - [0] Success - [-1] Malloc fail -
 */
 static int32_t	first_cd_call(bool *start_of_program, env_vars_t **env)
 {
@@ -138,14 +149,17 @@ static int32_t	first_cd_call(bool *start_of_program, env_vars_t **env)
 	return (0);
 }
 
-/*
-	*	Builtin function to change the current working directory.
-	*	@param argument Double character array
-	*	containing all arguments to execute.
-	*	@param env Pointer to the head of the
-	*	environment variable list.
-	*	@return - [0] Success - [1] Function could not succeed - 
-	*	[-1] Malloc fail -
+/**
+ * Builtin function to change the current working directory.
+ * 
+ * @param argument Double character array
+ * containing all arguments to execute.
+ * 
+ * @param env Pointer to the head of the
+ * environment variable list.
+ * 
+ * @return - [0] Success - [1] Function could not succeed - 
+ *[-1] Malloc fail -
 */
 int32_t	cd(char **argument, env_vars_t **env)
 {

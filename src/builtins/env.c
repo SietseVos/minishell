@@ -6,17 +6,19 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:35 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 14:42:12 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 20:34:42 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	*	Builtin function to print everything in the environment
-	*	variable list with a value.
-	*	@param list Pointer to the environment variable list.
-	*	@return N/A
+/**
+ * Builtin function to print everything in the environment
+ * variable list with a value.
+ * 
+ * @param list Pointer to the environment variable list.
+ * 
+ * @return N/A
 */
 void	env(env_vars_t *list)
 {

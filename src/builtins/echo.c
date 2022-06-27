@@ -6,18 +6,21 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:42 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 14:40:38 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 20:33:44 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	*	Function to check if a given string can pass
-	*	as a -n flag.
-	*	@param str Pointer to the string to check.
-	*	@return - [true] Given string is an -n flag - 
-	*	[false] Given string is  not an -n flag -
+/**
+ * Function to check if a given string can pass
+ * as a -n flag.
+ * 
+ * @param str Pointer to the string to check.
+ * 
+ * @return - [true] Given string is an -n flag - 
+ * 
+ * [false] Given string is  not an -n flag -
 */
 static bool	is_n_flag(char *str)
 {
@@ -37,12 +40,14 @@ static bool	is_n_flag(char *str)
 	return (true);
 }
 
-/*
-	*	Builtin function to output the given arguments
-	*	to the stdout. If an -n flag is given it won't output a newline.
-	*	Sets the exit status to 0.	
-	*	@param args Double char array containing all arguments.
-	*	@return N/A
+/**
+ * Builtin function to output the given arguments
+ * to the stdout. If an -n flag is given it won't output a newline.
+ * Sets the exit status to 0.	
+ * 
+ * @param args Double char array containing all arguments.
+ * 
+ * @return N/A
 */
 void	echo(char **args)
 {

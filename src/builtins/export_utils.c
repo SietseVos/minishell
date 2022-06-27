@@ -6,18 +6,22 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:44 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 18:07:42 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 20:39:47 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	*	Function to swap the pointers of 2 strings inside an array.
-	*	@param strings Double char array countaining broth strings.
-	*	@param str1 Position of the first string inside the array. 
-	*	@param str2 Position of the second string inside the array.
-	*	@return N/A
+/**
+ * Function to swap the pointers of 2 strings inside an array.
+ * 
+ * @param strings Double char array countaining broth strings.
+ *
+ * @param str1 Position of the first string inside the array. 
+ * 
+ * @param str2 Position of the second string inside the array.
+ * 
+ * @return N/A
 */
 static void	swap_strings(char **strings, int32_t str1, int32_t str2)
 {
@@ -28,13 +32,16 @@ static void	swap_strings(char **strings, int32_t str1, int32_t str2)
 	strings[str2] = tmp;
 }
 
-/*
-	*	Function to bubble sort a double char array
-	*	based on ascii value of the characters inside.
-	*	@param env_strings Double char array containing
-	*	all the strings to be sorted.
-	*	@param lst_size Amount of strings inside the array.
-	*	@return N/A
+/**
+ * Function to bubble sort a double char array
+ * based on ascii value of the characters inside.
+ * 
+ * @param env_strings Double char array containing
+ * all the strings to be sorted.
+ * 
+ * @param lst_size Amount of strings inside the array.
+ * 
+ * @return N/A
 */
 void	bubble_sort_array(char **env_strings, int32_t lst_size)
 {
@@ -64,16 +71,21 @@ void	bubble_sort_array(char **env_strings, int32_t lst_size)
 	}
 }
 
-/*
-	*	Function to set quotes before and after the given string.
-	*	Wont set quotes if the string does not contain '='.
-	*	@param string Double char array containing all strings.
-	*	@param str Index of the original string. 
-	*	@param tmp Pointer to the new string where the quotes
-	*	have to be included.
-	*	@param past_equals Pointer to a boolian keepeing track if
-	*	an equals sign has been passed.
-	*	@return N/A
+/**
+ * Function to set quotes before and after the given string.
+ * Wont set quotes if the string does not contain '='.
+ * 
+ * @param string Double char array containing all strings.
+ * 
+ * @param str Index of the original string. 
+ * 
+ * @param tmp Pointer to the new string where the quotes
+ * have to be included.
+ * 
+ * @param past_equals Pointer to a boolian keepeing track if
+ * an equals sign has been passed.
+ *
+ * @return N/A
 */
 static void	set_quotes_in_string(char **string, int32_t str, \
 								char *tmp, bool *past_equals)
@@ -100,11 +112,13 @@ static void	set_quotes_in_string(char **string, int32_t str, \
 	string[str] = tmp;
 }
 
-/*
-	*	Function to add quotes after the equals sign.
-	*	@param strings Double char array containing all
-	*	strings that have to be changed.
-	*	@return - [0] success - [-1] malloc fail -
+/**
+ * Function to add quotes after the equals sign.
+ * 
+ * @param strings Double char array containing all
+ * strings that have to be changed.
+ * 
+ * @return - [0] success - [-1] malloc fail -
 */
 int32_t	add_quotes_after_equal(char **strings)
 {
@@ -125,12 +139,15 @@ int32_t	add_quotes_after_equal(char **strings)
 	return (0);
 }
 
-/*
-	*	Function to search for a given string inside the
-	*	environment variables.
-	*	@param input Pointer to the string to search for.
-	*	@param env pointer to the env list containing all nodes.
-	*	@return - [true] If found inside list - [false] not inside list -
+/**
+ * Function to search for a given string inside the
+ * environment variables.
+ * 
+ * @param input Pointer to the string to search for.
+ * 
+ * @param env pointer to the env list containing all nodes.
+ * 
+ * @return - [true] If found inside list - [false] not inside list -
 */
 bool	is_already_in_list(char	*input, env_vars_t *env)
 {

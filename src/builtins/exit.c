@@ -6,16 +6,18 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:29 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 16:02:16 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 20:36:50 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	*	Function to print the exit error on the stderr.
-	*	@param str Pointer to the string that caused the error.
-	*	@return exit with value 255
+/**
+ * Function to print the exit error on the stderr.
+ * 
+ * @param str Pointer to the string that caused the error.
+ * 
+ * @return exit with value 255
 */
 static void	exit_shell_error(char *str, bool print)
 {
@@ -25,11 +27,13 @@ static void	exit_shell_error(char *str, bool print)
 		": numeric argument required\n", 255);
 }
 
-/*
-	*	Function to convert a string to a long.
-	*	If the given string would overflow it results in an error.
-	*	@param str Pointer to the string that has to be converted.
-	*	@return Given string converted into a long.
+/**
+ * Function to convert a string to a long.
+ * If the given string would overflow it results in an error.
+ * 
+ * @param str Pointer to the string that has to be converted.
+ * 
+ * @return Given string converted into a long.
 */
 static int64_t	ft_atoll(char *str, bool print)
 {
@@ -59,10 +63,12 @@ static int64_t	ft_atoll(char *str, bool print)
 	return (return_value);
 }
 
-/*
-	*	Function to check if he given argument is not valid.
-	*	@param str Pointer to the string to check if it is correct.
-	*	@return [true] if argument is invalid [false] if correct.
+/**
+ * Function to check if he given argument is not valid.
+ * 
+ * @param str Pointer to the string to check if it is correct.
+ * 
+ * @return [true] if argument is invalid [false] if correct.
 */
 static bool	check_for_wrong_argument(char *str)
 {
@@ -78,11 +84,13 @@ static bool	check_for_wrong_argument(char *str)
 	return (false);
 }
 
-/*
-	*	Function to exit with the global exit status.
-	*	@param print Boolian to check if it should print
-	*	exit to the strderr.
-	*	@return Exits
+/**
+ * Function to exit with the global exit status.
+ * 
+ * @param print Boolian to check if it should print
+ * exit to the strderr.
+ * 
+ * @return Exits
 */
 static void	exit_with_g_status(bool print)
 {
@@ -91,13 +99,16 @@ static void	exit_with_g_status(bool print)
 	exit(g_exit_status);
 }
 
-/*
-	*	Builtin function to exit the shell. 
-	*	@param argument Double char array containing all
-	*	the arguments exit has to run with.
-	*	@param print Boolian to check if it should print
-	*	exit to the strderr.
-	*	@return Exits
+/**
+ * Builtin function to exit the shell. 
+ * 
+ * @param argument Double char array containing all
+ * the arguments exit has to run with.
+ * 
+ * @param print Boolian to check if it should print
+ * exit to the strderr.
+ * 
+ * @return Exits
 */
 void	exit_shell(char **argument, bool print)
 {

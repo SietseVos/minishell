@@ -6,17 +6,19 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:32 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 18:26:10 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/27 20:41:49 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	*	Function to print the entire environment variable list,
-	*	sorted by ascii value.
-	*	@param env Pointer to the environment variable list.
-	*	@return - [0] Success - [-1] Malloc failed -
+/**
+ * Function to print the entire environment variable list,
+ * sorted by ascii value.
+ * 
+ * @param env Pointer to the environment variable list.
+ * 
+ * @return - [0] Success - [-1] Malloc failed -
 */
 static bool	print_export(env_vars_t *env)
 {
@@ -43,10 +45,12 @@ static bool	print_export(env_vars_t *env)
 	return (0);
 }
 
-/*
-	*	Function to check if the input is correct.
-	*	@param inp Pointer to the string that needs to be checked.
-	*	@return - [0] Input correct - [-1] Input incorrect -
+/**
+ * Function to check if the input is correct.
+ * 
+ * @param inp Pointer to the string that needs to be checked.
+ * 
+ * @return - [0] Input correct - [-1] Input incorrect -
 */
 static int32_t	check_valid_input(char	*inp)
 {
@@ -76,13 +80,16 @@ static int32_t	check_valid_input(char	*inp)
 	return (0);
 }
 
-/*
-	*	Function to create a new env node with the given value
-	*	inside of it.
-	*	@param input Pointer to the string that needs to be set inside 
-	*	the new environment node.
-	*	@param env Pointer to the head of the environment variable list.
-	*	@return - [0] Success - [-1] Malloc failed -
+/**
+ * Function to create a new env node with the given value
+ * inside of it.
+ * 
+ * @param input Pointer to the string that needs to be set inside 
+ * the new environment node.
+ * 
+ * @param env Pointer to the head of the environment variable list.
+ * 
+ * @return - [0] Success - [-1] Malloc failed -
 */
 static int32_t	add_to_list(char *input, env_vars_t **env)
 {
@@ -100,13 +107,16 @@ static int32_t	add_to_list(char *input, env_vars_t **env)
 	return (0);
 }
 
-/*
-	*	Function to replace the current value inside the node that
-	*	contains the same variable name as the given input.
-	*	@param input Pointer to the string containing variable and
-	*	the new value that has to be set.
-	*	@param env Pointer to the environment variable list.
-	*	@return - [true] Success - [false] Malloc failed -
+/**
+ * Function to replace the current value inside the node that
+ * contains the same variable name as the given input.
+ * 
+ * @param input Pointer to the string containing variable and
+ * the new value that has to be set.
+ * 
+ * @param env Pointer to the environment variable list.
+ * 
+ * @return - [true] Success - [false] Malloc failed -
 */
 static int32_t	replace_current_in_list(char *input, env_vars_t *env)
 {
@@ -135,13 +145,16 @@ static int32_t	replace_current_in_list(char *input, env_vars_t *env)
 	return (true);
 }
 
-/*
-	*	Builtin function to replicate the behaviour of Bash's export
-	*	without and flags. 
-	*	@param args Double char array containing all the agruments
-	*	export has to work with.
-	*	@param env Pointer to the head of the environment variable list.
-	*	@return - [0] Success - [-1] Malloc failed -
+/**
+ * Builtin function to replicate the behaviour of Bash's export
+ * without and flags. 
+ * 
+ * @param args Double char array containing all the agruments
+ * export has to work with.
+ * 
+ * @param env Pointer to the head of the environment variable list.
+ * 
+ * @return - [0] Success - [-1] Malloc failed -
 */
 int32_t	export(char **args, env_vars_t **env)
 {
