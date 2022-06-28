@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/06/21 22:01:34 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 18:13:58 by rvan-mee      ########   odam.nl         */
+/*                                                        :::::::::::::               */
+/*   heredoc.c                                          :+:  :+:            */
+/*                                                      +:+                         */
+/*   By: rvan-mee <rvan-mee@student.42.fr>              +#+                         */
+/*                                                                                    */
+/*   Created: 2022/06/21 22:01:34 by rvan-mee      #+##+#    #+#                 */
+/*   Updated: 2022/06/28 16:18:06 by svos      ########   odam   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ int32_t	close_free_and_return(int32_t fd, char *str1, \
 								char *str2, int32_t return_v)
 {
 	if (fd > 0)
-		close(fd);
+	{
+		if (close(fd) == -1)
+			exit_with_error_message("close failed\n", NULL, NULL, 1);
+	}
 	if (str1)
 		free(str1);
 	if (str2)
@@ -44,26 +47,39 @@ static int32_t	run_heredoc(const char *heredoc_path, \
 						char *delimiter, int32_t type, env_vars_t *env)
 {
 	int32_t	fd;
-	int32_t	read_return;
 	char	*in;
 
-	// ctrl c signal should work
+	// ctrl c signal should work run inside of fork
 	in = NULL;
-	fd = open(heredoc_path, O_WRONLY | O_TRUNC);
-	if (fd == -1)
-		return (-1);
-	while (1)
+	g_info.heredoc_breakout = false;
+	g_info.heredoc_pid = fork();
+	if (g_info.heredoc_pid == -1)
+		exit_with_error_message("fork failed\n", NULL, NULL, 1);
+	if (g_info.heredoc_pid == 0)
 	{
-		read_return = read_heredoc_input(fd, delimiter, &in);
-		if (read_return != 1)
-			return (read_return);
-		if (ft_strcmp(delimiter, in) == 0)
-			return (close_free_and_return(fd, delimiter, in, 0));
-		if (expand_heredoc(&in, type, env) == -1)
-			return (close_free_and_return(fd, delimiter, in, -1));
-		else if (write(fd, in, ft_strlen(in)) == -1 || write(fd, "\n", 1) == -1)
-			return (close_free_and_return(fd, delimiter, in, -1));
-		free(in);
+		fd = open(heredoc_path, O_WRONLY | O_TRUNC);
+		if (fd == -1)
+			return (-1);
+		while (1)
+		{
+			in = readline("> ");
+			if (!in)
+				return (close_free_and_return(fd, delimiter, NULL, 0));
+			if (ft_strcmp(delimiter, in) == 0)
+				return (close_free_and_return(fd, delimiter, in, 0));
+			if (expand_heredoc(&in, type, env) == -1)
+				return (close_free_and_return(fd, delimiter, in, -1));
+			else if (write(fd, in, ft_strlen(in)) == -1 || write(fd, "\n", 1) == -1)
+				return (close_free_and_return(fd, delimiter, in, -1));
+			free(in);
+		}
+	}
+	else
+	{
+		signal(SIGINT, heredoc_handler);
+		waitpid(g_info.heredoc_pid, NULL, 0);
+		if (g_info.heredoc_breakout == true)
+			return (-1);
 	}
 	return (0);
 }

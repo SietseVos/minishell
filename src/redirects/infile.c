@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:39 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:03:10 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:59:58 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static bool	access_error(action_t *action)
 		{
 			if (access(action->arg[0], F_OK) == -1)
 			{
-				g_exit_status = 1;
+				g_info.exit_status = 1;
 				write_error_with_strings("bash: ", action->arg[0], \
 				": No such file or directory\n");
 				return (true);
 			}
 			else if (access(action->arg[0], R_OK) == -1)
 			{
-				g_exit_status = 1;
+				g_info.exit_status = 1;
 				write_error_with_strings("bash: ", action->arg[0], \
 				": Premission denied\n");
 				return (true);
@@ -49,7 +49,7 @@ int32_t	get_infile_fd(action_t	*action)
 	{
 		if (action->type == AMBIGU)
 		{
-			g_exit_status = 1;
+			g_info.exit_status = 1;
 			return (return_with_error_message("minishell: ", \
 								action->arg[0], AMBIGU_ERROR, -1));
 		}
@@ -57,7 +57,10 @@ int32_t	get_infile_fd(action_t	*action)
 			|| action->type == HDOCQUOTE)
 		{
 			if (fd != -2)
-				close(fd);
+			{
+				if (close(fd) == -1)
+					exit_with_error_message("close failed\n", NULL, NULL, 1);
+			}
 			fd = open(action->arg[0], O_RDONLY);
 			if (fd == -1)
 				return (-1);

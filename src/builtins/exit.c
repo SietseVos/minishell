@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:29 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:36:50 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void	exit_with_g_status(bool print)
 {
 	if (print)
 		write(STDERR_FILENO, "exit\n", 6);
-	exit(g_exit_status);
+	exit(g_info.exit_status);
 }
 
 /**
@@ -127,7 +127,7 @@ void	exit_shell(char **argument, bool print)
 	if (strings_in_array(argument) > 1)
 	{
 		write(STDERR_FILENO, "bash: exit: too many arguments\n", 32);
-		g_exit_status = 1;
+		g_info.exit_status = 1;
 		return ;
 	}
 	arg = ft_atoll(argument[0], print);

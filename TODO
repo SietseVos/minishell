@@ -1,7 +1,5 @@
-	*	ctrl c inside heredoc wont run
+	*	ctrl c inside heredoc runs, double check with more testing
 	*	check for leaks inside increment shell level? cant find em
-	*
-	*	protect returnvalue of close & dup 2.
 
 Use for writing to stderr??
 {

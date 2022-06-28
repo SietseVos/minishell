@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:54 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:28:18 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 */
 int32_t	chdir_error(char *str)
 {
-	g_exit_status = 1;
+	g_info.exit_status = 1;
 	write_error_with_strings("bash: cd: ", str, ": No such file or directory\n");
 	return (1);
 }

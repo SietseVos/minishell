@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   child.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/27 20:51:21 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/28 16:53:09 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -14,11 +25,13 @@
  * 
  * @return Exits
 */
-static void	exit_and_close_fds(int32_t infile_fd, int32_t outfile_fd, int32_t fd_in)
+static void	exit_and_close_fds(int32_t infile_fd, \
+						int32_t outfile_fd, int32_t fd_in)
 {
-	close(fd_in);
+	if (close(fd_in) == -1)
+		exit_with_error_message("close failed\n", NULL, NULL, 1);
 	reset_redirections(infile_fd, outfile_fd);
-	exit (g_exit_status);
+	exit (g_info.exit_status);
 }
 
 /**
@@ -37,15 +50,16 @@ static void	exit_and_close_fds(int32_t infile_fd, int32_t outfile_fd, int32_t fd
 */
 void	run_child(info_t info, int32_t *fd, int32_t fd_in, bool contains_pipes)
 {
-	int32_t infile_fd;
-	int32_t outfile_fd;
+	int32_t	infile_fd;
+	int32_t	outfile_fd;
 
 	signal(SIGINT, SIG_DFL);
 	if (dup2(fd_in, STDIN_FILENO) == -1)
 		exit_with_error_message("dup2 failed\n", NULL, NULL, 1);
 	if (contains_pipes)
 	{
-		close(fd[PIPE_READ]);
+		if (close(fd[PIPE_READ]) == -1)
+			exit_with_error_message("close failed\n", NULL, NULL, 1);
 		if (dup2(fd[PIPE_WRITE], STDOUT_FILENO) == -1)
 			exit_with_error_message("dup2 failed\n", NULL, NULL, 1);
 	}

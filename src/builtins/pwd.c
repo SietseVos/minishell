@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:09 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:42:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	pwd(void)
 		printf("%s\n", pwd);
 		free(pwd);
 	}
-	g_exit_status = 0;
+	g_info.exit_status = 0;
 }

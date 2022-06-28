@@ -20,8 +20,10 @@
 #define	PIPE_READ	0
 #define PIPE_WRITE	1
 
-#define PIPE_ERROR "bash: pipe: Resource temporarily unavailable\n"
-#define FORK_ERROR "bash: fork: Resource temporarily unavailable\n"
+#define TOKEN_ERROR "minishell: syntax error near unexpected token `"
+#define NEWLINE_ERROR "minishell: syntax error near unexpected token `newline'\n"
+#define PIPE_ERROR "minishell: pipe: Resource temporarily unavailable\n"
+#define FORK_ERROR "minishell: fork: Resource temporarily unavailable\n"
 #define	UNSET_ERROR "bash: unset: `"
 #define	EXPORT_ERROR "bash: export: `"
 #define IDENT_ERROR "': not a valid identifier\n"
@@ -44,7 +46,15 @@ enum type
 	AMBIGU				// beware of this dangerous monster D:
 };
 
-int32_t	g_exit_status;
+
+struct global_info_s
+{
+	int32_t	exit_status;
+	pid_t	heredoc_pid;
+	bool	heredoc_breakout;
+}	global_info_t;
+
+struct global_info_s g_info;
 
 typedef struct action_s
 {
@@ -150,7 +160,6 @@ void			reset_redirections(int32_t in_fd, int32_t out_fd);
 int32_t			create_heredoc_file(action_t *heredoc_node, heredoc_t **file_paths);
 int32_t			heredoc(action_t *actions, heredoc_t **file_paths, env_vars_t *env);
 void			remove_heredoc_files(heredoc_t **files);
-int32_t			read_heredoc_input(int32_t fd, char *delimiter, char **in);
 int32_t			expand_heredoc(char **input, int32_t type, env_vars_t *env);
 int32_t			close_free_and_return(int32_t fd, char *str1, \
 												char *str2, int32_t return_v);
@@ -208,6 +217,7 @@ int32_t			place_envvar_quote(char *dst, char *src, env_vars_t *envp, int32_t *j)
 void			init_signals(void);
 void			handle_sig_executer(int32_t sig);
 void			sig_c_outside_fork(int32_t sig);
+void			heredoc_handler(int32_t sig);
 
 /* ----------------------------------------------------------------------- */
 

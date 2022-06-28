@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 18:10:23 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 18:13:46 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:29:31 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,4 @@ int32_t	expand_heredoc(char **input, int32_t type, env_vars_t *env)
 	free(*input);
 	*input = new_str;
 	return (0);
-}
-
-int32_t	read_heredoc_input(int32_t fd, char *delimiter, char **in)
-{
-	*in = readline("> ");
-	if (!*in)
-		return (close_free_and_return(fd, delimiter, NULL, 0));
-	else if (*in[0] == '\0')
-	{
-		if (write(fd, "\n", 1) == -1)
-			return (close_free_and_return(fd, delimiter, *in, -1));
-		return (close_free_and_return(fd, delimiter, *in, 2));
-	}
-	return (1);
 }

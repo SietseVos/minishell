@@ -4,7 +4,7 @@ int32_t	exit_status_numblen(int32_t *strlen, int32_t varlen)
 {
 	int32_t	cpy;
 
-	cpy = g_exit_status;
+	cpy = g_info.exit_status;
 	if (cpy == 0)
 	{
 		*strlen += 1;

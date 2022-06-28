@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:02:44 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/25 14:43:24 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:04:43 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int32_t	close_fd_return_error(char *error_message, int32_t fd, \
 		int32_t return_value)
 {
-	close(fd);
+	if (close(fd) == -1)
+		exit_with_error_message("close failed\n", NULL, NULL, 1);
 	write(STDERR_FILENO, error_message, ft_strlen(error_message));
 	return (return_value);
 }

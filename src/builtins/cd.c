@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:41:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:31:32 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,6 @@ int32_t	cd(char **argument, env_vars_t **env)
 		|| change_old_pwd_path(*env, &has_been_null) == -1
 		|| change_pwd_path(*env) == -1)
 		return (-1);
-	g_exit_status = 0;
+	g_info.exit_status = 0;
 	return (0);
 }

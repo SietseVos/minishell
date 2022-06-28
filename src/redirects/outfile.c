@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:42 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/21 22:01:44 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:01:13 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static void	check_if_file_exists(char *path)
 	if (access(path, F_OK) == -1)
 		fd = open(path, O_CREAT);
 	if (fd != -1)
-		close(fd);
+	{
+		if (close(fd) == -1)
+			exit_with_error_message("close failed\n", NULL, NULL, 1);
+	}
 }
 
 static int32_t	check_premissions(char *path)
@@ -44,7 +47,10 @@ int32_t	get_outfile_fd(action_t	*action)
 		if (action->type == TRUNC || action->type == APPEND)
 		{
 			if (fd != -2)
-				close(fd);
+			{
+				if (close(fd) == -1)
+					exit_with_error_message("close failed\n", NULL, NULL, 1);
+			}
 			check_if_file_exists(action->arg[0]);
 			if (check_premissions(action->arg[0]) == false)
 				return (-1);

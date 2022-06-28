@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:32 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:41:49 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,19 @@ static int32_t	check_valid_input(char	*inp)
 	if (inp[0] == '\0' || (inp[0] >= '0' && inp[0] <= '9') || inp[0] == '=')
 	{
 		write_error_with_strings(EXPORT_ERROR, inp, IDENT_ERROR);
-		if (g_exit_status == 0)
-			g_exit_status = 1;
+		if (g_info.exit_status == 0)
+			g_info.exit_status = 1;
 		return (-1);
 	}
 	while (inp[i])
 	{
 		if (inp[i] == '=')
 			break ;
-		else if (inp[i] == '-' || inp[i] == ' ')
+		else if (!(ft_isalnum(inp[i]) || inp[i] == '_'))
 		{
 			write_error_with_strings(EXPORT_ERROR, inp, IDENT_ERROR);
-			if (g_exit_status == 0)
-				g_exit_status = 1;
+			if (g_info.exit_status == 0)
+				g_info.exit_status = 1;
 			return (-1);
 		}
 		i++;
@@ -161,7 +161,7 @@ int32_t	export(char **args, env_vars_t **env)
 	int32_t	i;
 
 	i = 0;
-	g_exit_status = 0;
+	g_info.exit_status = 0;
 	if (!*args)
 		return (print_export(*env));
 	while (args[i])

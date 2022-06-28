@@ -6,7 +6,7 @@ void	interp_exit_status(char *dst, int32_t *i)
 	int32_t	cpy;
 
 	j = 0;
-	cpy = g_exit_status;
+	cpy = g_info.exit_status;
 	if (cpy == 0)
 	{
 		dst[j] = '0';
@@ -18,7 +18,7 @@ void	interp_exit_status(char *dst, int32_t *i)
 		cpy = cpy / 10;
 		j++;
 	}
-	cpy = g_exit_status;
+	cpy = g_info.exit_status;
 	j--;
 	while (cpy > 0)
 	{

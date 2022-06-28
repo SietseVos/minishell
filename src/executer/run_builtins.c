@@ -1,7 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   run_builtins.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/28 17:02:35 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/06/28 17:08:17 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	run_if_builtin_child(info_t info)
+/**
+ * Function to compare the first string inside the first action node with
+ * all the supported builtins and execute it if it is found.
+ * 
+ * @param info Struct contaning the action list and environment
+ * variable list.
+ * 
+ * @return - [true] builtin found and executed - [false] builtin not found -
+*/
+bool	run_if_builtin_child(info_t info) // check if cd or export fails?
 {
 	if (ft_strncmp((*info.action)->arg[0], "cd", 3) == 0)
 		cd(&(*info.action)->arg[1], info.list);
@@ -22,6 +42,17 @@ bool	run_if_builtin_child(info_t info)
 	return (true);
 }
 
+/**
+ * Funtion to run a builtin, will clear the action list till it finds a
+ * node containing the command.
+ * 
+ * @param actions Pointer to the head of the action list.
+ * 
+ * @param list Pointer to the head of the environment variable list.
+ * 
+ * @return - [0] no builtins found or builtin ran without issues -
+ * [-1] builtin (cd or export) encountered an issue -
+*/
 int32_t	run_builtin_no_pipe(action_t **actions, env_vars_t **list)
 {
 	int32_t		return_value;

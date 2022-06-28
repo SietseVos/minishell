@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:20:58 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:43:26 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static bool	check_unset_error(char *str)
 	{
 		if (str[i] == '=' || str[i] == ' ' || str[i] == '-')
 		{
-			g_exit_status = 1;
+			g_info.exit_status = 1;
 			return (return_with_error_message(UNSET_ERROR, str, \
 								IDENT_ERROR, true));
 		}
@@ -92,7 +92,7 @@ void	unset(char **arg, env_vars_t **list)
 
 	i = 0;
 	error = 0;
-	g_exit_status = 0;
+	g_info.exit_status = 0;
 	while (arg[i])
 	{
 		if (!check_unset_error(arg[i]))

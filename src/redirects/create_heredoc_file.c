@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:28 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 14:17:49 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:58:26 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int32_t	create_heredoc_file(action_t *heredoc_node, heredoc_t **file_paths)
 	fd = open(heredoc_node->arg[0], O_RDWR | O_CREAT, 0666);
 	if (fd == -1)
 		return (-1);
-	close(fd);
+	if (close(fd) == -1)
+		exit_with_error_message("close failed\n", NULL, NULL, 1);
 	if (add_to_heredoc_paths(file_paths, heredoc_node->arg[0]) == -1)
 	{
 		unlink(heredoc_node->arg[0]);

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:42 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:33:44 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	echo(char **args)
 
 	i = 0;
 	newline = true;
-	g_exit_status = 0;
+	g_info.exit_status = 0;
 	if (args[0] && is_n_flag(args[0]))
 	{
 		newline = false;
