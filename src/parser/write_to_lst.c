@@ -6,14 +6,14 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/27 14:26:11 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int32_t	copy_til_quote(char *dst, char *src,
-					int32_t *i, env_vars_t *envp)
+					int32_t *i, t_env_vars *envp)
 {
 	char	c;
 	int32_t	j;
@@ -38,7 +38,7 @@ static int32_t	copy_til_quote(char *dst, char *src,
 }
 
 static int32_t	copy_til_space(char *dst, char *src,
-					int32_t *i, env_vars_t *envp)
+					int32_t *i, t_env_vars *envp)
 {
 	int32_t	j;
 
@@ -58,7 +58,7 @@ static int32_t	copy_til_space(char *dst, char *src,
 	return (j);
 }
 
-void	place_str_in_node(char *dst, char *src, int32_t *i, env_vars_t *envp)
+void	place_str_in_node(char *dst, char *src, int32_t *i, t_env_vars *envp)
 {
 	int	j;
 

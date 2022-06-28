@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:35 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * 
  * @return N/A
 */
-void	env(env_vars_t *list)
+void	env(t_env_vars *list)
 {
 	while (list)
 	{

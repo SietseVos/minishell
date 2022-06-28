@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-bool	free_env_list_return_false(env_vars_t *env)
+bool	free_env_list_return_false(t_env_vars *env)
 {
-	env_vars_t	*tmp;
-	env_vars_t	*next;
+	t_env_vars	*tmp;
+	t_env_vars	*next;
 
 	tmp = env;
 	while (tmp)
@@ -33,10 +33,10 @@ void	free_double_array(char **array)
 	}
 }
 
-void	free_env_list(env_vars_t *list)
+void	free_env_list(t_env_vars *list)
 {
-	env_vars_t	*tmp;
-	env_vars_t	*next;
+	t_env_vars	*tmp;
+	t_env_vars	*next;
 
 	tmp = list;
 	while (tmp)
@@ -49,9 +49,9 @@ void	free_env_list(env_vars_t *list)
 	}
 }
 
-void	pop_action_node(action_t **node)
+void	pop_action_node(t_action **node)
 {
-	action_t	*next;
+	t_action	*next;
 
 	if (!node || !*node)
 		return ;
@@ -61,7 +61,7 @@ void	pop_action_node(action_t **node)
 	*node = next;
 }
 
-void	free_action_list(action_t **node)
+void	free_action_list(t_action **node)
 {
 	while (node && *node)
 		pop_action_node(node);

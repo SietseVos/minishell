@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int32_t	count_cmdfrags(action_t *lst)
+int32_t	count_cmdfrags(t_action *lst)
 {
 	int32_t	ret;
 
@@ -14,7 +14,7 @@ int32_t	count_cmdfrags(action_t *lst)
 	return (ret);
 }
 
-void	move_to_next_pipe(action_t **lst)
+void	move_to_next_pipe(t_action **lst)
 {
 	while (*lst != NULL && (*lst)->type != PIPE)
 		*lst = (*lst)->next;
@@ -22,10 +22,10 @@ void	move_to_next_pipe(action_t **lst)
 		*lst = (*lst)->next;
 }
 
-bool	merge_cmdfrags(action_t *lst, int32_t cmdfrags)
+bool	merge_cmdfrags(t_action *lst, int32_t cmdfrags)
 {
-	action_t	*cmdnode;
-	action_t	**prevnextptr;
+	t_action	*cmdnode;
+	t_action	**prevnextptr;
 
 	cmdnode = lst;
 	while (cmdnode->next != NULL && cmdnode->type != TOSTDOUT
@@ -50,7 +50,7 @@ bool	merge_cmdfrags(action_t *lst, int32_t cmdfrags)
 	return (true);
 }
 
-bool	join_split_cmds(action_t *lst)
+bool	join_split_cmds(t_action *lst)
 {
 	int32_t	cmdfrags;
 

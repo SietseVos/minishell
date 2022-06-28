@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:42 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:01:13 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:49:45 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int32_t	check_premissions(char *path)
 	return (true);
 }
 
-int32_t	get_outfile_fd(action_t	*action)
+int32_t	get_outfile_fd(t_action	*action)
 {
 	int32_t	fd;
 

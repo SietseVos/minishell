@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:32 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * 
  * @return - [0] Success - [-1] Malloc failed -
 */
-static bool	print_export(env_vars_t *env)
+static bool	print_export(t_env_vars *env)
 {
 	char	**env_strings;
 	int32_t	i;
@@ -91,7 +91,7 @@ static int32_t	check_valid_input(char	*inp)
  * 
  * @return - [0] Success - [-1] Malloc failed -
 */
-static int32_t	add_to_list(char *input, env_vars_t **env)
+static int32_t	add_to_list(char *input, t_env_vars **env)
 {
 	char	*new_node;
 
@@ -118,9 +118,9 @@ static int32_t	add_to_list(char *input, env_vars_t **env)
  * 
  * @return - [true] Success - [false] Malloc failed -
 */
-static int32_t	replace_current_in_list(char *input, env_vars_t *env)
+static int32_t	replace_current_in_list(char *input, t_env_vars *env)
 {
-	env_vars_t	*to_replace;
+	t_env_vars	*to_replace;
 	char		*variable;
 	int32_t		i;
 
@@ -156,7 +156,7 @@ static int32_t	replace_current_in_list(char *input, env_vars_t *env)
  * 
  * @return - [0] Success - [-1] Malloc failed -
 */
-int32_t	export(char **args, env_vars_t **env)
+int32_t	export(char **args, t_env_vars **env)
 {
 	int32_t	i;
 

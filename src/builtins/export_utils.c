@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:44 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:39:47 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int32_t	add_quotes_after_equal(char **strings)
  * 
  * @return - [true] If found inside list - [false] not inside list -
 */
-bool	is_already_in_list(char	*input, env_vars_t *env)
+bool	is_already_in_list(char	*input, t_env_vars *env)
 {
 	int32_t	i;
 

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:44:59 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:23:49 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
  * 
  * @return - [0] Success - [-1] Malloc failed -
 */
-int32_t	set_first_node(env_vars_t **head, char *str)
+int32_t	set_first_node(t_env_vars **head, char *str)
 {
-	env_vars_t	*new;
+	t_env_vars	*new;
 
-	new = malloc(sizeof(env_vars_t) * 1);
+	new = malloc(sizeof(t_env_vars) * 1);
 	if (!new)
 		return (-1);
 	new->next = NULL;
@@ -45,9 +45,9 @@ int32_t	set_first_node(env_vars_t **head, char *str)
  * 
  * @return - [0] Success - [-1] Malloc failed -
 */
-int32_t	add_env_node(env_vars_t **env, char *str)
+int32_t	add_env_node(t_env_vars **env, char *str)
 {
-	env_vars_t	*new;
+	t_env_vars	*new;
 
 	if (!*env)
 	{
@@ -58,7 +58,7 @@ int32_t	add_env_node(env_vars_t **env, char *str)
 	new = *env;
 	while (new->next)
 		new = new->next;
-	new->next = malloc(sizeof(env_vars_t) * 1);
+	new->next = malloc(sizeof(t_env_vars) * 1);
 	if (!new->next)
 		return (-1);
 	new = new->next;

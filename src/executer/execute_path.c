@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:52:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 21:22:37 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static char	*set_command_after_path(const char *path, const char *command)
  * PATH variable -
 */
 static char	*norminette_wants_this_to_be_split(char **arguments, \
-		env_vars_t *path)
+		t_env_vars *path)
 {
 	char	**all_paths;
 	char	*execute_path;
@@ -113,9 +113,9 @@ static char	*norminette_wants_this_to_be_split(char **arguments, \
  * [NULL] If there isnt an executable with the same name within the
  * PATH variable -
 */
-static char	*find_command_in_path(char **arguments, env_vars_t *list)
+static char	*find_command_in_path(char **arguments, t_env_vars *list)
 {
-	env_vars_t	*path;
+	t_env_vars	*path;
 
 	path = get_variable_node(list, "PATH=");
 	if (!path)
@@ -135,7 +135,7 @@ static char	*find_command_in_path(char **arguments, env_vars_t *list)
  * @return - [execute_path] Path of the executable if it can be found -
  * [NULL] If there isnt an executable that can be found -
 */
-char	*get_executable_path(char **arguments, env_vars_t *list)
+char	*get_executable_path(char **arguments, t_env_vars *list)
 {
 	char	*cmd_path;
 

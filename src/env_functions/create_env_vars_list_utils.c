@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:53:42 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:19:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static void	str_copy(char *take, char *place)
  * 
  * @return N/A
 */
-static void	remove_old_pwd_value(env_vars_t **list)
+static void	remove_old_pwd_value(t_env_vars **list)
 {
-	env_vars_t	*tmp;
+	t_env_vars	*tmp;
 
 	tmp = get_variable_node(*list, "OLDPWD=");
 	if (tmp)
@@ -61,7 +61,7 @@ static void	remove_old_pwd_value(env_vars_t **list)
  * 
  * @return - [0] Success - [-1] Malloc failed -
 */
-static int32_t	increment_shell_level(env_vars_t *list)
+static int32_t	increment_shell_level(t_env_vars *list)
 {
 	int32_t	level;
 	char	*new_str;
@@ -96,11 +96,11 @@ static int32_t	increment_shell_level(env_vars_t *list)
  * 
  * @return N/A
 */
-static void	remove_exess_from_list(env_vars_t **list)
+static void	remove_exess_from_list(t_env_vars **list)
 {
-	env_vars_t	*pre;
-	env_vars_t	*tmp;
-	env_vars_t	*next;
+	t_env_vars	*pre;
+	t_env_vars	*tmp;
+	t_env_vars	*next;
 	int32_t		i;
 
 	i = 0;
@@ -133,7 +133,7 @@ static void	remove_exess_from_list(env_vars_t **list)
  * 
  * @return - [true] Success - [false] Malloc failed -
 */
-bool	clean_env_vars_list(env_vars_t **env_head)
+bool	clean_env_vars_list(t_env_vars **env_head)
 {
 	set_env_list_bool_value(*env_head);
 	remove_exess_from_list(env_head);

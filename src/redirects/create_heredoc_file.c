@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:28 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:58:26 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:16 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*get_hex_value(unsigned long num)
 	return (str);
 }
 
-static int32_t	set_heredoc_path_in_node(action_t *heredoc_node)
+static int32_t	set_heredoc_path_in_node(t_action *heredoc_node)
 {
 	char	*path;
 	char	*pointer_address;
@@ -56,12 +56,12 @@ static int32_t	set_heredoc_path_in_node(action_t *heredoc_node)
 	return (0);
 }
 
-static int32_t	add_to_heredoc_paths(heredoc_t **filepaths, char *new_path)
+static int32_t	add_to_heredoc_paths(t_heredoc **filepaths, char *new_path)
 {
-	heredoc_t	*new;
-	heredoc_t	*tmp;
+	t_heredoc	*new;
+	t_heredoc	*tmp;
 
-	new = malloc(sizeof(heredoc_t) * 1);
+	new = malloc(sizeof(t_heredoc) * 1);
 	if (!new)
 		return (-1);
 	new->next = NULL;
@@ -83,7 +83,7 @@ static int32_t	add_to_heredoc_paths(heredoc_t **filepaths, char *new_path)
 	return (0);
 }
 
-int32_t	create_heredoc_file(action_t *heredoc_node, heredoc_t **file_paths)
+int32_t	create_heredoc_file(t_action *heredoc_node, t_heredoc **file_paths)
 {
 	int32_t	fd;
 

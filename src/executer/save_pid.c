@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:08:38 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:18:29 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:49:28 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 
 /**
  * Function to get the address of the first (staticaly allocated)
- * child_pids_t node.
+ * t_child_pids node.
  * 
- * @return - [first child_pids_t node] -
+ * @return - [first t_child_pids node] -
 */
-child_pids_t	*get_first_pid_node(void)
+t_child_pids	*get_first_pid_node(void)
 {
-	static child_pids_t	first;
+	static t_child_pids	first;
 
 	return (&first);
 }
 
 /**
- * Function to the the final child_pids_t node inside the list.
+ * Function to the the final t_child_pids node inside the list.
  * 
- * @return - [last child_pids_t node] -
+ * @return - [last t_child_pids node] -
 */
-child_pids_t	*get_last_pid_node(void)
+t_child_pids	*get_last_pid_node(void)
 {
-	child_pids_t	*tmp;
+	t_child_pids	*tmp;
 
 	tmp = get_first_pid_node();
 	while (tmp && tmp->next)
@@ -42,7 +42,7 @@ child_pids_t	*get_last_pid_node(void)
 }
 
 /**
- * Function to add a new pid to the child_pids_t list.
+ * Function to add a new pid to the t_child_pids list.
  * 
  * @param new_pid The pid to be added to the list.
  * 
@@ -50,10 +50,10 @@ child_pids_t	*get_last_pid_node(void)
 */
 int32_t	save_pid(pid_t new_pid)
 {
-	child_pids_t	*new;
-	child_pids_t	*last;
+	t_child_pids	*new;
+	t_child_pids	*last;
 
-	new = malloc(sizeof(child_pids_t));
+	new = malloc(sizeof(t_child_pids));
 	if (!new)
 		return (-1);
 	new->pid = new_pid;
@@ -64,14 +64,14 @@ int32_t	save_pid(pid_t new_pid)
 }
 
 /**
- * Function that is used to reset the child_pids_t list after use.
+ * Function that is used to reset the t_child_pids list after use.
  * 
  * @return N/A
 */
 void	reset_pid(void)
 {
-	child_pids_t	*tmp;
-	child_pids_t	*next;
+	t_child_pids	*tmp;
+	t_child_pids	*next;
 
 	tmp = get_first_pid_node();
 	tmp = tmp->next;
@@ -93,8 +93,8 @@ void	reset_pid(void)
 */
 void	set_exit_status_and_wait(void)
 {
-	child_pids_t	*node;
-	child_pids_t	*last_child;
+	t_child_pids	*node;
+	t_child_pids	*last_child;
 	int32_t			return_wait;
 
 	node = get_first_pid_node();

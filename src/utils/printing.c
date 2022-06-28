@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	printenvp(env_vars_t *print)
+void	printenvp(t_env_vars *print)
 {
 	while (print != 0)
 	{
@@ -25,7 +25,7 @@ void	printchararr(char **toprint)
 	}
 }
 
-void	print_actions(action_t *inlst)
+void	print_actions(t_action *inlst)
 {
 	if (!inlst)
 		printf("\033[1;32mList is empty!\033[31m\n");

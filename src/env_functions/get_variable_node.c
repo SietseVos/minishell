@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 21:50:50 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:12:43 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int32_t	compare_var_in_list(char *str, char *var)
  * @return - [list] Node containing the variable - 
  * [NULL] List does not contain the given variable.
 */
-env_vars_t	*get_variable_node(env_vars_t *list, char *variable)
+t_env_vars	*get_variable_node(t_env_vars *list, char *variable)
 {
 	while (list)
 	{

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/23 15:51:59 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:03:12 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:27 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @return - [0] executed normally - [-1] fork failed
  * - [1] no more actions left -
 */
-static int32_t	run_executable_no_pipe(action_t	**actions, env_vars_t *list)
+static int32_t	run_executable_no_pipe(t_action	**actions, t_env_vars *list)
 {
 	int32_t	return_execute;
 	int32_t	fork_fd;
@@ -60,7 +60,7 @@ static int32_t	run_executable_no_pipe(action_t	**actions, env_vars_t *list)
  * @return - [0] executed normally - [-1] redirection failed / builtin failed /
  * executable failed -
 */
-static int32_t	run_no_pipes(action_t **actions, env_vars_t **list)
+static int32_t	run_no_pipes(t_action **actions, t_env_vars **list)
 {
 	int32_t	in_fd;
 	int32_t	out_fd;
@@ -113,7 +113,7 @@ static int32_t	close_fds_and_return(int32_t *pipe_fds, int32_t fd_in)
  * @return - [0] everything executed properly - [-1] close failed
  * / fork failed / pipe failed -
 */
-static int32_t	run_with_pipes(info_t info, int32_t fd_in)
+static int32_t	run_with_pipes(t_info info, int32_t fd_in)
 {
 	const bool	has_pipes = contains_pipes((*info.action));
 	int32_t		pipe_fds[2];
@@ -156,10 +156,10 @@ static int32_t	run_with_pipes(info_t info, int32_t fd_in)
  * @return - [0] everything eecuted properly - 
  * [-1] error occurred whilst trying to execute -
 */
-int32_t	executer(action_t **actions, env_vars_t **list)
+int32_t	executer(t_action **actions, t_env_vars **list)
 {
 	int32_t		return_value;
-	info_t		info;
+	t_info		info;
 
 	info.action = actions;
 	info.list = list;

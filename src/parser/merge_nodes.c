@@ -56,11 +56,11 @@ char	**join_chararrs(char **arr1, char **arr2)
 	return (ret);
 }
 
-bool	merge_nodes(action_t *dst, action_t **src, action_t **prevnextptr)
+bool	merge_nodes(t_action *dst, t_action **src, t_action **prevnextptr)
 {
 	char		**fragdst;
 	char		**fragsrc;
-	action_t	*freeme;
+	t_action	*freeme;
 
 	fragdst = dst->arg;
 	fragsrc = (*src)->arg;

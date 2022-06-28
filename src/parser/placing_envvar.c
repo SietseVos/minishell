@@ -30,7 +30,7 @@ void	interp_exit_status(char *dst, int32_t *i)
 }
 
 int32_t	copy_envvar_to_str(char *dst, char *src,
-			env_vars_t *envp, int32_t varlen)
+			t_env_vars *envp, int32_t varlen)
 {
 	int32_t	ret;
 
@@ -49,7 +49,7 @@ int32_t	copy_envvar_to_str(char *dst, char *src,
 	return (ret);
 }
 
-int32_t	place_envvar_quote(char *dst, char *src, env_vars_t *envp, int32_t *j)
+int32_t	place_envvar_quote(char *dst, char *src, t_env_vars *envp, int32_t *j)
 {
 	int32_t	varlen;
 
@@ -69,7 +69,7 @@ int32_t	place_envvar_quote(char *dst, char *src, env_vars_t *envp, int32_t *j)
 	return (varlen);
 }
 
-int32_t	place_envvar_space(char *dst, char *src, env_vars_t *envp, int32_t *j)
+int32_t	place_envvar_space(char *dst, char *src, t_env_vars *envp, int32_t *j)
 {
 	int32_t	varlen;
 

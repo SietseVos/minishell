@@ -18,7 +18,7 @@ int32_t	exit_status_numblen(int32_t *strlen, int32_t varlen)
 	return (varlen);
 }
 
-int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
+int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, t_env_vars *envp)
 {
 	int32_t	varlen;
 
@@ -46,7 +46,7 @@ int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, env_vars_t *envp)
 	return (varlen);
 }
 
-static int32_t	strlen_til_space(char *str, env_vars_t *envp, int32_t *strlen)
+static int32_t	strlen_til_space(char *str, t_env_vars *envp, int32_t *strlen)
 {
 	int32_t	i;
 
@@ -66,7 +66,7 @@ static int32_t	strlen_til_space(char *str, env_vars_t *envp, int32_t *strlen)
 }
 
 static int32_t	strlen_til_quote(char *str, char c,
-					env_vars_t *envp, int32_t *strlen)
+					t_env_vars *envp, int32_t *strlen)
 {
 	int32_t	i;
 
@@ -84,7 +84,7 @@ static int32_t	strlen_til_quote(char *str, char c,
 	return (i);
 }
 
-void	read_input_str(char *str, int *strlen, env_vars_t *envp)
+void	read_input_str(char *str, int *strlen, t_env_vars *envp)
 {
 	while (*str != '\0' && is_whitespace(*str) == false)
 	{

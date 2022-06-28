@@ -1,10 +1,10 @@
 #include "minishell.h"
 
-action_t	*parse_pipe(char *input, int32_t *i)
+t_action	*parse_pipe(char *input, int32_t *i)
 {
-	action_t	*ret;
+	t_action	*ret;
 
-	ret = malloc(sizeof(action_t));
+	ret = malloc(sizeof(t_action));
 	if (ret == NULL)
 		return (nullerr("failed to malloc pipe node"));
 	ret->type = PIPE;

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:54 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ int32_t	chdir_error(char *str)
  * 
  * @return [-1] If memory allocation fails else [0].
 */
-int32_t	move_pwd_to_oldpwd(env_vars_t *oldpwd_node, \
-		env_vars_t *pwd_node, bool *has_been_null)
+int32_t	move_pwd_to_oldpwd(t_env_vars *oldpwd_node, \
+		t_env_vars *pwd_node, bool *has_been_null)
 {
 	int32_t	oldpwd_size;
 
 	*has_been_null = false;
 	free(oldpwd_node->str);
 	oldpwd_node->str = NULL;
-	oldpwd_size = strlen(pwd_node->str) + old + null;
+	oldpwd_size = strlen(pwd_node->str) + OLD + NULL_TERM;
 	oldpwd_node->str = ft_calloc(oldpwd_size, sizeof(char));
 	if (!oldpwd_node->str)
 		return (-1);
@@ -69,7 +69,7 @@ int32_t	move_pwd_to_oldpwd(env_vars_t *oldpwd_node, \
  * 
  * @return - [0] Success - [-1] Malloc fail -
 */
-int32_t	set_oldpwd(env_vars_t *oldpwd_node)
+int32_t	set_oldpwd(t_env_vars *oldpwd_node)
 {
 	char	*cwd;
 
@@ -96,7 +96,7 @@ int32_t	set_oldpwd(env_vars_t *oldpwd_node)
  * 
  * @return - [0] Success - [-1] Malloc fail -
 */
-int32_t	create_empty_oldpwd(env_vars_t *oldpwd_node, bool *has_been_null)
+int32_t	create_empty_oldpwd(t_env_vars *oldpwd_node, bool *has_been_null)
 {
 	free(oldpwd_node->str);
 	oldpwd_node->str = create_new_cd_str("OLDPWD=", NULL);
@@ -115,7 +115,7 @@ int32_t	create_empty_oldpwd(env_vars_t *oldpwd_node, bool *has_been_null)
  * 
  * @return - [0] Success - [-1] Malloc fail -
 */
-int32_t	create_new_oldpwd_node(env_vars_t **env)
+int32_t	create_new_oldpwd_node(t_env_vars **env)
 {
 	char	*old_pwd;
 

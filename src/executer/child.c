@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:51:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:53:09 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:27 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	exit_and_close_fds(int32_t infile_fd, \
  * 
  * @return Exits
 */
-void	run_child(info_t info, int32_t *fd, int32_t fd_in, bool contains_pipes)
+void	run_child(t_info info, int32_t *fd, int32_t fd_in, bool contains_pipes)
 {
 	int32_t	infile_fd;
 	int32_t	outfile_fd;

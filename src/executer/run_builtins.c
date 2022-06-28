@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:02:35 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:08:17 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:27 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * 
  * @return - [true] builtin found and executed - [false] builtin not found -
 */
-bool	run_if_builtin_child(info_t info) // check if cd or export fails?
+bool	run_if_builtin_child(t_info info) // check if cd or export fails?
 {
 	if (ft_strncmp((*info.action)->arg[0], "cd", 3) == 0)
 		cd(&(*info.action)->arg[1], info.list);
@@ -53,7 +53,7 @@ bool	run_if_builtin_child(info_t info) // check if cd or export fails?
  * @return - [0] no builtins found or builtin ran without issues -
  * [-1] builtin (cd or export) encountered an issue -
 */
-int32_t	run_builtin_no_pipe(action_t **actions, env_vars_t **list)
+int32_t	run_builtin_no_pipe(t_action **actions, t_env_vars **list)
 {
 	int32_t		return_value;
 

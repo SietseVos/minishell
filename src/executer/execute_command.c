@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:51:13 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:51:15 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * 
  * @return - [0] Success - [-1] Malloc / execve failed - 
 */
-int32_t	execute_command(char **arguments, env_vars_t *list)
+int32_t	execute_command(char **arguments, t_env_vars *list)
 {
 	char	*execute_path;
 	char	**env_array;

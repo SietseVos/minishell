@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 21:50:26 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:15:06 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**free_array_till_index(char **array, int32_t index)
  * 
  * @return - [list size] size of the list -
 */
-int32_t	env_list_size(env_vars_t *env_list)
+int32_t	env_list_size(t_env_vars *env_list)
 {
 	int32_t	i;
 
@@ -86,9 +86,9 @@ int32_t	env_list_size(env_vars_t *env_list)
  * 
  * @return - [new array] Success - [NULL] Malloc failed -
 */
-char	**env_list_to_array(env_vars_t *env_list)
+char	**env_list_to_array(t_env_vars *env_list)
 {
-	env_vars_t	*list;
+	t_env_vars	*list;
 	char		**env_array;
 	int32_t		i;
 

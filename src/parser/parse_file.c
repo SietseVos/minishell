@@ -8,11 +8,11 @@ void	skip_operator_space(char *input, int32_t *i)
 		*i += 1;
 }
 
-action_t	*create_filenode(int32_t strlen, int32_t type)
+t_action	*create_filenode(int32_t strlen, int32_t type)
 {
-	action_t	*node;
+	t_action	*node;
 
-	node = malloc(sizeof(action_t));
+	node = malloc(sizeof(t_action));
 	if (node == NULL)
 		return (nullerr("node malloc fail"));
 	node ->arg = malloc(sizeof(char *) * 2);
@@ -34,10 +34,10 @@ action_t	*create_filenode(int32_t strlen, int32_t type)
 	return (node);
 }
 
-action_t	*found_redirect(char *input, int32_t *i,
-				int32_t type, env_vars_t *envp)
+t_action	*found_redirect(char *input, int32_t *i,
+				int32_t type, t_env_vars *envp)
 {
-	action_t	*node;
+	t_action	*node;
 	int32_t		strlen;
 
 	strlen = 0;
@@ -62,9 +62,9 @@ action_t	*found_redirect(char *input, int32_t *i,
 	return (node);
 }
 
-action_t	*parse_file(char *input, int32_t *i, env_vars_t *envp)
+t_action	*parse_file(char *input, int32_t *i, t_env_vars *envp)
 {
-	action_t	*node;
+	t_action	*node;
 
 	node = NULL;
 	if (check_str_end(input, *i, 2) != 2)

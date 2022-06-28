@@ -48,11 +48,11 @@ int32_t	look_for_other_types(char *str)
 	return (TOSTDOUT);
 }
 
-action_t	*create_cmdnode(int32_t arrlen)
+t_action	*create_cmdnode(int32_t arrlen)
 {
-	action_t	*node;
+	t_action	*node;
 
-	node = malloc(sizeof(action_t));
+	node = malloc(sizeof(t_action));
 	if (node == NULL)
 		return (nullerr("node malloc failure"));
 	node ->arg = malloc(sizeof(char *) * (arrlen + 1));
@@ -65,7 +65,7 @@ action_t	*create_cmdnode(int32_t arrlen)
 	return (node);
 }
 
-action_t	*arg_malloc_fail(action_t *node, int32_t j)
+t_action	*arg_malloc_fail(t_action *node, int32_t j)
 {
 	j--;
 	while (j >= 0)
@@ -79,9 +79,9 @@ action_t	*arg_malloc_fail(action_t *node, int32_t j)
 	return (nullerr("failed to malloc argstring"));
 }
 
-action_t	*parse_cmd(char *input, int32_t *i, env_vars_t *envp)
+t_action	*parse_cmd(char *input, int32_t *i, t_env_vars *envp)
 {
-	action_t	*node;
+	t_action	*node;
 	int32_t		strlen;
 	int32_t		cmdarrlen;
 	int32_t		j;

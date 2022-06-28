@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static bool	init_vars_main(char **envp, env_vars_t **env, int argc, char **argv)
+static bool	init_vars_main(char **envp, t_env_vars **env, int argc, char **argv)
 {
 	(void)	argc;
 	(void)	argv;
@@ -30,10 +30,10 @@ static char	*get_input(char *input)
 
 int32_t	main(int32_t argc, char **argv, char **envp)
 {
-	heredoc_t	*hdoc_files;
-	action_t	*actions;
+	t_heredoc	*hdoc_files;
+	t_action	*actions;
 	char		*input;
-	env_vars_t	*env;
+	t_env_vars	*env;
 
 	env = NULL;
 	input = NULL;

@@ -6,13 +6,13 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:39 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:59:58 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:49:45 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	access_error(action_t *action)
+static bool	access_error(t_action *action)
 {
 	while (action && action->type != PIPE)
 	{
@@ -38,7 +38,7 @@ static bool	access_error(action_t *action)
 	return (false);
 }
 
-int32_t	get_infile_fd(action_t	*action)
+int32_t	get_infile_fd(t_action	*action)
 {
 	int32_t	fd;
 

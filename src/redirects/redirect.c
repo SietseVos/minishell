@@ -6,13 +6,13 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:46 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:04:46 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:49:45 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int32_t	dup_correct_fd(int32_t (file_function)(action_t *), action_t *actions, int32_t direction)
+static int32_t	dup_correct_fd(int32_t (file_function)(t_action *), t_action *actions, int32_t direction)
 {
 	int32_t	fd;
 
@@ -49,7 +49,7 @@ void	reset_redirections(int32_t in_fd, int32_t out_fd)
 	}
 }
 
-int32_t	set_redirections(action_t *actions, int32_t *in_fd, int32_t *out_fd)
+int32_t	set_redirections(t_action *actions, int32_t *in_fd, int32_t *out_fd)
 {
 	*in_fd = dup_correct_fd(get_infile_fd, actions, STDIN_FILENO);
 	if (*in_fd == -1)

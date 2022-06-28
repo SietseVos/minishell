@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-bool	check_ambigu(char *input, int32_t i, env_vars_t *envp, char c)
+bool	check_ambigu(char *input, int32_t i, t_env_vars *envp, char c)
 {
 	int32_t	len;
 
@@ -25,7 +25,7 @@ bool	check_ambigu(char *input, int32_t i, env_vars_t *envp, char c)
 	return (false);
 }
 
-bool	ambigu_redirect(char *input, int32_t i, env_vars_t *envp)
+bool	ambigu_redirect(char *input, int32_t i, t_env_vars *envp)
 {
 	skip_operator_space(input, &i);
 	if (input[i] != '"' && input[i] != '\'' && input[i] != '$')
@@ -39,11 +39,11 @@ bool	ambigu_redirect(char *input, int32_t i, env_vars_t *envp)
 	return (false);
 }
 
-action_t	*create_ambigu_node(int32_t size)
+t_action	*create_ambigu_node(int32_t size)
 {
-	action_t	*ret;
+	t_action	*ret;
 
-	ret = malloc(sizeof(action_t));
+	ret = malloc(sizeof(t_action));
 	if (ret == NULL)
 		return (NULL);
 	ret->arg = malloc(sizeof(char *) * 2);
@@ -64,11 +64,11 @@ action_t	*create_ambigu_node(int32_t size)
 	return (ret);
 }
 
-action_t	*found_ambigu(char *input, int32_t *i)
+t_action	*found_ambigu(char *input, int32_t *i)
 {
 	int32_t		len;
 	int32_t		j;
-	action_t	*ret;
+	t_action	*ret;
 
 	j = 0;
 	skip_operator_space(input, i);

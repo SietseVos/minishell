@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:20:58 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
  * 
  * @return N/A
 */
-static void	remove_from_list(char *arg, env_vars_t **list)
+static void	remove_from_list(char *arg, t_env_vars **list)
 {
-	env_vars_t	*pre;
-	env_vars_t	*tmp;
-	env_vars_t	*next;
+	t_env_vars	*pre;
+	t_env_vars	*tmp;
+	t_env_vars	*next;
 	int32_t		i;
 
 	i = 0;
@@ -85,7 +85,7 @@ static bool	check_unset_error(char *str)
  * 
  * @return N/A
 */
-void	unset(char **arg, env_vars_t **list)
+void	unset(char **arg, t_env_vars **list)
 {
 	int32_t	error;
 	int32_t	i;

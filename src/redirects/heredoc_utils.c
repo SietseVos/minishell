@@ -6,13 +6,13 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 18:10:23 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:29:31 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int32_t	get_total_str_len(char *input, env_vars_t *env)
+static int32_t	get_total_str_len(char *input, t_env_vars *env)
 {
 	int32_t	len;
 	int32_t	i;
@@ -32,7 +32,7 @@ static int32_t	get_total_str_len(char *input, env_vars_t *env)
 	return (len);
 }
 
-int32_t	expand_heredoc(char **input, int32_t type, env_vars_t *env)
+int32_t	expand_heredoc(char **input, int32_t type, t_env_vars *env)
 {
 	char	*new_str;
 	int32_t	i;

@@ -6,13 +6,13 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/27 14:33:12 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-action_t	*determine_kind(char *input, int32_t *i, env_vars_t *envp)
+t_action	*determine_kind(char *input, int32_t *i, t_env_vars *envp)
 {
 	if (input[*i] == '|')
 		return (parse_pipe(input, i));
@@ -34,9 +34,9 @@ void	free_chararr(char **tofree)
 	free(tofree);
 }
 
-action_t	*action_node_fail(action_t *tofree)
+t_action	*action_node_fail(t_action *tofree)
 {
-	action_t	*temp;
+	t_action	*temp;
 
 	temp = tofree;
 	while (tofree)
@@ -49,11 +49,11 @@ action_t	*action_node_fail(action_t *tofree)
 	return (nullerr("failed to make next node"));
 }
 
-action_t	*parser(char *input, env_vars_t *envp)
+t_action	*parser(char *input, t_env_vars *envp)
 {
 	int32_t		i;
-	action_t	*ret;
-	action_t	*lst;
+	t_action	*ret;
+	t_action	*lst;
 
 	i = 0;
 	while (is_whitespace(input[i]) == true)

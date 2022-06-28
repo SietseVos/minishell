@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 21:20:52 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 21:22:05 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:49:45 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * 
  * @return N/A
 */
-void	pop_nodes_till_command(action_t **actions)
+void	pop_nodes_till_command(t_action **actions)
 {
 	while (actions && (*actions) && (*actions)->type != TOSTDOUT)
 		pop_action_node(actions);
@@ -34,7 +34,7 @@ void	pop_nodes_till_command(action_t **actions)
  * 
  * @return N/A
 */
-void	set_actions_next_pipe(action_t **actions)
+void	set_actions_next_pipe(t_action **actions)
 {
 	while (actions && *actions && (*actions)->type != PIPE)
 		pop_action_node(actions);
@@ -49,7 +49,7 @@ void	set_actions_next_pipe(action_t **actions)
  * 
  * @return - [true] if there are pipes - [false] if there are no pipes -
 */
-bool	contains_pipes(action_t *actions)
+bool	contains_pipes(t_action *actions)
 {
 	while (actions)
 	{
@@ -68,7 +68,7 @@ bool	contains_pipes(action_t *actions)
  * @return - [true] If there are only builtins - [false] if there is more
  * then only builtins -
 */
-bool	actions_only_builtins(action_t *actions)
+bool	actions_only_builtins(t_action *actions)
 {
 	while (actions && actions->type != PIPE)
 	{

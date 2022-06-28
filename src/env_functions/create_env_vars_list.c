@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 21:49:43 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:17:21 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
  *
  * @return - [new] Pointer to the newly created node - [NULL] Malloc failed -
 */
-static env_vars_t	*new_env_node(char *envp)
+static t_env_vars	*new_env_node(char *envp)
 {
-	env_vars_t	*new;
+	t_env_vars	*new;
 
-	new = malloc(sizeof(env_vars_t));
+	new = malloc(sizeof(t_env_vars));
 	if (!new)
 		return (NULL);
 	new->str = ft_strdup(envp);
@@ -48,10 +48,10 @@ static env_vars_t	*new_env_node(char *envp)
  *
  * @return - [true] Success - [false] Malloc failed - 
 */
-bool	create_env_vars_list(char **envp, env_vars_t **env_head)
+bool	create_env_vars_list(char **envp, t_env_vars **env_head)
 {
-	env_vars_t	*tmp;
-	env_vars_t	*new;
+	t_env_vars	*tmp;
+	t_env_vars	*new;
 	int32_t		i;
 
 	i = 0;

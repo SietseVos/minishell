@@ -44,7 +44,7 @@ int32_t	close_free_and_return(int32_t fd, char *str1, \
 }
 
 static int32_t	run_heredoc(const char *heredoc_path, \
-						char *delimiter, int32_t type, env_vars_t *env)
+						char *delimiter, int32_t type, t_env_vars *env)
 {
 	int32_t	fd;
 	char	*in;
@@ -84,9 +84,9 @@ static int32_t	run_heredoc(const char *heredoc_path, \
 	return (0);
 }
 
-void	remove_heredoc_files(heredoc_t **files)
+void	remove_heredoc_files(t_heredoc **files)
 {
-	heredoc_t	*next;
+	t_heredoc	*next;
 
 	if (!files || !*files)
 		return ;
@@ -103,7 +103,7 @@ void	remove_heredoc_files(heredoc_t **files)
 	}
 }
 
-int32_t	heredoc(action_t *actions, heredoc_t **file_paths, env_vars_t *env)
+int32_t	heredoc(t_action *actions, t_heredoc **file_paths, t_env_vars *env)
 {
 	char	*delimiter;
 

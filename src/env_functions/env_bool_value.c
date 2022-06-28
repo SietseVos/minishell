@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 21:50:11 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/27 20:15:54 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * 
  * @return N/A
 */
-void	set_env_node_hasvalue(env_vars_t *env)
+void	set_env_node_hasvalue(t_env_vars *env)
 {
 	int32_t	i;
 
@@ -45,7 +45,7 @@ void	set_env_node_hasvalue(env_vars_t *env)
  * 
  * @return N/A
 */
-void	set_env_list_bool_value(env_vars_t *env)
+void	set_env_list_bool_value(t_env_vars *env)
 {
 	while (env)
 	{

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:41:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*create_new_cd_str(char *var, char *pwd)
 
 	strlen_pwd = ft_strlen(pwd);
 	strlen_var = ft_strlen(var);
-	new_str_size = strlen_pwd + strlen_var + null;
+	new_str_size = strlen_pwd + strlen_var + NULL_TERM;
 	new = ft_calloc(new_str_size, sizeof(char));
 	if (!new)
 		return (NULL);
@@ -50,9 +50,9 @@ char	*create_new_cd_str(char *var, char *pwd)
  * @return - [0] Success - [1] PWD node does not exist - 
  * [-1] Malloc fail -
 */
-static int32_t	change_pwd_path(env_vars_t *env)
+static int32_t	change_pwd_path(t_env_vars *env)
 {
-	env_vars_t	*path;
+	t_env_vars	*path;
 	char		*new_pwd;
 	char		*pwd;
 
@@ -87,10 +87,10 @@ static int32_t	change_pwd_path(env_vars_t *env)
  * 
  * @return - [0] Success - [-1] Malloc fail -
 */
-static int32_t	change_old_pwd_path(env_vars_t *env, bool *has_been_null)
+static int32_t	change_old_pwd_path(t_env_vars *env, bool *has_been_null)
 {
-	env_vars_t	*oldpwd_node;
-	env_vars_t	*pwd_node;
+	t_env_vars	*oldpwd_node;
+	t_env_vars	*pwd_node;
 
 	oldpwd_node = get_variable_node(env, "OLDPWD");
 	pwd_node = get_variable_node(env, "PWD");
@@ -125,9 +125,9 @@ static int32_t	change_old_pwd_path(env_vars_t *env, bool *has_been_null)
  * 
  * @return - [0] Success - [-1] Malloc fail -
 */
-static int32_t	first_cd_call(bool *start_of_program, env_vars_t **env)
+static int32_t	first_cd_call(bool *start_of_program, t_env_vars **env)
 {
-	env_vars_t	*oldpwd_node;
+	t_env_vars	*oldpwd_node;
 
 	oldpwd_node = get_variable_node(*env, "OLDPWD");
 	if (*start_of_program == false)
@@ -161,11 +161,11 @@ static int32_t	first_cd_call(bool *start_of_program, env_vars_t **env)
  * @return - [0] Success - [1] Function could not succeed - 
  *[-1] Malloc fail -
 */
-int32_t	cd(char **argument, env_vars_t **env)
+int32_t	cd(char **argument, t_env_vars **env)
 {
 	static bool	has_been_null = false;
 	static bool	start_of_program = true;
-	env_vars_t	*home_path;
+	t_env_vars	*home_path;
 
 	if (!*argument || argument[0][0] == '\0')
 	{
