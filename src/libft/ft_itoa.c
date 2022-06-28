@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:11:02 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:25:28 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 18:51:23 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*putnbr(char *ret, long n, int32_t count)
 
 char	*ft_itoa(int32_t n)
 {
-	int32_t		count;
+	int32_t	count;
 	char	*ret;
 	long	nr;
 

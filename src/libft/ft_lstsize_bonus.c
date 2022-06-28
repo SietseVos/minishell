@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:12:26 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:12:40 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 18:51:38 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int32_t	ft_lstsize(t_list *lst)
 {
-	int32_t		count;
+	int32_t	count;
 	t_list	*point;
 
 	count = 0;

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:13:50 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:25:47 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 18:52:54 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strrchr(const char *s, int32_t c)
 {
 	unsigned char	t;
-	int32_t				i;
+	int32_t			i;
 
 	t = c;
 	i = 0;

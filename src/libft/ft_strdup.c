@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:13:22 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:25:41 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 18:52:22 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strdup(const char *s1)
 {
-	int32_t		i;
+	int32_t	i;
 	char	*ret;
 
 	i = 0;

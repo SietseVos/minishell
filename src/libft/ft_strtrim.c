@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:13:53 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:25:47 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 18:53:06 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*place_string(char *str, const char *s1, const char *set, int32_t len)
 
 char	*ft_strtrim(const char *s1, const char *set)
 {
-	int32_t		len;
+	int32_t	len;
 	char	*ret;
 
 	len = get_length(s1, set);

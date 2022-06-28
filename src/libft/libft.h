@@ -2,8 +2,8 @@
 # define LIBFT_H
 # include <stdlib.h>
 
-#define uint32_t u_int32_t
-#define int32_t int
+// #define uint32_t u_int32_t linux stuff
+// #define int32_t int
 
 typedef struct s_list
 {

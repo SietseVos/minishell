@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:13:15 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:25:39 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 18:52:08 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*putstr(const char *s, char c)
 {
-	int32_t		count;
+	int32_t	count;
 	char	*ret;
 
 	count = 0;
@@ -83,7 +83,7 @@ static void	putwords(char **ret, int32_t count, const char *s, char c)
 
 char	**ft_split(const char *s, char c)
 {
-	int32_t		count;
+	int32_t	count;
 	char	**ret;
 
 	count = countw(s, c);

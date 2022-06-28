@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:10:28 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:25:14 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 18:51:11 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ptr;
-	int32_t		fill;
+	int32_t	fill;
 
 	if (count == 0)
 		count = 1;

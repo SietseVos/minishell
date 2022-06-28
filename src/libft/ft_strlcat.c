@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:13:30 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:25:43 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 18:52:42 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t	len;
-	int32_t		size;
-	int32_t		ret;
+	int32_t	size;
+	int32_t	ret;
 
 	ret = ft_strlen(dst) + ft_strlen(src);
 	if (dstsize < ft_strlen(dst))
