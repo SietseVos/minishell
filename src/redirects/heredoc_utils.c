@@ -6,12 +6,22 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 18:10:23 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 21:31:12 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * Function to get the total string length of the string
+ * after environment variable expansion.
+ * 
+ * @param input Pointer to the string that has environment variable(s).
+ * 
+ * @param env Pointer to the environment variable list.
+ * 
+ * @return - [len] length of the total string after expansion -
+*/
 static int32_t	get_total_str_len(char *input, t_env_vars *env)
 {
 	int32_t	len;
@@ -32,6 +42,20 @@ static int32_t	get_total_str_len(char *input, t_env_vars *env)
 	return (len);
 }
 
+/**
+ * Function to expand the input line of the heredoc
+ * with the environment variables.
+ * 
+ * @param input Double char pointer to the pointer containing the
+ * input from the heredoc.
+ * 
+ * @param type The type of heredoc 
+ * (if it has quotes/should be expanded or not).
+ * 
+ * @param env Pointer to the environment variable list.
+ * 
+ * @return - [0] success - [-1] mallloc failed -
+*/
 int32_t	expand_heredoc(char **input, int32_t type, t_env_vars *env)
 {
 	char	*new_str;

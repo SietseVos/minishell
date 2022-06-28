@@ -1,22 +1,3 @@
 	*	ctrl c inside heredoc runs, double check with more testing
+	*	ctrl c inside definetly broken ahaHAAAAAAAA
 	*	check for leaks inside increment shell level? cant find em
-
-Use for writing to stderr??
-{
-	void func(char *string[]);
-
-	func((char *[]){"functon failed: ", test, "lkj"});
-}
-
-export hi="ls"
-$hi
-in Arguments:
--"ls"-
-should be -ls-
-
-echo "'"ls"'"
--echo-
--'ls"'"-
-'ls"'"
-
-ls				-la

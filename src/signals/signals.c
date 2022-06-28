@@ -36,6 +36,7 @@ void	sig_c_outside_fork(int32_t sig)
 void	heredoc_handler(int32_t sig)
 {
 	(void)	sig;
+	printf("\n");
 	kill(g_info.heredoc_pid, SIGTERM);
 	g_info.heredoc_breakout = true;
 	g_info.exit_status = 1;
@@ -43,11 +44,11 @@ void	heredoc_handler(int32_t sig)
 
 void	init_signals(void)
 {
-	struct termios t;
+	// struct termios t; makes line overwrite itself???????
 
-	tcgetattr(STDIN_FILENO, &t);
-	t.c_lflag &= ~(ECHOCTL);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &t);
+	// tcgetattr(STDIN_FILENO, &t);
+	// t.c_lflag &= ~(ECHOCTL);
+	// tcsetattr(STDIN_FILENO, TCSAFLUSH, &t);
 	signal(SIGINT, handle_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 }

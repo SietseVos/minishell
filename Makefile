@@ -100,7 +100,7 @@ $(OBJ_DIR):
 
 clean:
 	make clean -C src/libft
-	rm -rf /tmp/.tmp_heredoc*
+	rm -rf /tmp/.minishell_heredoc*
 	rm -rf $(OBJ_DIR)
 
 fclean: clean

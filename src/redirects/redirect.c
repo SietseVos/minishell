@@ -6,13 +6,14 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:46 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:49:45 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/28 22:13:47 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int32_t	dup_correct_fd(int32_t (file_function)(t_action *), t_action *actions, int32_t direction)
+static int32_t	dup_correct_fd(int32_t (file_function)(t_action *), \
+									t_action *actions, int32_t direction)
 {
 	int32_t	fd;
 
