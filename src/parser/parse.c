@@ -3,15 +3,23 @@
 /*                                                        ::::::::            */
 /*   parse.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/05/24 15:01:01 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Created: 2022/06/29 10:07:34 by svos          #+#    #+#                 */
+/*   Updated: 2022/06/29 11:01:01 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief decide whether the program needs to make a pipe, file, or command node
+ * 
+ * @param input - input string
+ * @param i - pointer to string iterater
+ * @param envp - environment variables
+ * @return t_action* - a pearl to be joined to a neckles
+ */
 t_action	*determine_kind(char *input, int32_t *i, t_env_vars *envp)
 {
 	if (input[*i] == '|')
@@ -21,6 +29,11 @@ t_action	*determine_kind(char *input, int32_t *i, t_env_vars *envp)
 	return (parse_cmd(input, i, envp));
 }
 
+/**
+ * @brief free a array of strings
+ * 
+ * @param tofree - string array that needs to be freed
+ */
 void	free_chararr(char **tofree)
 {
 	int	i;
@@ -34,6 +47,12 @@ void	free_chararr(char **tofree)
 	free(tofree);
 }
 
+/**
+ * @brief free previous nodes if something goes wrong
+ * 
+ * @param tofree - the list that needs to be freed
+ * @return t_action* - an errorous NULL
+ */
 t_action	*action_node_fail(t_action *tofree)
 {
 	t_action	*temp;
@@ -49,6 +68,13 @@ t_action	*action_node_fail(t_action *tofree)
 	return (nullerr("failed to make next node"));
 }
 
+/**
+ * @brief This is where the great parsing adventure begins
+ * 
+ * @param input - string pre-chewed by lexer
+ * @param envp - environment variables
+ * @return t_action* - list with all the actions
+ */
 t_action	*parser(char *input, t_env_vars *envp)
 {
 	int32_t		i;

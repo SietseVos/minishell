@@ -1,5 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   merge_nodes.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/29 10:07:50 by svos          #+#    #+#                 */
+/*   Updated: 2022/06/29 14:05:58 by svos          ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
+/**
+ * @brief - count how many strings a string array has
+ * 
+ * @param arr - the array to be counted
+ * @return int32_t - the amount of strings
+ */
 int32_t	count_strings(char **arr)
 {
 	int32_t	count;
@@ -13,6 +31,15 @@ int32_t	count_strings(char **arr)
 	return (count);
 }
 
+/**
+ * @brief - duplicate the arrays to the return array
+ * 
+ * @param ret - the final return array
+ * @param arr1 - array 1
+ * @param arr2 - array  2
+ * @return true - function successfull
+ * @return false - function not successfull
+ */
 bool	dup_strs_to_chararr(char **ret, char **arr1, char **arr2)
 {
 	int32_t	i;
@@ -39,6 +66,13 @@ bool	dup_strs_to_chararr(char **ret, char **arr1, char **arr2)
 	return (true);
 }
 
+/**
+ * @brief - join two string arrays
+ * 
+ * @param arr1 - array 1
+ * @param arr2 - array 2
+ * @return char** - joined array
+ */
 char	**join_chararrs(char **arr1, char **arr2)
 {
 	int32_t	strcount;
@@ -56,6 +90,15 @@ char	**join_chararrs(char **arr1, char **arr2)
 	return (ret);
 }
 
+/**
+ * @brief - merge two nodes
+ * 
+ * @param dst - destination node
+ * @param src - node that will be put in dst and after that removed
+ * @param prevnextptr - the next pointer of the previous node
+ * @return true - merge successfull
+ * @return false - something blew up
+ */
 bool	merge_nodes(t_action *dst, t_action **src, t_action **prevnextptr)
 {
 	char		**fragdst;

@@ -1,5 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   read_from_str.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/29 10:08:46 by svos          #+#    #+#                 */
+/*   Updated: 2022/06/29 14:11:23 by svos          ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
+/**
+ * @brief - get the stringlength of the exit status
+ * 
+ * @param strlen - pointer to the total stringlength
+ * @param varlen - length of the uninterperted variable
+ * 					(in this function always 2)
+ * @return int32_t - see varlen
+ */
 int32_t	exit_status_numblen(int32_t *strlen, int32_t varlen)
 {
 	int32_t	cpy;
@@ -18,6 +38,15 @@ int32_t	exit_status_numblen(int32_t *strlen, int32_t varlen)
 	return (varlen);
 }
 
+/**
+ * @brief - get the stinglength of a environment variable
+ * 
+ * @param str - input string pointing to a $
+ * @param c - singel or double quote
+ * @param strlen - pointer to the total stringlength
+ * @param envp - environment variables
+ * @return int32_t - the stringlength of a uninterperted enviroment variable
+ */
 int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, t_env_vars *envp)
 {
 	int32_t	varlen;
@@ -46,6 +75,14 @@ int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, t_env_vars *envp)
 	return (varlen);
 }
 
+/**
+ * @brief get the length of a sting until a whitespace is found
+ * 
+ * @param str - input string
+ * @param envp - environment variables
+ * @param strlen - pointer to the stinglength
+ * @return int32_t 
+ */
 static int32_t	strlen_til_space(char *str, t_env_vars *envp, int32_t *strlen)
 {
 	int32_t	i;
@@ -65,6 +102,15 @@ static int32_t	strlen_til_space(char *str, t_env_vars *envp, int32_t *strlen)
 	return (i);
 }
 
+/**
+ * @brief get the length of a sting until a quote is found
+ * 
+ * @param str - input string
+ * @param c - single or double quote
+ * @param envp - environment variables
+ * @param strlen - pointer to the stinglength
+ * @return int32_t 
+ */
 static int32_t	strlen_til_quote(char *str, char c,
 					t_env_vars *envp, int32_t *strlen)
 {
@@ -84,6 +130,13 @@ static int32_t	strlen_til_quote(char *str, char c,
 	return (i);
 }
 
+/**
+ * @brief - read the length of an argument
+ * 
+ * @param str - input string
+ * @param strlen - pionter to the stringlength
+ * @param envp - environment variables
+ */
 void	read_input_str(char *str, int *strlen, t_env_vars *envp)
 {
 	while (*str != '\0' && is_whitespace(*str) == false)

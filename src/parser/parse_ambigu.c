@@ -1,5 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   parse_ambigu.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/29 10:08:00 by svos          #+#    #+#                 */
+/*   Updated: 2022/06/29 12:45:15 by svos          ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
+/**
+ * @brief - check if the string has a amiguous variable  
+ * 
+ * @param input - the input string
+ * @param i - the index of the input string iterater
+ * @param envp - environment variables
+ * @param c - a single or double quote or a space
+ * @return true - found ambiguous node
+ * @return false - nothing suspicuos found
+ */
 bool	check_ambigu(char *input, int32_t i, t_env_vars *envp, char c)
 {
 	int32_t	len;
@@ -25,6 +47,15 @@ bool	check_ambigu(char *input, int32_t i, t_env_vars *envp, char c)
 	return (false);
 }
 
+/**
+ * @brief - check the possbility of a ambiguous redirect
+ * 
+ * @param input - the input string
+ * @param i - the input string index
+ * @param envp - environment variables
+ * @return true - found ambiguous variable
+ * @return false - nothing suspicious found
+ */
 bool	ambigu_redirect(char *input, int32_t i, t_env_vars *envp)
 {
 	skip_operator_space(input, &i);
@@ -39,6 +70,12 @@ bool	ambigu_redirect(char *input, int32_t i, t_env_vars *envp)
 	return (false);
 }
 
+/**
+ * @brief - initialize the ambiguous node
+ * 
+ * @param size - the size of the string in argument
+ * @return t_action* - the initialized ambiguous node
+ */
 t_action	*create_ambigu_node(int32_t size)
 {
 	t_action	*ret;
@@ -64,6 +101,13 @@ t_action	*create_ambigu_node(int32_t size)
 	return (ret);
 }
 
+/**
+ * @brief - make an amibuous node
+ * 
+ * @param input - the input string
+ * @param i - a pointer to the input string iterater
+ * @return t_action* - the amiguous node
+ */
 t_action	*found_ambigu(char *input, int32_t *i)
 {
 	int32_t		len;
