@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/29 16:56:19 by svos          #+#    #+#                 */
+/*   Updated: 2022/06/29 16:56:20 by svos          ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static bool	init_vars_main(char **envp, t_env_vars **env, int argc, char **argv)
 {
-	(void)	argc;
-	(void)	argv;
+	(void) argc;
+	(void) argv;
 	g_info.exit_status = 0;
 	using_history();
 	return (create_env_vars_list(envp, env));
@@ -11,7 +23,7 @@ static bool	init_vars_main(char **envp, t_env_vars **env, int argc, char **argv)
 
 static char	*get_input(char *input)
 {
-	const char prompt[] = "\001\033[1;31m\002Minihell>\001\033[0m\002 ";
+	const char	prompt[] = "\001\033[1;31m\002Minihell>\001\033[0m\002 ";
 
 	while (1)
 	{
@@ -35,15 +47,11 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	char		*input;
 	t_env_vars	*env;
 
-	env = NULL;
 	input = NULL;
-	actions = NULL;
-	hdoc_files = NULL;
 	if (init_vars_main(envp, &env, argc, argv) == false)
 		return (1);
 	while (1)
 	{
-		// printf("Current exit status: %d\n", g_info.exit_status);
 		init_signals();
 		remove_heredoc_files(&hdoc_files);
 		free_action_list(&actions);
@@ -56,7 +64,9 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		if (heredoc(actions, &hdoc_files, env) == -1)
 			continue ;
 		executer(&actions, &env);
-		// system("leaks minishell");
 	}
 	return (0);
 }
+
+		// system("leaks minishell");
+		// printf("Current exit status: %d\n", g_info.exit_status);
