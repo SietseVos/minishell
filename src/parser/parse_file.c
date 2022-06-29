@@ -1,5 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   parse_file.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/06/29 10:08:12 by svos          #+#    #+#                 */
+/*   Updated: 2022/06/29 14:12:35 by svos          ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
+/**
+ * @brief - skip the operator and the whitespace that comes after that
+ * 
+ * @param input - the input string
+ * @param i - a pointer to the input string iterater
+ */
 void	skip_operator_space(char *input, int32_t *i)
 {
 	while (is_whitespace(input[*i]) == false)
@@ -8,6 +26,13 @@ void	skip_operator_space(char *input, int32_t *i)
 		*i += 1;
 }
 
+/**
+ * @brief - initialize a file node
+ * 
+ * @param strlen - the length of the string
+ * @param type - the type of the node 
+ * @return t_action* 
+ */
 t_action	*create_filenode(int32_t strlen, int32_t type)
 {
 	t_action	*node;
@@ -34,6 +59,15 @@ t_action	*create_filenode(int32_t strlen, int32_t type)
 	return (node);
 }
 
+/**
+ * @brief - make the propper redirect node
+ * 
+ * @param input - the input string
+ * @param i - a pointer to the input iterater
+ * @param type - the type that the node needs to be
+ * @param envp - evironment variables
+ * @return t_action* 
+ */
 t_action	*found_redirect(char *input, int32_t *i,
 				int32_t type, t_env_vars *envp)
 {
@@ -62,6 +96,14 @@ t_action	*found_redirect(char *input, int32_t *i,
 	return (node);
 }
 
+/**
+ * @brief - choose wich type the file node will be
+ * 
+ * @param input - the input string pre-chewed by the lexer
+ * @param i - a pointer to the input iterater
+ * @param envp - evironment varialbes
+ * @return t_action* 
+ */
 t_action	*parse_file(char *input, int32_t *i, t_env_vars *envp)
 {
 	t_action	*node;

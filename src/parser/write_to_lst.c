@@ -6,12 +6,22 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/24 15:05:47 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/29 14:10:44 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief copy until a single of double quote is found
+ * 
+ * @param dst - destination string (User has to make sure that
+ * 				there's enough memory allocoted)
+ * @param src - source string
+ * @param i - pointer to source iterater
+ * @param envp - environment variables
+ * @return int32_t - stringlength of the copied string
+ */
 static int32_t	copy_til_quote(char *dst, char *src,
 					int32_t *i, t_env_vars *envp)
 {
@@ -37,6 +47,16 @@ static int32_t	copy_til_quote(char *dst, char *src,
 	return (j);
 }
 
+/**
+ * @brief - copy until a whitespace is found
+ * 
+ * @param dst - destination string (User has to make sure that
+ * 				there's enough memory allocoted)
+ * @param src - source string
+ * @param i - pointer to source iterater
+ * @param envp - environment variables
+ * @return int32_t - stringlength of the copied string
+ */
 static int32_t	copy_til_space(char *dst, char *src,
 					int32_t *i, t_env_vars *envp)
 {
@@ -58,6 +78,16 @@ static int32_t	copy_til_space(char *dst, char *src,
 	return (j);
 }
 
+/**
+ * @brief - place a sting in a node
+ * 
+ * @param dst - destination string (User has to make sure
+ * 				that there's enough memory allocoted)
+ * @param src - source string
+ * @param i - pointer to source iterater
+ * @param envp - environment variables
+ * @return * void 
+ */
 void	place_str_in_node(char *dst, char *src, int32_t *i, t_env_vars *envp)
 {
 	int	j;
