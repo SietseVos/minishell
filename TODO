@@ -3,4 +3,3 @@
 
 	ctrl c when more shells are active
 	print exit on ctrl d
-	delimiter heredoc leaks?
