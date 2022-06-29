@@ -6,12 +6,28 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:46 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 22:13:47 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/29 16:51:42 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * This function uses the given file function to get an fd and then
+ * proceeds to dup that file descriptor to direction.
+ * 
+ * @param file_function Function to get an fd.
+ * 
+ * @param actions Pointer to the actions list.
+ * 
+ * @param direction The file descriptor which will be replaced
+ * by the fd recieved from file_function.
+ * 
+ * @return - [fd] the file descriptor dup2'd to direction -
+ * [-2] no file descriptor recieved from file_function -
+ * [-1] file function failed -
+ * [exit] close / dup2 failed - 
+*/
 static int32_t	dup_correct_fd(int32_t (file_function)(t_action *), \
 									t_action *actions, int32_t direction)
 {
@@ -29,6 +45,15 @@ static int32_t	dup_correct_fd(int32_t (file_function)(t_action *), \
 	return (fd);
 }
 
+/**
+ * This function resets the STDIN and STDOUT back to STDERR.
+ * 
+ * @param in_fd The fd currently used as STDIN.
+ * 
+ * @param out_fd The fd currently used as STDOUT.
+ * 
+ * @return - N/A - [exit] close / dup2 failed -
+*/
 void	reset_redirections(int32_t in_fd, int32_t out_fd)
 {
 	if (in_fd > 0)
@@ -50,6 +75,19 @@ void	reset_redirections(int32_t in_fd, int32_t out_fd)
 	}
 }
 
+/**
+ * This function is used to set the STDIN and STDOUT to the
+ * corresponding redirects.
+ * 
+ * @param actions Pointer to the actions list.
+ * 
+ * @param in_fd Pointer to the int where the new STDIN will be set to.
+ * 
+ * @param out_fd Pointer to the int where the new STDOUT will be set to.
+ * 
+ * @return - [0] success - [-1] could get_file function failed -
+ * [exit] close / dup2 failed -
+*/
 int32_t	set_redirections(t_action *actions, int32_t *in_fd, int32_t *out_fd)
 {
 	*in_fd = dup_correct_fd(get_infile_fd, actions, STDIN_FILENO);
