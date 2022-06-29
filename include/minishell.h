@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:57:07 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/29 14:55:15 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,9 @@ void			run_child(t_info info, int32_t *fd, \
 							int32_t fd_in, bool contains_pipes);
 bool			run_if_builtin_child(t_info info);
 int32_t			run_builtin_no_pipe(t_action **actions, t_env_vars **list);
+int32_t			close_fds_and_return(int32_t *pipe_fds, int32_t fd_in);
+void			close_fds_run_with_pipes(bool close_pipe, int32_t fd_in, \
+													int32_t *pipe_fds);
 
 /* ----------------------------------------------------------------------- */
 

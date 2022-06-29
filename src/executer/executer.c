@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/23 15:51:59 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:27 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/29 14:52:28 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,26 +81,6 @@ static int32_t	run_no_pipes(t_action **actions, t_env_vars **list)
 }
 
 /**
- * Function that can be used to close the given pipe and file descriptor.
- * 
- * @param pipe_fds Pointer to the array cointaining fds from a single pipe.
- * 
- * @param fd_in Integer containing the file descriptor used as infile.
- * 
- * @return - [-1] -
-*/
-static int32_t	close_fds_and_return(int32_t *pipe_fds, int32_t fd_in)
-{
-	if (close(pipe_fds[0]) == -1)
-		exit_with_error_message("close failed\n", NULL, NULL, 1);
-	if (close(pipe_fds[1]) == -1)
-		exit_with_error_message("close failed\n", NULL, NULL, 1);
-	if (close(fd_in) == -1)
-		exit_with_error_message("close failed\n", NULL, NULL, 1);
-	return (-1);
-}
-
-/**
  * Function to run all actions within pipes.
  * Uses recursion to execute all actions behind each other
  * without waiting for one to finish.
@@ -130,13 +110,7 @@ static int32_t	run_with_pipes(t_info info, int32_t fd_in)
 	}
 	else if (fork_pid == 0)
 		run_child(info, pipe_fds, fd_in, has_pipes);
-	if (fd_in > 0)
-	{
-		if (close(fd_in) == -1)
-			exit_with_error_message("close failed\n", NULL, NULL, 1);
-	}
-	if (close(pipe_fds[PIPE_WRITE]) == -1)
-		exit_with_error_message("close failed\n", NULL, NULL, 1);
+	close_fds_run_with_pipes(has_pipes, fd_in, pipe_fds);
 	if (save_pid(fork_pid) == -1)
 		return (-1);
 	set_actions_next_pipe(info.action);
