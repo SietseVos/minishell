@@ -44,11 +44,11 @@ void	heredoc_handler(int32_t sig)
 
 void	init_signals(void)
 {
-	// struct termios t; makes line overwrite itself???????
+	struct termios t;
 
-	// tcgetattr(STDIN_FILENO, &t);
-	// t.c_lflag &= ~(ECHOCTL);
-	// tcsetattr(STDIN_FILENO, TCSAFLUSH, &t);
+	tcgetattr(STDIN_FILENO, &t);
+	t.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &t);
 	signal(SIGINT, handle_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 }

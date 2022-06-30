@@ -25,6 +25,7 @@ EXECUTER =	executer.c									\
 			execute_utils.c								\
 			child.c										\
 			run_builtins.c								\
+			executer_trash.c							\
 
 LEXER =		lexer.c										\
 			in_string.c									\
@@ -72,7 +73,7 @@ SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 BREW_DIR		= $(shell brew --prefix)
 LIBREADLINE		= $(BREW_DIR)/opt/readline/lib
 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g
+FLAGS = -Wall -Werror -Wextra
 #		-fsanitize=address -g
 
 INCLUDE_DIRS = -I src/libft -I include -I $(BREW_DIR)/opt/readline/include 

@@ -31,7 +31,10 @@ static char	*get_input(char *input)
 			free(input);
 		input = readline(prompt);
 		if (!input)
+		{
+			write(STDERR_FILENO, "exit\n", 6); // needs to be on the same line as readline.
 			exit(g_info.exit_status);
+		}
 		else if (input[0] != '\0')
 		{
 			add_history(input);
@@ -64,6 +67,10 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		if (heredoc(actions, &hdoc_files, env) == -1)
 			continue ;
 		executer(&actions, &env);
+<<<<<<< HEAD
+=======
+		system("leaks minishell");
+>>>>>>> cb98f5b6cacf7cabe7b043adea7d422d3a7da82e
 	}
 	return (0);
 }

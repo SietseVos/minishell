@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 20:03:45 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 21:49:35 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/06/29 16:55:24 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ static int32_t	run_heredoc(const char *heredoc_path, \
 	}
 	else
 	{
+		free(delimiter);
 		signal(SIGINT, heredoc_handler);
 		waitpid(g_info.heredoc_pid, NULL, 0);
 		if (g_info.heredoc_breakout == true ) // || return value of child != 0)

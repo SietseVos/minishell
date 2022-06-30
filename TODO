@@ -1,3 +1,5 @@
 	*	ctrl c inside heredoc runs, double check with more testing
-	*	ctrl c inside definetly broken ahaHAAAAAAAA
 	*	check for leaks inside increment shell level? cant find em
+
+	ctrl c when more shells are active
+	print exit on ctrl d
