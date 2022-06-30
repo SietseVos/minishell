@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:56:19 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/29 16:56:20 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/30 13:40:39 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,27 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		if (heredoc(actions, &hdoc_files, env) == -1)
 			continue ;
 		executer(&actions, &env);
-<<<<<<< HEAD
-=======
-		system("leaks minishell");
->>>>>>> cb98f5b6cacf7cabe7b043adea7d422d3a7da82e
+		// system("leaks minishell");
 	}
 	return (0);
 }
 
 		// system("leaks minishell");
 		// printf("Current exit status: %d\n", g_info.exit_status);
+
+
+
+
+// export bla="s -l"
+
+// l$bla
+
+// segfault:
+// export a=5=5
+
+// misschien doen?
+// export a+=10
+
+// jullie path wordt niet van voren naar achteren afgegaan
+
+// globals zijn niet goed verantwoord. struct is ook erg stiekem
