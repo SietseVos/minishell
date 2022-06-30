@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:56:19 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/30 13:40:39 by svos          ########   odam.nl         */
+/*   Updated: 2022/06/30 16:36:23 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 
 
 // export bla="s -l"
-
 // l$bla
 
 // segfault:
