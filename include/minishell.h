@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/29 14:55:15 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/01 15:44:17 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
  * heredoc with quote
  * beware of this dangerous monster D:
 */
-enum e_type
+enum e_nodetype
 {
 	INFILE,
 	APPEND,
@@ -62,6 +62,13 @@ enum e_type
 	HDOCSPACE,
 	HDOCQUOTE,
 	AMBIGU
+};
+
+enum e_strtype
+{
+	SPAC,
+	SINGLE,
+	DOUBLE
 };
 
 struct s_global_info
