@@ -66,7 +66,7 @@ static int32_t	check_valid_input(char	*inp)
 	}
 	while (inp[i])
 	{
-		if (inp[i] == '=')
+		if (inp[i] == '=' || (inp[i] == '+' && inp[i + 1] == '='))
 			break ;
 		else if (!(ft_isalnum(inp[i]) || inp[i] == '_'))
 		{
@@ -93,15 +93,28 @@ static int32_t	check_valid_input(char	*inp)
 */
 static int32_t	add_to_list(char *input, t_env_vars **env)
 {
-	char	*new_node;
+	char	*new_str;
+	bool	past_equals;
+	int32_t	i;
 
-	new_node = ft_calloc(ft_strlen(input) + 1, sizeof(char));
-	if (!new_node)
+	i = 0;
+	past_equals = false;
+	new_str = ft_calloc(ft_strlen(input) + NULL_TERM, sizeof(char));
+	if (!new_str)
 		return (-1);
-	ft_strlcpy(new_node, input, ft_strlen(input) + 1);
-	if (add_env_node(env, new_node) == -1)
+	while (*input)
+	{	
+		if (*input == '+' && past_equals == false)
+			input++;
+		if (*input == '=')
+			past_equals = true;
+		new_str[i] = *input;
+		input++;
+		i++;
+	}
+	if (add_env_node(env, new_str) == -1)
 	{
-		free(new_node);
+		free(new_str);
 		return (-1);
 	}
 	return (0);
@@ -125,6 +138,8 @@ static int32_t	replace_current_in_list(char *input, t_env_vars *env)
 	int32_t		i;
 
 	i = 0;
+	if (check_for_append_export(input))
+		return (add_to_existing_var(env, input));
 	variable = ft_calloc(ft_strlen(input) + 1, sizeof(char));
 	if (!variable)
 		return (false);
@@ -177,9 +192,8 @@ int32_t	export(char **args, t_env_vars **env)
 			if (replace_current_in_list(args[i], *env) == -1)
 				return (-1);
 		}
-		else
-			if (add_to_list(args[i], env) == -1)
-				return (-1);
+		else if (add_to_list(args[i], env) == -1)
+			return (-1);
 		i++;
 	}
 	return (0);

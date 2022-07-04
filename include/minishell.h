@@ -22,8 +22,8 @@
 # include <readline/history.h>
 # include "libft.h"
 
-// # define uint32_t u_int32_t linux stuff
-// # define uint64_t u_int64_t
+# define uint32_t u_int32_t // linux stuff
+# define uint64_t u_int64_t
 
 # define OLD 		3
 # define NULL_TERM	1
@@ -128,6 +128,8 @@ void			pwd(void);
 void			env(t_env_vars *list);
 int32_t			strings_in_array(char **str);
 int32_t			export(char **args, t_env_vars **env);
+bool			check_for_append_export(char *input);
+bool			add_to_existing_var(t_env_vars *env, char *to_add);
 void			bubble_sort_array(char **env_strings, int32_t lst_size);
 int32_t			add_quotes_after_equal(char **strings);
 bool			is_already_in_list(char	*input, t_env_vars *env);

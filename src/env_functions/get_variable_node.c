@@ -16,11 +16,11 @@
  * Function to check if the given string contains the same variable
  * as the given variable.
  * 
- * @param str Pointer to the string to compare to.
+ * @param str Pointer to the string inside the node to compare against.
  * @param var Pointer to the string to check if its the same.
  * 
- * @return - [1] Strings contain the same variable -
- * [0] Strings so not contain the same variable -
+ * @return - [0] Strings contain the same variable -
+ * [1] Strings so not contain the same variable -
 */
 static int32_t	compare_var_in_list(char *str, char *var)
 {
@@ -29,7 +29,11 @@ static int32_t	compare_var_in_list(char *str, char *var)
 	i = 0;
 	while (str[i] && var[i] && var[i] != '=' && (str[i] == var[i]))
 		i++;
-	if ((str[i] == '=' && var[i] == '=') || (str[i] == '\0' && var[i] == '\0')
+	if (var[i] == '+' && var[i + 1] == '=' && \
+		(str[i] == '=' || str[i] == '\0'))
+		return (0);
+	if ((str[i] == '=' && var[i] == '=') 
+		|| (str[i] == '\0' && var[i] == '\0')
 		|| (str[i] == '=' && var[i] == '\0'))
 		return (0);
 	return (1);

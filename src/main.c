@@ -32,7 +32,9 @@ static char	*get_input(char *input)
 		input = readline(prompt);
 		if (!input)
 		{
-			write(STDERR_FILENO, "exit\n", 6); // needs to be on the same line as readline.
+			rl_replace_line("exit\n", 0);
+			rl_redisplay();
+			printf("\n");
 			exit(g_info.exit_status);
 		}
 		else if (input[0] != '\0')
@@ -51,6 +53,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	t_env_vars	*env;
 
 	input = NULL;
+	hdoc_files = NULL;
 	if (init_vars_main(envp, &env, argc, argv) == false)
 		return (1);
 	while (1)

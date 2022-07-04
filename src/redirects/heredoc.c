@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
+#include <sys/wait.h>
 
 /**
  * Lazy strncmp without the need to specify the size to compare.

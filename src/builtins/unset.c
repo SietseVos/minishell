@@ -87,11 +87,9 @@ static bool	check_unset_error(char *str)
 */
 void	unset(char **arg, t_env_vars **list)
 {
-	int32_t	error;
 	int32_t	i;
 
 	i = 0;
-	error = 0;
 	g_info.exit_status = 0;
 	while (arg[i])
 	{

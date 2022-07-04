@@ -5,6 +5,7 @@ BUILTINS =	cd.c										\
 			echo.c										\
 			env.c										\
 			exit.c										\
+			export_add_to_var.c							\
 			export_utils.c								\
 			export.c									\
 			pwd.c										\
@@ -73,8 +74,8 @@ SRC =	$(addprefix src/builtins/, $(BUILTINS))			\
 BREW_DIR		= $(shell brew --prefix)
 LIBREADLINE		= $(BREW_DIR)/opt/readline/lib
 
-FLAGS = -Wall -Werror -Wextra
-#		-fsanitize=address -g
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+#		-fsanitize=address -fsanitize=leak -g
 
 INCLUDE_DIRS = -I src/libft -I include -I $(BREW_DIR)/opt/readline/include 
 

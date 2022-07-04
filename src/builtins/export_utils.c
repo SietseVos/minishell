@@ -154,7 +154,7 @@ bool	is_already_in_list(char	*input, t_env_vars *env)
 	int32_t	i;
 
 	i = 0;
-	while (input[i] && input[i] != '=')
+	while (input[i] && input[i] != '=' && input[i] != '+')
 		i++;
 	while (env)
 	{

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
 /**
  * Fucntion to run an executable without a pipe before or after it.

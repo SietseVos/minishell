@@ -1,5 +1,4 @@
 	*	ctrl c inside heredoc runs, double check with more testing
-	*	check for leaks inside increment shell level? cant find em
+	*	test if export += works well and doesnt crash
 
 	ctrl c when more shells are active
-	print exit on ctrl d
