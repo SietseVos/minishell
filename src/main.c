@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:56:19 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/30 16:36:23 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/04 16:50:20 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	init_vars_main(char **envp, t_env_vars **env, int argc, char **argv)
 	return (create_env_vars_list(envp, env));
 }
 
-static char	*get_input(char *input)
+static char	*get_input(char *input, t_env_vars *env)
 {
 	const char	prompt[] = "\001\033[1;31m\002Minihell>\001\033[0m\002 ";
 
@@ -40,7 +40,7 @@ static char	*get_input(char *input)
 		else if (input[0] != '\0')
 		{
 			add_history(input);
-			return (lexer(input));
+			return (expander(lexer(input), env));
 		}
 	}
 }
@@ -54,6 +54,8 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 
 	input = NULL;
 	hdoc_files = NULL;
+	env = NULL;
+	actions = NULL;
 	if (init_vars_main(envp, &env, argc, argv) == false)
 		return (1);
 	while (1)
@@ -61,7 +63,7 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		init_signals();
 		remove_heredoc_files(&hdoc_files);
 		free_action_list(&actions);
-		input = get_input(input);
+		input = get_input(input, env);
 		if (!input)
 			continue ;
 		actions = parser(input, env);

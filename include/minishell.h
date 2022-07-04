@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/04 09:10:23 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/04 14:12:53 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ enum e_nodetype
 	AMBIGU
 };
 
+// SPAC means space. The variable SPACE was already defined by some other library
 enum e_strtype
 {
 	SPAC,
@@ -249,6 +250,7 @@ int32_t			place_envvar_space(char *dst, char *src, \
 int32_t			place_envvar_quote(char *dst, char *src, \
 											t_env_vars *envp, int32_t *j);
 char			*expander(char *input, t_env_vars *env);
+int32_t			hdoc_copy_til_quote(char *dst, char *src, int32_t *i);
 
 /* ----------------------------------------------------------------------- */
 

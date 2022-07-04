@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 10:08:17 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/29 14:12:17 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/04 15:17:35 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param i - a pointer to the source string iterater
  * @return int32_t - the length of the string
  */
-static int32_t	copy_til_quote(char *dst, char *src, int32_t *i)
+int32_t	hdoc_copy_til_quote(char *dst, char *src, int32_t *i)
 {
 	char	c;
 	int32_t	j;
@@ -56,7 +56,7 @@ void	place_hdoc_in_node(char *dst, char *src, int32_t *i)
 	while (src[*i] != '\0' && is_whitespace(src[*i]) == false)
 	{
 		if (src[*i] == '"' || src[*i] == '\'')
-			j += copy_til_quote(dst + j, src, i);
+			j += hdoc_copy_til_quote(dst + j, src, i);
 		else
 		{
 			while (src[*i] != '\0' && is_whitespace(src[*i]) == false
