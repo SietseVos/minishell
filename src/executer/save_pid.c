@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include <sys/wait.h>
+#include <signal.h>
 
 /**
  * Function to get the address of the first (staticaly allocated)
@@ -97,6 +98,9 @@ void	set_exit_status_and_wait(void)
 	t_child_pids	*last_child;
 	int32_t			return_wait;
 
+	// signal(SIGINT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
+	rl_catch_signals = 1;
 	node = get_first_pid_node();
 	last_child = get_last_pid_node();
 	if (!node->next)

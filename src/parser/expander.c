@@ -37,7 +37,7 @@ int32_t	get_hdoclen(char *input, int32_t *ret)
 
 	len = 0;
 	skip_operator_space(input, &len);
-	while (input[len])
+	while (input[len] && input[len] != ' ') // fixed this temporarily? by adding && input[len] != ' ' - would infinite loop otherwise
 	{
 		if (input[len] == '"' || input[len] == '\'')
 		{
@@ -171,7 +171,11 @@ char	*expander(char *input, t_env_vars *env)
 	size = count_inputlen(input, env);
 	ret = malloc(size + 1);
 	if (ret == NULL)
+	{
+		free(input); // prevent leaks
 		return (NULL);
+	}
 	expndr_strcpy(ret, input, env);
+	free(input); // prevent leaks
 	return (ret);
 }

@@ -52,10 +52,10 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 	char		*input;
 	t_env_vars	*env;
 
-	input = NULL;
-	hdoc_files = NULL;
 	env = NULL;
+	input = NULL;
 	actions = NULL;
+	hdoc_files = NULL;
 	if (init_vars_main(envp, &env, argc, argv) == false)
 		return (1);
 	while (1)
@@ -80,17 +80,8 @@ int32_t	main(int32_t argc, char **argv, char **envp)
 		// system("leaks minishell");
 		// printf("Current exit status: %d\n", g_info.exit_status);
 
-
-
-
 // export bla="s -l"
 // l$bla
-
-// segfault:
-// export a=5=5
-
-// misschien doen?
-// export a+=10
 
 // jullie path wordt niet van voren naar achteren afgegaan
 

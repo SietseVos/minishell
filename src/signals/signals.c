@@ -10,7 +10,7 @@ static void	handle_ctrl_c(int sig)
 	rl_replace_line("\0", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	g_info.exit_status = 1;
+	g_info.exit_status = 130;
 }
 
 void	handle_sig_executer(int32_t sig)
@@ -39,7 +39,7 @@ void	heredoc_handler(int32_t sig)
 	printf("\n");
 	kill(g_info.heredoc_pid, SIGTERM);
 	g_info.heredoc_breakout = true;
-	g_info.exit_status = 1;
+	g_info.exit_status = 130;
 }
 
 void	init_signals(void)
