@@ -24,6 +24,7 @@ bool	add_to_existing_var(t_env_vars *env, char *to_add)
 	char		*str;
 	int32_t		i;
     
+	i = 0;
 	node = get_variable_node(env, to_add);
 	while (to_add[i] && to_add[i] != '=')
 		i++;

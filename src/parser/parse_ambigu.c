@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 10:08:00 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/29 12:45:15 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/04 09:54:50 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	ambigu_redirect(char *input, int32_t i, t_env_vars *envp)
 		return (false);
 	if (input[i] == '$')
 		return (check_ambigu(input, i, envp, ' '));
-	else if ((input[i] == '"' || input[i] == '\'') && input[i + 1] == '$')
+	else if (input[i] == '"' && input[i + 1] == '$')
 		return (check_ambigu(input, i + 1, envp, input[i]));
 	return (false);
 }
