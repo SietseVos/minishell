@@ -113,9 +113,3 @@ fclean: clean
 	rm -f minishell
 
 re: fclean all
-
-# testing: testing.c
-# 	gcc testing.c -L$(LIBREADLINE) -l readline -I $(BREW_DIR)/opt/readline/include -fsanitize=address -g -o testing
-
-# testing2: testing2.c
-# 	gcc ft_split.c ft_split_putstr.c testing2.c -L$(LIBREADLINE) -l readline -I $(BREW_DIR)/opt/readline/include -o testing2
