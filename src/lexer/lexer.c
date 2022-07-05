@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 21:59:56 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 19:17:21 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 14:25:48 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,10 @@ char	*lexer(char	*input)
 	char	*output;
 
 	if (check_syntax_error(input))
+	{
+		free(input);
 		return (NULL);
+	}
 	spaces = get_missing_space_count(input);
 	output = malloc(sizeof(char) * (ft_strlen(input) + spaces + 1));
 	if (!output)

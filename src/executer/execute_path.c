@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:52:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 13:30:22 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 15:17:34 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	*norminette_wants_this_to_be_split(char **arguments, \
 	int32_t	i;
 
 	i = 0;
-	all_paths = ft_split(path->str, ':');
+	all_paths = ft_split(path->str + 5, ':');
 	if (!all_paths)
 		return (NULL);
 	while (all_paths[i])

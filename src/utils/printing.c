@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   printing.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/05 14:13:14 by svos          #+#    #+#                 */
+/*   Updated: 2022/07/05 14:13:15 by svos          ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	printenvp(t_env_vars *print)
@@ -38,8 +50,6 @@ void	print_actions(t_action *inlst)
 			printf("Type: Ambiguous\n");
 		else if (inlst ->type == APPEND)
 			printf("Type: Append\n");
-		else if (inlst ->type == HDOC)
-			printf("Type: Heredoc\n");
 		else if (inlst ->type == TRUNC)
 			printf("Type: Trunicate\n");
 		else if (inlst ->type == PIPE)

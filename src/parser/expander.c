@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/01 11:31:34 by svos          #+#    #+#                 */
-/*   Updated: 2022/07/05 11:23:29 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/05 15:17:53 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	expndr_strcpy(char *dst, char *src, t_env_vars *env)
 	{
 		strmode = check_strmode(strmode, src[i]);
 		if (src[i] == '<' && src[i + 1] == '<' && strmode == SPAC)
-			j = uninterp_strcpy(dst + j, src + i, &i);
+			j += uninterp_strcpy(dst + j, src + i, &i);
 		else if (check_if_ambigu(src, i, strmode, env) == true)
 			j += uninterp_strcpy(dst + j, src + i, &i);
 		else if (src[i] == '$' && strmode == SPAC)
