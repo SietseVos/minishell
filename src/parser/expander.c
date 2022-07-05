@@ -6,12 +6,19 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/01 11:31:34 by svos          #+#    #+#                 */
-/*   Updated: 2022/07/04 16:50:25 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/05 11:23:29 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief - check if the string is quoted with double, single or no quotes
+ * 
+ * @param strmode - the current mode
+ * @param c - the character in the string to be checked
+ * @return int32_t - the new mode
+ */
 static int32_t	check_strmode(int32_t strmode, char c)
 {
 	if (c == '"' && strmode == SPAC)
@@ -25,33 +32,68 @@ static int32_t	check_strmode(int32_t strmode, char c)
 	return (strmode);
 }
 
-void	loop_til_char(char *str, int32_t *i, char c)
+/**
+ * @brief - check if there's an ambiguous redirect
+ * 
+ * @param str - the string to check
+ * @param i - int iterater of str
+ * @param strmode - is the string quoted with double, single or no quotes
+ * @param env - environment variables
+ * @return true - there's an ambiguous redirect
+ * @return false - nothing special found
+ */
+static bool	check_if_ambigu(char *str, int32_t i,
+				int32_t strmode, t_env_vars *env)
 {
-	while (str[*i] != c && str[*i] != '\0')
-		*i += 1;
+	if (!(str[i] == '<' && str[i + 1] == '<')
+		&& (str[i] == '<' || str[i] == '>')
+		&& ambigu_redirect(str, i, env) == true
+		&& strmode != SINGLE)
+		return (true);
+	return (false);
 }
 
-int32_t	get_hdoclen(char *input, int32_t *ret)
+/**
+ * @brief - copy the input string to the new input string
+ * 
+ * @param dst - the destiation string
+ * @param src - the source string
+ * @param env - environment variables
+ */
+static void	expndr_strcpy(char *dst, char *src, t_env_vars *env)
 {
-	int32_t	len;
+	int32_t	i;
+	int32_t	j;
+	int32_t	strmode;
 
-	len = 0;
-	skip_operator_space(input, &len);
-	while (input[len] && input[len] != ' ') // fixed this temporarily? by adding && input[len] != ' ' - would infinite loop otherwise
+	i = 0;
+	j = 0;
+	strmode = SPAC;
+	while (src[i])
 	{
-		if (input[len] == '"' || input[len] == '\'')
-		{
-			loop_til_char(input, &len, input[len]);
-			len++;
-		}
+		strmode = check_strmode(strmode, src[i]);
+		if (src[i] == '<' && src[i + 1] == '<' && strmode == SPAC)
+			j = uninterp_strcpy(dst + j, src + i, &i);
+		else if (check_if_ambigu(src, i, strmode, env) == true)
+			j += uninterp_strcpy(dst + j, src + i, &i);
+		else if (src[i] == '$' && strmode == SPAC)
+			i += place_envvar_space(dst + j, src + i, env, &j);
+		else if (src[i] == '$' && strmode == DOUBLE)
+			i += place_envvar_quote(dst + j, src + i, env, &j);
 		else
-			loop_til_char(input, &len, ' ');
+			copy_char(dst, src, &i, &j);
 	}
-	*ret += len;
-	return (len);
+	dst[j] = '\0';
 }
 
-int32_t	count_inputlen(char *input, t_env_vars *env)
+/**
+ * @brief - count the length of the interperted input string
+ * 
+ * @param input - the inputstring form the lexer
+ * @param env - environment variables
+ * @return int32_t - the length of the interperted input string
+ */
+static int32_t	count_inputlen(char *input, t_env_vars *env)
 {
 	int32_t	i;
 	int32_t	ret;
@@ -63,12 +105,9 @@ int32_t	count_inputlen(char *input, t_env_vars *env)
 	while (input[i])
 	{
 		strmode = check_strmode(strmode, input[i]);
-		if (input[i] == '<' && input[i+ 1] == '<' && strmode == SPAC)
+		if (input[i] == '<' && input[i + 1] == '<' && strmode == SPAC)
 			i += get_hdoclen(input + i, &ret);
-		else if (!(input[i] == '<' && input[i + 1] == '<')
-			&& (input[i] == '<' || input[i] == '>')
-			&& ambigu_redirect(input, i, env) == true
-			&& strmode != SINGLE)
+		else if (check_if_ambigu(input, i, strmode, env) == true)
 			i += get_hdoclen(input + i, &ret);
 		else if (input[i] == '$' && strmode == SPAC)
 			i += interpvar_strlen(input + i, ' ', &ret, env);
@@ -83,84 +122,13 @@ int32_t	count_inputlen(char *input, t_env_vars *env)
 	return (ret);
 }
 
-void	cpy_operator_space(char *dst, char *src, int32_t *i)
-{
-	while (is_whitespace(src[*i]) == false)
-	{
-		dst[*i] = src[*i];
-		*i += 1;
-	}
-	while (is_whitespace(src[*i]) == true)
-	{
-		dst[*i] = src[*i];
-		*i += 1;
-	}
-}
-
-int32_t	uninterp_strcpy(char *dst, char *src, int32_t *i)
-{
-	int	j;
-
-	j = 0;
-	cpy_operator_space(dst, src, &j);
-	while (src[j] != '\0' && is_whitespace(src[j]) == false)
-	{
-		if (src[j] == '"' || src[j] == '\'')
-			hdoc_copy_til_quote(dst + j, src + j, &j);
-		else
-		{
-			while (src[j] != '\0' && is_whitespace(src[j]) == false
-				&& src[j] != '"' && src[j] != '\'')
-			{
-				dst[j] = src[j];
-				j++;
-			}
-		}
-	}
-	while (is_whitespace(src[j]) == true)
-	{
-		dst[j] = src[j];
-		j++;
-	}
-	*i += j;
-	return (j);
-}
-
-void	expndr_strcpy(char *dst, char *src, t_env_vars *env)
-{
-	int32_t	i;
-	int32_t	j;
-	int32_t	strmode;
-
-	i = 0;
-	j = 0;
-	strmode = SPAC;
-	while (src[i])
-	{
-		strmode = check_strmode(strmode, src[i]);
-		if (src[i] == '<' && src[i + 1] == '<' && strmode == SPAC)
-			j = uninterp_strcpy(dst + j, src + i, &i);
-		else if (!(src[i] == '<' && src[i + 1] == '<')
-			&& (src[i] == '<' || src[i] == '>')
-			&& ambigu_redirect(src, i, env) == true
-			&& strmode != SINGLE)
-		{
-			j += uninterp_strcpy(dst + j, src + i, &i);
-		}
-		else if (src[i] == '$' && strmode == SPAC)
-			i += place_envvar_space(dst + j, src + i, env, &j);
-		else if (src[i] == '$' && strmode == DOUBLE)
-			i += place_envvar_quote(dst + j, src + i, env, &j);
-		else
-		{
-			dst[j] = src[i];
-			i++;
-			j++;
-		}
-	}
-	dst[j] = '\0';
-}
-
+/**
+ * @brief - expands environment variables when necessary
+ * 
+ * @param input - input string from lexer 
+ * @param env - environment variables
+ * @return char* - the inputstring with expanded variables
+ */
 char	*expander(char *input, t_env_vars *env)
 {
 	char	*ret;
@@ -172,10 +140,10 @@ char	*expander(char *input, t_env_vars *env)
 	ret = malloc(size + 1);
 	if (ret == NULL)
 	{
-		free(input); // prevent leaks
+		free(input);
 		return (NULL);
 	}
 	expndr_strcpy(ret, input, env);
-	free(input); // prevent leaks
+	free(input);
 	return (ret);
 }

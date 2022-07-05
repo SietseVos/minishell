@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 10:08:39 by svos          #+#    #+#                 */
-/*   Updated: 2022/07/04 15:53:48 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/05 09:03:34 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,11 @@ int32_t	copy_envvar_to_str(char *dst, char *src,
 	int32_t	ret;
 
 	ret = 0;
-	// printf("entering cpy_envvar function\n");
 	while (envp)
 	{
 		if (ft_strncmp(envp ->str, src + 1, varlen - 1) == 0
 			&& envp ->str[varlen - 1] == '=')
 		{
-			printf("copy_envvar_to_str found variable\n");
 			ft_strlcpy(dst, envp ->str + varlen,
 				ft_strlen(envp ->str + varlen) + 1);
 			ret += ft_strlen(envp ->str + varlen);
@@ -106,7 +104,6 @@ int32_t	place_envvar_quote(char *dst, char *src, t_env_vars *envp, int32_t *j)
 		*j += 1;
 		return (varlen);
 	}
-	printf("place_envvar_quote is returning: %d\n", varlen);
 	*j += copy_envvar_to_str(dst, src, envp, varlen);
 	return (varlen);
 }

@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 10:08:46 by svos          #+#    #+#                 */
-/*   Updated: 2022/07/04 09:45:30 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/05 09:02:55 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, t_env_vars *envp)
 			*strlen += 1;
 		else if (c == '"' || c == '\'')
 			*strlen += 1;
-		printf("varlen = 1\n");
 		return (varlen);
 	}
 	while (envp)
@@ -73,7 +72,6 @@ int32_t	interpvar_strlen(char *str, char c, int32_t *strlen, t_env_vars *envp)
 		}
 		envp = envp ->next;
 	}
-	printf("interpvar is returning: %d\n", varlen);
 	return (varlen);
 }
 

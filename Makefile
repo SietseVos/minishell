@@ -45,6 +45,8 @@ PARSER =	parse_cmd.c									\
 			parse_ambigu.c								\
 			placing_envvar.c							\
 			expander.c									\
+			expander_strlen.c							\
+			expander_strcpy.c							\
 
 REDIRECTS =	infile.c									\
 			outfile.c									\

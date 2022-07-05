@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/04 14:12:53 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/05 09:37:15 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,9 @@ int32_t			place_envvar_quote(char *dst, char *src, \
 											t_env_vars *envp, int32_t *j);
 char			*expander(char *input, t_env_vars *env);
 int32_t			hdoc_copy_til_quote(char *dst, char *src, int32_t *i);
+int32_t			get_hdoclen(char *input, int32_t *ret);
+void			copy_char(char *dst, char *src, int32_t *i, int32_t *j);
+int32_t			uninterp_strcpy(char *dst, char *src, int32_t *i);
 
 /* ----------------------------------------------------------------------- */
 
