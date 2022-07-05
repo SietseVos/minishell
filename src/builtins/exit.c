@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:29 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 16:21:24 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:37:11 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	exit_shell_error(char *str, bool print)
 {
 	if (print)
 		write(STDERR_FILENO, "exit\n", 6);
-	exit_with_error_message("bash: exit: ", str, \
+	exit_with_error_message("minishell: exit: ", str, \
 		": numeric argument required\n", 255);
 }
 
@@ -126,7 +126,7 @@ void	exit_shell(char **argument, bool print)
 		exit_shell_error(argument[0], print);
 	if (strings_in_array(argument) > 1)
 	{
-		write(STDERR_FILENO, "bash: exit: too many arguments\n", 32);
+		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
 		g_info.exit_status = 1;
 		return ;
 	}

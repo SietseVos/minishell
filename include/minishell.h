@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 13:30:35 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:36:15 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # define NL_ERROR "minishell: syntax error near unexpected token `newline'\n"
 # define PIPE_ERROR "minishell: pipe: Resource temporarily unavailable\n"
 # define FORK_ERROR "minishell: fork: Resource temporarily unavailable\n"
-# define UNSET_ERROR "bash: unset: `"
-# define EXPORT_ERROR "bash: export: `"
+# define UNSET_ERROR "minishell: unset: `"
+# define EXPORT_ERROR "minishell: export: `"
 # define IDENT_ERROR "': not a valid identifier\n"
 # define AMBIGU_ERROR ": ambiguous redirect\n"
 
