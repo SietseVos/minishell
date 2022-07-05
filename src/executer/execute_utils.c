@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 21:20:52 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:49:45 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 18:28:46 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,30 @@ bool	actions_only_builtins(t_action *actions)
 		actions = actions->next;
 	}
 	return (true);
+}
+
+char	*handle_relative_path(char *argument)
+{
+	char	*cmd_path;
+
+	if (argument[1] == '\0')
+	{
+		if (argument[0] == '.')
+			write(STDERR_FILENO, DOT_ERROR, ft_strlen(DOT_ERROR));
+		else
+			write(STDERR_FILENO, DIR_ERROR, ft_strlen(DIR_ERROR));
+		return (NULL);
+	}
+	cmd_path = ft_strdup(argument);
+	if (!cmd_path)
+	{
+		write(STDERR_FILENO, "Malloc failed\n", 15);
+		return (NULL);
+	}
+	if (command_found(cmd_path))
+		return (cmd_path);
+	free(cmd_path);
+	write_error_with_strings("minishell: ", argument, \
+							": No such file or directory\n");
+	return (NULL);
 }
