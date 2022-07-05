@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:20:58 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:11:13 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ static bool	check_unset_error(char *str)
 	int32_t	i;
 
 	i = 0;
-	if (str[0] == '\0')
+	if (str[0] == '\0' || ft_isdigit(str[0]))
 		return (return_with_error_message(UNSET_ERROR, str, IDENT_ERROR, 1));
 	while (str[i])
 	{
-		if (str[i] == '=' || str[i] == ' ' || str[i] == '-')
+		if (!ft_isalnum(str[i]) && str[i] != '_')
 		{
 			g_info.exit_status = 1;
 			return (return_with_error_message(UNSET_ERROR, str, \
