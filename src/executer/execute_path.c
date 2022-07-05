@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:52:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 18:30:55 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 20:31:06 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,22 @@ static char	*find_command_in_path(char **arguments, t_env_vars *list)
 char	*get_executable_path(char **args, t_env_vars *list)
 {
 	char	*cmd_path;
+	int32_t	i;
 
+	i = 0;
 	if (!args || !args[0])
 		return (NULL);
-	if (args[0][0] == '.' || args[0][0] == '/')
-		return (handle_relative_path(args[0]));
+	if (args[0][0] == '.' && args[0][1] == '\0')
+	{
+		write(STDERR_FILENO, DOT_ERROR, ft_strlen(DOT_ERROR));
+		return (NULL);
+	}
+	while (args[0][i])
+	{
+		if (args[0][i] == '/')
+			return (handle_given_path(args[0]));
+		i++;
+	}
 	cmd_path = find_command_in_path(args, list);
 	if (cmd_path)
 		return (cmd_path);

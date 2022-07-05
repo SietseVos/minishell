@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 21:20:52 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 18:55:07 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 20:31:06 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,13 @@ bool	actions_only_builtins(t_action *actions)
  * 
  * @return - [cmd_path] path to the executable - [NULL] en error happened -
 */
-char	*handle_relative_path(char *argument)
+char	*handle_given_path(char *argument)
 {
 	char	*cmd_path;
 
 	if (argument[1] == '\0')
 	{
-		if (argument[0] == '.')
-			write(STDERR_FILENO, DOT_ERROR, ft_strlen(DOT_ERROR));
-		else
+		if (argument[0] == '/')
 			write(STDERR_FILENO, DIR_ERROR, ft_strlen(DIR_ERROR));
 		return (NULL);
 	}
