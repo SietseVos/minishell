@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 21:20:52 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 18:28:46 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 18:55:07 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,13 @@ bool	actions_only_builtins(t_action *actions)
 	return (true);
 }
 
+/**
+ * Function to handle the given input as a relative or absolute path.
+ * 
+ * @param argument Pointer to the string containing the path to an executable.
+ * 
+ * @return - [cmd_path] path to the executable - [NULL] en error happened -
+*/
 char	*handle_relative_path(char *argument)
 {
 	char	*cmd_path;
