@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 16:48:12 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/05 18:06:55 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ int32_t			chdir_error(char *str);
 char			*create_new_cd_str(char *var, char *pwd);
 int32_t			set_oldpwd(t_env_vars *oldpwd_node);
 int32_t			move_pwd_to_oldpwd(t_env_vars *oldpwd_node, \
-									t_env_vars *pwd_node, bool *has_been_null);
+				t_env_vars *pwd_node, bool *has_been_null);
 int32_t			create_empty_oldpwd(t_env_vars *oldpwd_node, \
-											bool *has_been_null);
+				bool *has_been_null);
 void			exit_shell(char **argument, bool print);
 void			pwd(void);
 void			env(t_env_vars *list);
@@ -178,12 +178,12 @@ bool			contains_pipes(t_action *actions);
 void			set_actions_next_pipe(t_action **actions);
 void			pop_nodes_till_command(t_action **actions);
 void			run_child(t_info info, int32_t *fd, \
-							int32_t fd_in, bool contains_pipes);
+				int32_t fd_in, bool contains_pipes);
 bool			run_if_builtin_child(t_info info);
 int32_t			run_builtin_no_pipe(t_action **actions, t_env_vars **list);
 int32_t			close_fds_and_return(int32_t *pipe_fds, int32_t fd_in);
 void			close_fds_run_with_pipes(bool close_pipe, int32_t fd_in, \
-													int32_t *pipe_fds);
+				int32_t *pipe_fds);
 
 /* ----------------------------------------------------------------------- */
 
@@ -194,18 +194,18 @@ void			close_fds_run_with_pipes(bool close_pipe, int32_t fd_in, \
 int32_t			get_infile_fd(t_action	*action);
 int32_t			get_outfile_fd(t_action	*action);
 int32_t			set_redirections(t_action *actions, int32_t *in_fd, \
-												int32_t *out_fd);
+				int32_t *out_fd);
 void			reset_redirections(int32_t in_fd, int32_t out_fd);
 int32_t			create_heredoc_file(t_action *heredoc_node, \
-												t_heredoc **file_paths);
+				t_heredoc **file_paths);
 int32_t			heredoc(t_action *actions, t_heredoc **file_paths, \
-												t_env_vars *env);
+				t_env_vars *env);
 void			read_input_and_write_to_heredoc(const char *heredoc_path, \
-						char *delimiter, int32_t type, t_env_vars *env);
+				char *delimiter, int32_t type, t_env_vars *env);
 void			remove_heredoc_files(t_heredoc **files);
 int32_t			expand_heredoc(char **input, int32_t type, t_env_vars *env);
 int32_t			close_free_and_return(int32_t fd, char *str1, \
-												char *str2, int32_t return_v);
+				char *str2, int32_t return_v);
 
 /* ----------------------------------------------------------------------- */
 
@@ -228,10 +228,10 @@ int32_t			envvarlen(char *str, char end);
 int32_t			is_operator(char c);
 int32_t			check_str_end(char *str, int32_t i, int32_t n);
 void			place_str_in_node(char *dst, char *src, \
-											int32_t *i, t_env_vars *envp);
+				int32_t *i, t_env_vars *envp);
 void			place_hdoc_in_node(char *dst, char *src, int32_t *i);
 int32_t			place_envvar(char *dst, char *src, \
-											t_env_vars *envp, int32_t *i);
+				t_env_vars *envp, int32_t *i);
 t_action		*parse_file(char *input, int32_t *i, t_env_vars *envp);
 t_action		*parse_cmd(char *input, int32_t *i, t_env_vars *envp);
 int32_t			skipstring(char *str, char quote);
@@ -241,12 +241,12 @@ t_action		*parser(char *input, t_env_vars *envp);
 t_action		*parse_pipe(char *input, int32_t *i);
 bool			join_split_cmds(t_action *lst);
 bool			merge_nodes(t_action *dst, t_action **src, \
-												t_action **prevnextptr);
+				t_action **prevnextptr);
 bool			is_whitespace(char c);
 int32_t			interpvar_strlen(char *str, char c, \
-									int32_t *strlen, t_env_vars *envp);
+				int32_t *strlen, t_env_vars *envp);
 int32_t			place_envvar_space(char *dst, char *src, \
-											t_env_vars *envp, int32_t *j);
+				t_env_vars *envp, int32_t *j);
 
 void			print_actions(t_action *inlst);
 t_action		*found_ambigu(char *input, int32_t *i);
@@ -254,9 +254,9 @@ bool			ambigu_redirect(char *input, int32_t i, t_env_vars *envp);
 void			skip_operator_space(char *input, int32_t *i);
 void			print_actions(t_action *inlst);
 int32_t			place_envvar_space(char *dst, char *src, \
-											t_env_vars *envp, int32_t *j);
+				t_env_vars *envp, int32_t *j);
 int32_t			place_envvar_quote(char *dst, char *src, \
-											t_env_vars *envp, int32_t *j);
+				t_env_vars *envp, int32_t *j);
 char			*expander(char *input, t_env_vars *env);
 int32_t			hdoc_copy_til_quote(char *dst, char *src, int32_t *i);
 int32_t			get_hdoclen(char *input, int32_t *ret);
@@ -290,10 +290,10 @@ void			pop_action_node(t_action **node);
 void			free_action_list(t_action **node);
 bool			free_env_list_return_false(t_env_vars **env);
 void			write_error_with_chars(char *str1, char char1, \
-													char char2, char *str2);
+				char char2, char *str2);
 void			write_error_with_strings(char *str1, char *str2, char *str3);
 int32_t			return_with_error_message(char *str1, const char *str2, \
-											char *str3, int32_t return_value);
+				char *str3, int32_t return_value);
 int32_t			close_fd_return_error(char *error_message, int32_t fd, \
 				int32_t return_value);
 void			exit_with_error_message(char *str1, char *str2, char *str3, \
