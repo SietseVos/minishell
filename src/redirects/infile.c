@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:39 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 22:04:50 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 14:17:16 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,22 @@ static bool	access_error(t_action *action)
 }
 
 /**
+ * Function to handle the ambiguous redirect.
+ * This function was created to comply with the norm of functions
+ * only containing 25 lines.
+ * 
+ * @param error_str Pointer to the string containing the ambiguous redirect.
+ * 
+ * @return - [-1] -
+*/
+static int32_t	handle_ambiguous_norminette(char *error_str)
+{
+	g_info.exit_status = 1;
+	return (return_with_error_message("minishell: ", \
+		error_str, AMBIGU_ERROR, -1));
+}
+
+/**
  * Function to get the last file descriptor in the list.
  * It will open all other infiles as it is going past them.
  * 
@@ -67,11 +83,7 @@ int32_t	get_infile_fd(t_action	*action)
 	while (action && action->type != PIPE)
 	{
 		if (action->type == AMBIGU)
-		{
-			g_info.exit_status = 1;
-			return (return_with_error_message("minishell: ", \
-								action->arg[0], AMBIGU_ERROR, -1));
-		}
+			return (handle_ambiguous_norminette(action->arg[0]));
 		if (action->type == INFILE || action->type == HDOCSPACE
 			|| action->type == HDOCQUOTE)
 		{

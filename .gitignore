@@ -1,3 +1,4 @@
+.gitignore
 test.c
 *.out*
 *outfile
@@ -8,4 +9,4 @@ testing
 testing2
 /src/libft/libft.a
 .vscode
-valgrind_suppression_script.sh
+valgrind*

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:32 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 13:07:05 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:38:03 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ static int32_t	replace_current_in_list(char *input, t_env_vars *env)
 
 /**
  * Builtin function to replicate the behaviour of Bash's export
- * without and flags. 
+ * without any flags. 
  * 
  * @param args Double char array containing all the agruments
  * export has to work with.

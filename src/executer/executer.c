@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/23 15:51:59 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 12:14:27 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:48:36 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,12 @@ static int32_t	run_with_pipes(t_info info, int32_t fd_in)
 	if (has_pipes && pipe(pipe_fds) == -1)
 		return (close_fd_return_error(PIPE_ERROR, fd_in, -1));
 	fork_pid = fork();
-	if (has_pipes && fork_pid == -1) // should be ony fork == -1??
+	if (fork_pid == -1)
 	{
 		write(STDERR_FILENO, FORK_ERROR, 51);
-		return (close_fds_and_return(pipe_fds, fd_in));
+		if (has_pipes)
+			return (close_fds_and_return(pipe_fds, fd_in));
+		return (close_fds_and_return(NULL, fd_in));
 	}
 	else if (fork_pid == 0)
 		run_child(info, pipe_fds, fd_in, has_pipes);

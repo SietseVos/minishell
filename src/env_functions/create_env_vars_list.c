@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 21:49:43 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 15:02:14 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool	create_env_vars_list(char **envp, t_env_vars **env_head)
 	{
 		new = new_env_node(envp[i]);
 		if (!new)
-			return (free_env_list_return_false(*env_head));
+			return (free_env_list_return_false(env_head));
 		if (i == 0)
 		{
 			tmp = new;

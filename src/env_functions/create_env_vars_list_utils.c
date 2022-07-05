@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:53:42 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 15:02:06 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,6 @@ bool	clean_env_vars_list(t_env_vars **env_head)
 	set_env_list_bool_value(*env_head);
 	remove_exess_from_list(env_head);
 	if (increment_shell_level(*env_head) == -1)
-		return (free_env_list_return_false(*env_head));
+		return (free_env_list_return_false(env_head));
 	return (true);
 }

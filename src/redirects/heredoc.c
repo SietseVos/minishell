@@ -6,38 +6,13 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 20:03:45 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/29 16:55:24 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 14:08:47 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <signal.h>
 #include <sys/wait.h>
-
-/**
- * Lazy strncmp without the need to specify the size to compare.
- * 
- * @param str1 The first string to compare.
- * 
- * @param str2 The second string to compare against the first.
- * 
- * @return - [0] strings are equal - [-1] strings differ -
-*/
-static int32_t	ft_strcmp(char *str1, char *str2)
-{
-	int32_t	i;
-
-	i = 0;
-	while (str1[i] && str2[i])
-	{
-		if (str1[i] != str2[i])
-			return (-1);
-		i++;
-	}
-	if (str1[i] != str2[i])
-		return (-1);
-	return (0);
-}
 
 /**
  * Function to close the given fd and free the given strings.
@@ -69,8 +44,8 @@ int32_t	close_free_and_return(int32_t fd, char *str1, \
 }
 
 /**
- * This function will run the heredoc, get the input from terminal
- * and write it into a file.
+ * This function will create a fork to
+ * run the heredoc in and handle its errors.
  * 
  * @param heredoc_path The path towards the heredoc file.
  *
@@ -85,40 +60,22 @@ int32_t	close_free_and_return(int32_t fd, char *str1, \
 static int32_t	run_heredoc(const char *heredoc_path, \
 						char *delimiter, int32_t type, t_env_vars *env)
 {
-	int32_t	fd;
-	char	*in;
+	int32_t	return_of_heredoc;
 
-	// ctrl c signal inside of fork works now?? test more..
-	in = NULL;
+	return_of_heredoc = 0;
 	g_info.heredoc_breakout = false;
 	g_info.heredoc_pid = fork();
 	if (g_info.heredoc_pid == -1)
 		exit_with_error_message("Fork failed\n", NULL, NULL, 1);
 	else if (g_info.heredoc_pid == 0)
-	{
-		fd = open(heredoc_path, O_WRONLY | O_TRUNC);
-		if (fd == -1)
-			exit (-1);
-		while (1)
-		{
-			in = readline("> ");
-			if (!in)
-				exit (close_free_and_return(fd, delimiter, NULL, 0));
-			if (ft_strcmp(delimiter, in) == 0)
-				exit (close_free_and_return(fd, delimiter, in, 0));
-			if (expand_heredoc(&in, type, env) == -1)
-				exit (close_free_and_return(fd, delimiter, in, -1));
-			else if (write(fd, in, ft_strlen(in)) == -1 || write(fd, "\n", 1) == -1)
-				exit (close_free_and_return(fd, delimiter, in, -1));
-			free(in);
-		}
-	}
+		read_input_and_write_to_heredoc(heredoc_path, delimiter, type, env);
 	else
 	{
 		free(delimiter);
 		signal(SIGINT, heredoc_handler);
-		waitpid(g_info.heredoc_pid, NULL, 0);
-		if (g_info.heredoc_breakout == true ) // || return value of child != 0)
+		waitpid(g_info.heredoc_pid, &return_of_heredoc, 0);
+		return_of_heredoc = WEXITSTATUS (return_of_heredoc);
+		if (g_info.heredoc_breakout == true || return_of_heredoc != 0)
 			return (-1);
 		init_signals();
 	}

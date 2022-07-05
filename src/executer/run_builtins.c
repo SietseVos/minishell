@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:02:35 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:27 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:53:12 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@
  * @param info Struct contaning the action list and environment
  * variable list.
  * 
- * @return - [true] builtin found and executed - [false] builtin not found -
+ * @return - [true] builtin found and executed - 
+ * [false] builtin not found - [exit] if cd or export is called and it failed -
 */
-bool	run_if_builtin_child(t_info info) // check if cd or export fails?
+bool	run_if_builtin_child(t_info info)
 {
+	int32_t	return_value;
+
+	return_value = 0;
 	if (ft_strncmp((*info.action)->arg[0], "cd", 3) == 0)
-		cd(&(*info.action)->arg[1], info.list);
+		return_value = cd(&(*info.action)->arg[1], info.list);
 	else if (ft_strncmp((*info.action)->arg[0], "echo", 5) == 0)
 		echo(&(*info.action)->arg[1]);
 	else if (ft_strncmp((*info.action)->arg[0], "env", 4) == 0)
@@ -32,13 +36,15 @@ bool	run_if_builtin_child(t_info info) // check if cd or export fails?
 	else if (ft_strncmp((*info.action)->arg[0], "exit", 5) == 0)
 		exit_shell(&(*info.action)->arg[1], false);
 	else if (ft_strncmp((*info.action)->arg[0], "export", 7) == 0)
-		export(&(*info.action)->arg[1], info.list);
+		return_value = export(&(*info.action)->arg[1], info.list);
 	else if (ft_strncmp((*info.action)->arg[0], "pwd", 4) == 0)
 		pwd();
 	else if (ft_strncmp((*info.action)->arg[0], "unset", 6) == 0)
 		unset(&(*info.action)->arg[1], info.list);
 	else
 		return (false);
+	if (return_value != 0)
+		exit (1);
 	return (true);
 }
 

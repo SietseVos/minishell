@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 21:50:50 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:47:15 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int32_t	compare_var_in_list(char *str, char *var)
 	if (var[i] == '+' && var[i + 1] == '=' && \
 		(str[i] == '=' || str[i] == '\0'))
 		return (0);
-	if ((str[i] == '=' && var[i] == '=') 
+	if ((str[i] == '=' && var[i] == '=')
 		|| (str[i] == '\0' && var[i] == '\0')
 		|| (str[i] == '=' && var[i] == '\0'))
 		return (0);

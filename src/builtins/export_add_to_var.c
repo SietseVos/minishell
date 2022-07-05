@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   export_add_to_var.c                                :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/05 13:46:40 by rvan-mee      #+#    #+#                 */
+/*   Updated: 2022/07/05 13:46:42 by rvan-mee      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -19,11 +30,11 @@ bool	check_for_append_export(char *input)
 
 bool	add_to_existing_var(t_env_vars *env, char *to_add)
 {
-    t_env_vars 	*node;
+	t_env_vars	*node;
 	size_t		size;
 	char		*str;
 	int32_t		i;
-    
+
 	i = 0;
 	node = get_variable_node(env, to_add);
 	while (to_add[i] && to_add[i] != '=')

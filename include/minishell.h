@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 13:36:15 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 15:05:13 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ enum e_nodetype
 	AMBIGU
 };
 
-// SPAC means space. The variable SPACE was already defined by some other library
+// SPAC means space. The variable SPACE
+// was already defined by some other library
 enum e_strtype
 {
 	SPAC,
@@ -197,6 +198,8 @@ int32_t			create_heredoc_file(t_action *heredoc_node, \
 												t_heredoc **file_paths);
 int32_t			heredoc(t_action *actions, t_heredoc **file_paths, \
 												t_env_vars *env);
+void			read_input_and_write_to_heredoc(const char *heredoc_path, \
+						char *delimiter, int32_t type, t_env_vars *env);
 void			remove_heredoc_files(t_heredoc **files);
 int32_t			expand_heredoc(char **input, int32_t type, t_env_vars *env);
 int32_t			close_free_and_return(int32_t fd, char *str1, \
@@ -283,8 +286,7 @@ void			printchararr(char **toprint);
 void			free_double_array(char **array);
 void			pop_action_node(t_action **node);
 void			free_action_list(t_action **node);
-void			free_env_list(t_env_vars *list);
-bool			free_env_list_return_false(t_env_vars *env);
+bool			free_env_list_return_false(t_env_vars **env);
 void			write_error_with_chars(char *str1, char char1, \
 													char char2, char *str2);
 void			write_error_with_strings(char *str1, char *str2, char *str3);

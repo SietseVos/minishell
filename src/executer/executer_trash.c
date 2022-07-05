@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 14:48:41 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/29 14:56:52 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:49:10 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@
 */
 int32_t	close_fds_and_return(int32_t *pipe_fds, int32_t fd_in)
 {
-	if (close(pipe_fds[0]) == -1)
-		exit_with_error_message("close failed\n", NULL, NULL, 1);
-	if (close(pipe_fds[1]) == -1)
-		exit_with_error_message("close failed\n", NULL, NULL, 1);
+	if (pipe_fds)
+	{
+		if (close(pipe_fds[0]) == -1)
+			exit_with_error_message("close failed\n", NULL, NULL, 1);
+		if (close(pipe_fds[1]) == -1)
+			exit_with_error_message("close failed\n", NULL, NULL, 1);
+	}
 	if (close(fd_in) == -1)
 		exit_with_error_message("close failed\n", NULL, NULL, 1);
 	return (-1);
