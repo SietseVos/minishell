@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:52:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:30:22 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,23 +135,31 @@ static char	*find_command_in_path(char **arguments, t_env_vars *list)
  * @return - [execute_path] Path of the executable if it can be found -
  * [NULL] If there isnt an executable that can be found -
 */
-char	*get_executable_path(char **arguments, t_env_vars *list)
+char	*get_executable_path(char **args, t_env_vars *list)
 {
 	char	*cmd_path;
 
-	if (!arguments || !arguments[0])
+	if (!args || !args[0])
 		return (NULL);
-	cmd_path = find_command_in_path(arguments, list);
+	if ((args[0][0] == '.' || args[0][0] == '/') && args[0][1] == '\0')
+	{
+		if (args[0][0] == '.')
+			write(STDERR_FILENO, DOT_ERROR, ft_strlen(DOT_ERROR));
+		else
+			write(STDERR_FILENO, DIR_ERROR, ft_strlen(DIR_ERROR));
+		return (NULL);
+	}
+	cmd_path = find_command_in_path(args, list);
 	if (cmd_path)
 		return (cmd_path);
-	else
+	if (args[0][0] == '.' || args[0][0] == '/')
 	{
-		cmd_path = ft_strdup(arguments[0]);
+		cmd_path = ft_strdup(args[0]);
 		if (command_found(cmd_path))
 			return (cmd_path);
 		free(cmd_path);
 	}
-	write_error_with_strings("minishell: ", arguments[0], \
+	write_error_with_strings("minishell: ", args[0], \
 									": command not found\n");
 	return (NULL);
 }

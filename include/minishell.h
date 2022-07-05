@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 12:58:49 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 13:30:35 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # define PIPE_READ	0
 # define PIPE_WRITE	1
 
+# define DOT_ERROR "minishell: .: filename argument required\n\
+.: usage: . filename [arguments]\n"
+# define DIR_ERROR "minishell: /: is a directory\n"
 # define TOKEN_ERROR "minishell: syntax error near unexpected token `"
 # define NL_ERROR "minishell: syntax error near unexpected token `newline'\n"
 # define PIPE_ERROR "minishell: pipe: Resource temporarily unavailable\n"
@@ -165,7 +168,7 @@ int32_t			save_pid(pid_t new_pid);
 t_child_pids	*get_last_pid_node(void);
 t_child_pids	*get_first_pid_node(void);
 void			set_exit_status_and_wait(void);
-char			*get_executable_path(char **arguments, t_env_vars *list);
+char			*get_executable_path(char **args, t_env_vars *list);
 int32_t			execute_command(char **arguments, t_env_vars *list);
 bool			actions_only_builtins(t_action *actions);
 bool			contains_pipes(t_action *actions);
