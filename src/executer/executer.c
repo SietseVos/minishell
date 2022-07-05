@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/23 15:51:59 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/29 14:52:28 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 12:14:27 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int32_t	run_executable_no_pipe(t_action	**actions, t_env_vars *list)
 	int32_t	return_execute;
 	int32_t	fork_fd;
 
-	signal(SIGINT, sig_c_outside_fork);
 	while ((*actions) && (*actions)->type != TOSTDOUT)
 		pop_action_node(actions);
 	if (!actions)
@@ -100,7 +99,6 @@ static int32_t	run_with_pipes(t_info info, int32_t fd_in)
 	int32_t		pipe_fds[2];
 	pid_t		fork_pid;
 
-	signal(SIGINT, sig_c_outside_fork);
 	if (has_pipes && pipe(pipe_fds) == -1)
 		return (close_fd_return_error(PIPE_ERROR, fd_in, -1));
 	fork_pid = fork();

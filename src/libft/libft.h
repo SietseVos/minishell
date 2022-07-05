@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   libft.h                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/30 11:11:41 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/30 11:11:42 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/05 12:59:01 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define LIBFT_H
 # include <stdlib.h>
 
-#define uint32_t u_int32_t // linux stuff
-#define int32_t int
+// #define uint32_t u_int32_t // linux stuff
+// #define int32_t int
 
 typedef struct s_list
 {

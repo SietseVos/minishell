@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: svos <svos@student.codam.nl>                 +#+                     */
+/*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:56:19 by svos          #+#    #+#                 */
-/*   Updated: 2022/07/04 16:50:20 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/05 11:55:34 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static char	*get_input(char *input, t_env_vars *env)
 		input = readline(prompt);
 		if (!input)
 		{
-			rl_replace_line("exit\n", 0);
-			rl_redisplay();
-			printf("\n");
+			printf("\033[1A\033[1;31mMinihell>\033[0m exit\n");
 			exit(g_info.exit_status);
 		}
 		else if (input[0] != '\0')

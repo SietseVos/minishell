@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 09:37:15 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/05 12:58:49 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <readline/history.h>
 # include "libft.h"
 
-# define uint32_t u_int32_t // linux stuff
-# define uint64_t u_int64_t
+// # define uint32_t u_int32_t // linux stuff
+// # define uint64_t u_int64_t
 
 # define OLD 		3
 # define NULL_TERM	1
@@ -263,7 +263,6 @@ int32_t			uninterp_strcpy(char *dst, char *src, int32_t *i);
 
 void			init_signals(void);
 void			handle_sig_executer(int32_t sig);
-void			sig_c_outside_fork(int32_t sig);
 void			heredoc_handler(int32_t sig);
 
 /* ----------------------------------------------------------------------- */

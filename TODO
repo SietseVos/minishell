@@ -1,4 +1,2 @@
-	*	ctrl c inside heredoc runs but not with more shell layers deep
+	*	ctrl c should work proerly now, test more
 	*	test if export += works well and doesnt crash
-
-	ctrl c when more shells are active

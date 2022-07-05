@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:08:38 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:49:28 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 12:14:07 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,6 @@ void	set_exit_status_and_wait(void)
 	t_child_pids	*last_child;
 	int32_t			return_wait;
 
-	// signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
-	rl_catch_signals = 1;
 	node = get_first_pid_node();
 	last_child = get_last_pid_node();
 	if (!node->next)
@@ -114,4 +111,8 @@ void	set_exit_status_and_wait(void)
 	reset_pid();
 	if (!WIFSIGNALED (return_wait))
 		g_info.exit_status = WEXITSTATUS (return_wait);
+	else if (WIFSIGNALED (return_wait) && g_info.exit_status == 131)
+		write(STDERR_FILENO, "Quit: 3\n", 9);
+	else if (WIFSIGNALED (return_wait) && g_info.exit_status == 130)
+		printf("\n");
 }
