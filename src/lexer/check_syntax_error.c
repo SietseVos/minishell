@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 21:57:37 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:44:39 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 17:55:37 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	write_syntax_error(char *str, int32_t *i)
 	else if (char_count == 1)
 		write_error_with_chars(TOKEN_ERROR, str[*i], 0, "'\n");
 	else if (char_count == 0)
-		write(STDERR_FILENO, NL_ERROR, 57);
+		write(STDERR_FILENO, NL_ERROR, ft_strlen(NL_ERROR));
 	g_info.exit_status = 258;
 }
 

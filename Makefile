@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: rvan-mee <rvan-mee@student.42.fr>            +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/07/05 18:03:46 by rvan-mee      #+#    #+#                  #
+#    Updated: 2022/07/05 18:03:47 by rvan-mee      ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
 
 BUILTINS =	cd.c										\
@@ -104,12 +116,14 @@ $(OBJ_DIR):
 	@mkdir -p obj
 
 clean:
-	make clean -C src/libft
-	rm -rf /tmp/.minishell_heredoc*
-	rm -rf $(OBJ_DIR)
+	@echo Cleaning object and temporary files
+	@make clean -C src/libft
+	@rm -rf /tmp/.minishell_heredoc*
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	make fclean -C src/libft
-	rm -f minishell
+	@echo Cleaning executable
+	@make fclean -C src/libft
+	@rm -f minishell
 
 re: fclean all

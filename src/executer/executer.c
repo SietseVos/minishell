@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/23 15:51:59 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 13:48:36 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/05 17:57:00 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static int32_t	run_with_pipes(t_info info, int32_t fd_in)
 	fork_pid = fork();
 	if (fork_pid == -1)
 	{
-		write(STDERR_FILENO, FORK_ERROR, 51);
+		write(STDERR_FILENO, FORK_ERROR, ft_strlen(FORK_ERROR));
 		if (has_pipes)
 			return (close_fds_and_return(pipe_fds, fd_in));
 		return (close_fds_and_return(NULL, fd_in));
