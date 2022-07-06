@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 10:08:06 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/29 12:33:10 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/06 12:47:10 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,31 @@ t_action	*arg_malloc_fail(t_action *node, int32_t j)
 	return (nullerr("failed to malloc argstring"));
 }
 
+t_action	*space_edge_case(void)
+{
+	t_action	*ret;
+
+	ret = malloc(sizeof(t_action));
+	if (ret == NULL)
+		return (NULL);
+	ret ->arg = malloc(sizeof(char *) * 2);
+	if (ret ->arg == NULL)
+	{
+		free(ret);
+		return (NULL);
+	}
+	ret ->arg[0] = ft_strdup("");
+	if (ret ->arg[0] == NULL)
+	{
+		free(ret ->arg);
+		free(ret ->arg[0]);
+		return (NULL);
+	}
+	ret ->type = TOSTDOUT;
+	ret ->arg[1] = NULL;
+	return (ret);
+}
+
 /**
  * @brief - make a node with a command type
  * 
@@ -105,6 +130,8 @@ t_action	*parse_cmd(char *input, int32_t *i, t_env_vars *envp)
 	int32_t		j;
 
 	j = 0;
+	if (input[*i] == '\0')
+		return (space_edge_case());
 	cmdarrlen = get_cmdarrlen(input + *i);
 	node = create_cmdnode(cmdarrlen);
 	if (node == NULL)
