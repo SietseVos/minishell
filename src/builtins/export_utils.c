@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:44 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/06 17:02:07 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,8 @@ bool	is_already_in_list(char	*input, t_env_vars *env)
 		i++;
 	while (env)
 	{
-		if (ft_strncmp(input, env->str, i) == 0)
+		if (ft_strncmp(input, env->str, i) == 0 && \
+		(env->str[i] == '=' || env->str[i] == '\0'))
 			return (true);
 		env = env->next;
 	}

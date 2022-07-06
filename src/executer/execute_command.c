@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:51:13 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/06 17:34:53 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
  * 
  * @param list Pointer to the environment variable list.
  * 
- * @return - [0] Success - [-1] Malloc / execve failed - 
+ * @return - [0] Success - [-1] Malloc / execve failed -
+ * [exit 127] command not found -
 */
 int32_t	execute_command(char **arguments, t_env_vars *list)
 {
@@ -29,12 +30,12 @@ int32_t	execute_command(char **arguments, t_env_vars *list)
 
 	execute_path = get_executable_path(arguments, list);
 	if (!execute_path)
-		return (-1);
+		exit (127);
 	env_array = env_list_to_array(list);
 	if (!env_array)
 	{
 		free(execute_path);
-		return (-1);
+		return (return_with_error_message("Malloc failed\n", NULL, NULL, -1));
 	}
 	if (execve(execute_path, arguments, env_array) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/23 15:51:59 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 17:57:00 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/06 17:34:02 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param list Pointer to the environment variable list.
  * 
  * @return - [0] executed normally - [-1] fork failed
- * - [1] no more actions left -
+ * - [1] no more actions left - [exit 127] command not found - 
 */
 static int32_t	run_executable_no_pipe(t_action	**actions, t_env_vars *list)
 {
@@ -41,9 +41,6 @@ static int32_t	run_executable_no_pipe(t_action	**actions, t_env_vars *list)
 		return_execute = execute_command((*actions)->arg, list);
 		if (return_execute == -1)
 			exit (1);
-		else if (return_execute == 0)
-			exit_with_error_message("minishell: ", (*actions)->arg[0], \
-									": command not found\n", 1);
 		exit (g_info.exit_status);
 	}
 	save_pid(fork_fd);

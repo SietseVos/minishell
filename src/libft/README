@@ -1,9 +1,0 @@
-Put the directory in the same folder as you're makefile. Compile the .c files to object files, then compile this library in your makefile using
-
-make -C libft
-or
-make bonus -C libft
-
-The second one will compile functions that are used for linked lists.
-
-Then you can add the library to your executable.
