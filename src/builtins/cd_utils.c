@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:54 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 13:36:38 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/07 20:52:26 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@
 int32_t	chdir_error(char *str)
 {
 	g_info.exit_status = 1;
-	write_error_with_strings("minishell: cd: ", str, \
+	if (is_directory(str) == 2)
+		write_error_with_strings("minishell: cd: ", str, \
 								": No such file or directory\n");
+	else
+		write_error_with_strings("minishell: cd: ", str, \
+								": Not a directory\n");
 	return (1);
 }
 

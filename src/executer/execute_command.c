@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:51:13 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/06 17:34:53 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/07 20:41:52 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int32_t	execute_command(char **arguments, t_env_vars *list)
 {
 	char	*execute_path;
 	char	**env_array;
-
+	
+	if (is_directory(arguments[0]))
+		exit_with_error_message("minishell: ", arguments[0], \
+								" is a directory\n", 126);
 	execute_path = get_executable_path(arguments, list);
 	if (!execute_path)
 		exit (127);

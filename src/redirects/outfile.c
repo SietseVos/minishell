@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:42 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 22:13:36 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/07 19:47:33 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,32 @@
  * 
  * @param path Pointer to the string contaning the path to the file.
  * 
- * @return N/A - exit if close or open fails -
+ * @return - [0] file exists or is created -
+ * [-1] encountered an error with the file -
 */
-static void	check_if_file_exists(char *path)
+static int32_t	check_if_file_exists(char *path)
 {
 	int32_t	fd;
 
 	fd = -1;
+	if (path[0] == '\0')
+	{
+		g_info.exit_status = 1;
+		return (return_with_error_message("minishell: ", path, \
+		": No such file or directory\n", -1));
+	}
+	if (check_directory(path) == -1)
+		return (-1);
 	if (access(path, F_OK) == -1)
 	{
 		fd = open(path, O_CREAT);
 		if (fd == -1)
-			exit_with_error_message("open failed\n", NULL, NULL, 1);
+			return_with_error_message("open failed\n", NULL, NULL, -1);
 	}
 	if (fd != -1)
 		if (close(fd) == -1)
-			exit_with_error_message("close failed\n", NULL, NULL, 1);
+			return_with_error_message("close failed\n", NULL, NULL, -1);
+	return (0);
 }
 
 /**
@@ -77,8 +87,8 @@ int32_t	get_outfile_fd(t_action	*action)
 				if (close(fd) == -1)
 					exit_with_error_message("close failed\n", NULL, NULL, 1);
 			}
-			check_if_file_exists(action->arg[0]);
-			if (check_premissions(action->arg[0]) == false)
+			if (check_if_file_exists(action->arg[0]) == -1 || \
+				check_premissions(action->arg[0]) == false)
 				return (-1);
 			if (action->type == APPEND)
 				fd = open(action->arg[0], O_WRONLY | O_APPEND);

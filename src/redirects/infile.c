@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:39 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 14:17:16 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/07 19:46:05 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /**
  * Funtion to check if the action nodes contains a files
- * that can be opened or not. If the file can't be opened it
+ * that can be opened or if the given path leads to a directory. 
+ * If the file or directory can't be opened in read mode it
  * will display an error message.
  * 
  * @param action Pointer to the action node list.
@@ -28,20 +29,9 @@ static bool	access_error(t_action *action)
 		if (action->type == INFILE || action->type == HDOCSPACE
 			|| action->type == HDOCQUOTE)
 		{
-			if (access(action->arg[0], F_OK) == -1)
-			{
-				g_info.exit_status = 1;
-				write_error_with_strings("minishell: ", action->arg[0], \
-				": No such file or directory\n");
+			if (action->type == INFILE && \
+				check_path(action->arg[0], R_OK) == -1)
 				return (true);
-			}
-			else if (access(action->arg[0], R_OK) == -1)
-			{
-				g_info.exit_status = 1;
-				write_error_with_strings("minishell: ", action->arg[0], \
-				": Premission denied\n");
-				return (true);
-			}
 		}
 		action = action->next;
 	}

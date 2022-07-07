@@ -6,7 +6,7 @@
 #    By: rvan-mee <rvan-mee@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/07/05 18:03:46 by rvan-mee      #+#    #+#                  #
-#    Updated: 2022/07/05 18:03:47 by rvan-mee      ########   odam.nl          #
+#    Updated: 2022/07/07 17:37:40 by rvan-mee      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ REDIRECTS =	infile.c									\
 			create_heredoc_file.c						\
 			heredoc.c									\
 			heredoc_utils.c								\
+			directory.c									\
 
 SIGNALS =	signals.c									\
 
@@ -90,7 +91,7 @@ BREW_DIR		= $(shell brew --prefix)
 LIBREADLINE		= $(BREW_DIR)/opt/readline/lib
 
 FLAGS = -Wall -Werror -Wextra
-#		-fsanitize=address -fsanitize=leak -g
+#DEBUG:							-fsanitize=address -fsanitize=leak -g
 
 INCLUDE_DIRS = -I src/libft -I include -I $(BREW_DIR)/opt/readline/include 
 

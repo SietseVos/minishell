@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 20:31:06 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/07 20:40:10 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,10 @@ void			close_fds_run_with_pipes(bool close_pipe, int32_t fd_in, \
 
 int32_t			get_infile_fd(t_action	*action);
 int32_t			get_outfile_fd(t_action	*action);
+int32_t			check_directory(char *path);
+int32_t			check_absolute_path(char *path);
+int32_t			check_path(char *path, int32_t premission);
+int32_t			is_directory(char *path);
 int32_t			set_redirections(t_action *actions, int32_t *in_fd, \
 				int32_t *out_fd);
 void			reset_redirections(int32_t in_fd, int32_t out_fd);

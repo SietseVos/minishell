@@ -6,14 +6,15 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 21:20:52 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 20:31:06 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/07 14:39:37 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * Function to remove nodes till a command node can be found.
+ * Function to remove nodes till a command node or pipe
+ * can be found.
  * 
  * @param actions Pointer to the head of the action list.
  * 
@@ -21,7 +22,8 @@
 */
 void	pop_nodes_till_command(t_action **actions)
 {
-	while (actions && (*actions) && (*actions)->type != TOSTDOUT)
+	while (actions && (*actions) && (*actions)->type != TOSTDOUT \
+			&& (*actions)->type != PIPE)
 		pop_action_node(actions);
 }
 

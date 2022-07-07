@@ -1,2 +1,3 @@
--	Redirect to directory
--	check leaks valgrind
+-	Redirect to directory(bash checks the premissions for every directory, we give does "no such file" error) -- can use errno to check how open failed (might be better implementation then stat)
+-	return value check
+-	Makefile check for that last object compiling thing
