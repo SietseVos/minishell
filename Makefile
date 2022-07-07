@@ -6,7 +6,7 @@
 #    By: rvan-mee <rvan-mee@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/07/05 18:03:46 by rvan-mee      #+#    #+#                  #
-#    Updated: 2022/07/07 17:37:40 by rvan-mee      ########   odam.nl          #
+#    Updated: 2022/07/07 20:59:40 by rvan-mee      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,7 +119,6 @@ $(OBJ_DIR):
 clean:
 	@echo Cleaning object and temporary files
 	@make clean -C src/libft
-	@rm -rf /tmp/.minishell_heredoc*
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
