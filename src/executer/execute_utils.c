@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 21:20:52 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/07 14:39:37 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 14:49:54 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,32 +89,21 @@ bool	actions_only_builtins(t_action *actions)
 }
 
 /**
- * Function to handle the given input as a relative or absolute path.
+ * Function to copy the given path.
  * 
  * @param argument Pointer to the string containing the path to an executable.
  * 
- * @return - [cmd_path] path to the executable - [NULL] en error happened -
+ * @return - [cmd_path] path to the executable - [exit 1] malloc failed -
 */
-char	*handle_given_path(char *argument)
+char	*copy_path(char *argument)
 {
 	char	*cmd_path;
 
-	if (argument[1] == '\0')
-	{
-		if (argument[0] == '/')
-			write(STDERR_FILENO, DIR_ERROR, ft_strlen(DIR_ERROR));
-		return (NULL);
-	}
 	cmd_path = ft_strdup(argument);
 	if (!cmd_path)
 	{
 		write(STDERR_FILENO, "Malloc failed\n", 15);
-		return (NULL);
+		exit (1);
 	}
-	if (command_found(cmd_path))
-		return (cmd_path);
-	free(cmd_path);
-	write_error_with_strings("minishell: ", argument, \
-							": No such file or directory\n");
-	return (NULL);
+	return (cmd_path);
 }

@@ -6,11 +6,12 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:41:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 17:50:04 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 14:30:01 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
 
 /**
  * This function concatinates the given strings into one, newly allocated string.
@@ -175,10 +176,10 @@ int32_t	cd(char **argument, t_env_vars **env)
 		else if (home_path->str[5] == '\0')
 			return (0);
 		else if (chdir(&home_path->str[5]) != 0)
-			return (chdir_error(&home_path->str[5]));
+			return (chdir_error(&home_path->str[5], errno));
 	}
 	else if (chdir(argument[0]) != 0)
-		return (chdir_error(argument[0]));
+		return (chdir_error(argument[0], errno));
 	if (first_cd_call(&start_of_program, env) == -1
 		|| change_old_pwd_path(*env, &has_been_null) == -1
 		|| change_pwd_path(*env) == -1)

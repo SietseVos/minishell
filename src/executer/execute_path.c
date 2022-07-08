@@ -6,15 +6,14 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:52:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 20:31:06 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 14:52:49 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * Function to check if a command can be found and if the
- * premmisions are there to execute it.
+ * Function to check if a command can be found.
  * 
  * @param path Pointer to the string containing the path to the command.
  * 
@@ -25,11 +24,6 @@ bool	command_found(const char *path)
 {
 	if (access(path, F_OK) == 0)
 	{
-		if (access(path, X_OK) == 0)
-			return (true);
-		else
-			write_error_with_strings("minishell: ", (char *)path, \
-						": Premission denied\n");
 		return (true);
 	}
 	return (false);
@@ -98,7 +92,7 @@ static char	*norminette_wants_this_to_be_split(char **arguments, \
 		i++;
 	}
 	free_double_array(all_paths);
-	return (NULL);
+	return (copy_path(arguments[0]));
 }
 
 /**
@@ -146,18 +140,20 @@ char	*get_executable_path(char **args, t_env_vars *list)
 	if (args[0][0] == '.' && args[0][1] == '\0')
 	{
 		write(STDERR_FILENO, DOT_ERROR, ft_strlen(DOT_ERROR));
-		return (NULL);
+		exit (2);
+	}
+	else if (args[0][1] == '\0')
+	{
+		if (args[0][0] == '/')
+			write(STDERR_FILENO, DIR_ERROR, ft_strlen(DIR_ERROR));
+		exit (126);
 	}
 	while (args[0][i])
 	{
 		if (args[0][i] == '/')
-			return (handle_given_path(args[0]));
+			return (copy_path(args[0]));
 		i++;
 	}
 	cmd_path = find_command_in_path(args, list);
-	if (cmd_path)
-		return (cmd_path);
-	write_error_with_strings("minishell: ", args[0], \
-							": command not found\n");
-	return (NULL);
+	return (cmd_path);
 }

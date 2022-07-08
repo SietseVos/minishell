@@ -6,11 +6,12 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:54 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/07 20:52:26 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 14:28:51 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
 
 /**
  * Function to write a cd file / directory error
@@ -21,15 +22,21 @@
  * 
  * @return [1]
 */
-int32_t	chdir_error(char *str)
+int32_t	chdir_error(char *str, int32_t error)
 {
 	g_info.exit_status = 1;
-	if (is_directory(str) == 2)
+	if (error == EACCES)
+		write_error_with_strings("minishell: cd: ", str, \
+								": Permission denied\n");
+	else if (error == ENOENT)
 		write_error_with_strings("minishell: cd: ", str, \
 								": No such file or directory\n");
-	else
+	else if (error == ENOTDIR)
 		write_error_with_strings("minishell: cd: ", str, \
 								": Not a directory\n");
+	else
+		write_error_with_strings("minishell: cd: ", str, \
+								": Change directory error\n");
 	return (1);
 }
 

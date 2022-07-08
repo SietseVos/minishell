@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/07 20:40:10 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 14:49:08 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_info
 
 int32_t			cd(char **argument, t_env_vars **env);
 int32_t			create_new_oldpwd_node(t_env_vars **env);
-int32_t			chdir_error(char *str);
+int32_t			chdir_error(char *str, int32_t error);
 char			*create_new_cd_str(char *var, char *pwd);
 int32_t			set_oldpwd(t_env_vars *oldpwd_node);
 int32_t			move_pwd_to_oldpwd(t_env_vars *oldpwd_node, \
@@ -173,7 +173,7 @@ t_child_pids	*get_first_pid_node(void);
 void			set_exit_status_and_wait(void);
 bool			command_found(const char *path);
 char			*get_executable_path(char **args, t_env_vars *list);
-char			*handle_given_path(char *argument);
+char			*copy_path(char *argument);
 int32_t			execute_command(char **arguments, t_env_vars *list);
 bool			actions_only_builtins(t_action *actions);
 bool			contains_pipes(t_action *actions);
@@ -193,12 +193,9 @@ void			close_fds_run_with_pipes(bool close_pipe, int32_t fd_in, \
 
 /* _----------------------------	redirects	-------------------------- */
 
+int32_t			open_error(char *path, int32_t error);
 int32_t			get_infile_fd(t_action	*action);
 int32_t			get_outfile_fd(t_action	*action);
-int32_t			check_directory(char *path);
-int32_t			check_absolute_path(char *path);
-int32_t			check_path(char *path, int32_t premission);
-int32_t			is_directory(char *path);
 int32_t			set_redirections(t_action *actions, int32_t *in_fd, \
 				int32_t *out_fd);
 void			reset_redirections(int32_t in_fd, int32_t out_fd);

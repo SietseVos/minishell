@@ -6,7 +6,7 @@
 #    By: rvan-mee <rvan-mee@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/07/05 18:03:46 by rvan-mee      #+#    #+#                  #
-#    Updated: 2022/07/07 20:59:40 by rvan-mee      ########   odam.nl          #
+#    Updated: 2022/07/08 14:43:31 by rvan-mee      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ REDIRECTS =	infile.c									\
 			create_heredoc_file.c						\
 			heredoc.c									\
 			heredoc_utils.c								\
-			directory.c									\
+			open_error.c								\
 
 SIGNALS =	signals.c									\
 
