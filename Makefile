@@ -6,7 +6,7 @@
 #    By: rvan-mee <rvan-mee@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/07/05 18:03:46 by rvan-mee      #+#    #+#                  #
-#    Updated: 2022/07/08 14:43:31 by rvan-mee      ########   odam.nl          #
+#    Updated: 2022/07/08 15:14:09 by rvan-mee      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,7 @@ all: $(OBJ_DIR) $(NAME)
 
 $(NAME): $(OBJ) 
 	@make -C src/libft
-	@echo "compiling $<"
+	@echo "compiling $@"
 	@gcc $(OBJ) $(FLAGS) $(LIB_DIRS) $(INCLUDE_DIRS) -o minishell
 
 $(OBJ_DIR)/%.o: %.c
