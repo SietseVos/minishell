@@ -6,7 +6,7 @@
 /*   By: svos <svos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 10:07:34 by svos          #+#    #+#                 */
-/*   Updated: 2022/06/29 11:01:01 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/08 16:09:20 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ t_action	*parser(char *input, t_env_vars *envp)
 	i = 0;
 	while (is_whitespace(input[i]) == true)
 		i++;
+	if (input[i] == '\0')
+		return (NULL);
 	lst = determine_kind(input, &i, envp);
 	if (lst == NULL)
 		return (nullerr("failed to make first node"));
