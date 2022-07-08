@@ -6,13 +6,12 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/08 14:49:08 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 15:55:38 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef  MINISHELL_H
 # define MINISHELL_H
-# include <string.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
