@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:52:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/08 14:52:49 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 15:42:43 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,6 @@ char	*get_executable_path(char **args, t_env_vars *list)
 	{
 		write(STDERR_FILENO, DOT_ERROR, ft_strlen(DOT_ERROR));
 		exit (2);
-	}
-	else if (args[0][1] == '\0')
-	{
-		if (args[0][0] == '/')
-			write(STDERR_FILENO, DIR_ERROR, ft_strlen(DIR_ERROR));
-		exit (126);
 	}
 	while (args[0][i])
 	{

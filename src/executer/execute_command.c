@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:51:13 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/08 15:10:14 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 15:44:37 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 #include <sys/stat.h>
 #include <errno.h>
 
+/**
+ * Function to check if the given path points towards a direcory or not.
+ * 
+ * @param path Pointer to the string containg the path to check for a dir.
+ * 
+ * @return - [true] path points towards a directory
+ * - [false] path does not point towards a directory -
+*/
 static bool	is_directory(char *path)
 {
 	struct stat	path_stat;
@@ -25,6 +33,17 @@ static bool	is_directory(char *path)
 	return (false);
 }
 
+/**
+ * Function to display the encountered error with the execve function
+ * and exit with the right exit value.
+ * 
+ * @param path Pointer to the string containing the path to the executable.
+ * 
+ * @param error The errno that execve set.
+ * 
+ * @return - [exit 126] the given path is a directory
+ * - [exit 127] other errors - 
+*/
 static void	execve_error(char *path, int32_t error)
 {
 	if (error == EACCES)
@@ -32,8 +51,8 @@ static void	execve_error(char *path, int32_t error)
 		if (is_directory(path))
 		{
 			write_error_with_strings("minishell: ", path, \
-			": Is a directory\n");
-			exit (127);
+			": is a directory\n");
+			exit (126);
 		}
 		else
 			write_error_with_strings("minishell: ", path, \
@@ -45,7 +64,7 @@ static void	execve_error(char *path, int32_t error)
 	else
 		write_error_with_strings("minishell: ", path, \
 		": execve error\n");
-	exit (126);
+	exit (127);
 }
 
 /**
