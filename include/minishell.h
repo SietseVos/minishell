@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/08 15:55:38 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/08 15:57:01 by svos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 
 # define DOT_ERROR "minishell: .: filename argument required\n\
 .: usage: . filename [arguments]\n"
-# define DIR_ERROR "minishell: /: is a directory\n"
 # define TOKEN_ERROR "minishell: you've comitted a\
  \033[1;31msin\033[0mtax near unexpected token `"
 # define NL_ERROR "minishell: you've comitted a\
