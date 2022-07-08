@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:52:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/08 15:42:43 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 16:14:19 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,18 @@ static char	*norminette_wants_this_to_be_split(char **arguments, \
 static char	*find_command_in_path(char **arguments, t_env_vars *list)
 {
 	t_env_vars	*path;
+	char		*empty_command;
 
 	path = get_variable_node(list, "PATH=");
 	if (!path)
 		return (NULL);
+	if (arguments[0][0] == '\0')
+	{
+		empty_command = ft_strdup("");
+		if (!empty_command)
+			write(STDERR_FILENO, "Malloc failed\n", 15);
+		return (empty_command);
+	}
 	return (norminette_wants_this_to_be_split(arguments, path));
 }
 
