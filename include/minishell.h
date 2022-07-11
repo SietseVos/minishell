@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/28 17:39:06 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/08 15:57:01 by svos          ########   odam.nl         */
+/*   Updated: 2022/07/11 16:21:49 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ enum e_strtype
 	DOUBLE
 };
 
-struct s_global_info
+typedef struct s_global_info
 {
 	int32_t	exit_status;
 	pid_t	heredoc_pid;
 	bool	heredoc_breakout;
-}	global_t_info;
+}	t_global_info;
 
-struct s_global_info	g_info;
+extern t_global_info	g_info;
 
 typedef struct s_action
 {

@@ -6,12 +6,14 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:22:54 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/08 14:28:51 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/11 14:27:35 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <errno.h>
+
+t_global_info	g_info;
 
 /**
  * Function to write a cd file / directory error

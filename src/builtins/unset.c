@@ -6,11 +6,13 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:20:58 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 13:11:13 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/11 14:28:15 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_global_info	g_info;
 
 /**
  * Function to remove a given argument from the environment variable list.

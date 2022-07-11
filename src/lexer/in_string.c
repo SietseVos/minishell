@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 21:57:43 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/06/28 19:06:28 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/11 14:22:28 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,20 @@ bool	in_string(char c, bool reset)
 */
 void	skip_string(char *str, int32_t *i)
 {
-	if (in_string(str[*i], false))
+	if (str[*i] == '\'')
+	{
 		*i += 1;
-	while (str[*i] && in_string(str[*i], false))
+		while (str[*i] != '\'' && str[*i] != '\0')
+			*i += 1;
+		if (str[*i] == '\'')
+			*i += 1;
+	}
+	else if (str[*i] == '\"')
+	{
 		*i += 1;
-	in_string(str[*i], true);
+		while (str[*i] != '\"' && str[*i] != '\0')
+			*i += 1;
+		if (str[*i] == '\"')
+			*i += 1;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 20:52:21 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/08 16:14:19 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/11 16:31:02 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,16 @@ static char	*find_command_in_path(char **arguments, t_env_vars *list)
 {
 	t_env_vars	*path;
 	char		*empty_command;
+	char		*path_not_set;
 
 	path = get_variable_node(list, "PATH=");
 	if (!path)
-		return (NULL);
+	{
+		path_not_set = ft_strdup(arguments[0]);
+		if (!path_not_set)
+			write(2, "Malloc failed\n", 15);
+		return (path_not_set);
+	}
 	if (arguments[0][0] == '\0')
 	{
 		empty_command = ft_strdup("");

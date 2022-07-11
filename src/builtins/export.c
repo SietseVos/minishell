@@ -6,11 +6,13 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 20:21:32 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/05 13:38:03 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/11 14:28:09 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_global_info	g_info;
 
 /**
  * Function to print the entire environment variable list,

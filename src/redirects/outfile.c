@@ -6,7 +6,7 @@
 /*   By: rvan-mee <rvan-mee@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/21 22:01:42 by rvan-mee      #+#    #+#                 */
-/*   Updated: 2022/07/08 14:32:14 by rvan-mee      ########   odam.nl         */
+/*   Updated: 2022/07/08 19:05:43 by rvan-mee      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int32_t	get_outfile_fd(t_action	*action)
 					exit_with_error_message("close failed\n", NULL, NULL, 1);
 			}
 			if (action->type == APPEND)
-				fd = open(action->arg[0], O_CREAT | O_WRONLY | O_APPEND);
+				fd = open(action->arg[0], O_CREAT | O_WRONLY | O_APPEND, 0666);
 			else
-				fd = open(action->arg[0], O_CREAT | O_WRONLY | O_TRUNC);
+				fd = open(action->arg[0], O_CREAT | O_WRONLY | O_TRUNC, 0666);
 			if (fd == -1)
 				return (open_error(action->arg[0], errno));
 		}
